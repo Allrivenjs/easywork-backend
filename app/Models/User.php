@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes, HasRoles;
 
@@ -49,29 +49,4 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-
-    protected $error_message;
-
-    public function sendPasswordResetLink($user){
-        do{
-            $token = $this->getResetCode();
-            $signature = Hash::make($token);
-            $exists =$this->PasswordReset()->where([
-                ['user_id', $user->id],
-                ["token_signature",$signature]
-            ])->exists();
-        }while($exists);
-        try {
-            $user->notify(new ApiPasswordResetNotification($token));
-            return $this->PasswordReset()->create([
-                "user_id" => $user->id,
-                "token_signature" => $signature,
-                "expires_at" => Carbon::now()->addMinutes(30)
-            ]);
-        }catch (\Throwable $th){
-            $this->error_message = $th->getMessage();
-            return false;
-        }
-    }
 }

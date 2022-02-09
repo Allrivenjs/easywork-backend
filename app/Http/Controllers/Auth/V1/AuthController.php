@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth\V1;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +15,6 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
-        return \response([Carbon::now()]);
         $request->validate([
             'email'=>'required|email',
             'password'=>'required'
@@ -46,9 +46,9 @@ class AuthController extends Controller
         $validatedData['birthday']=Carbon::make($request->birthday);
         try {
             $user = User::create($validatedData);//->assignRole('Student')
-        }catch (\SQLiteException $e){
+        }catch (QueryException $e){
             return response([
-                $e
+                'message'=>$e
             ])->setStatusCode(Response::HTTP_BAD_REQUEST);
         }
 

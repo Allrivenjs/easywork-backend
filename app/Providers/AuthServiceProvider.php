@@ -27,17 +27,6 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //EmailVerification
-        VerifyEmail::toMailUsing(function ($notifiable, $url) {
-            return (new MailMessage)->view('email.email_verify',['url'=>$url]);
-        });
-
-        //ResetPassword route
-        ResetPassword::toMailUsing(function ($notifiable, $token) {
-            return (new MailMessage)->view('email.password_reset',
-                ['url'=> env('APP_URL').'/reset-password/'.$token.'/'.$notifiable->getEmailForPasswordReset()]);
-        });
-
 
 //        if (! $this->app->routesAreCached()) {
 //            Passport::routes();
