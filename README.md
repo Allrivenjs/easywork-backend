@@ -7,7 +7,7 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-Using backend-api
+Using backend EasyWork
 ---
 
 1. Into line command
@@ -17,3 +17,12 @@ Using backend-api
    > php artisan passport:install
 3. check routes of the app with next command
    > php artisan r:l
+
+
+<br>
+
+### Your app is ready :D
+
+
+![Tux, the Linux mascot](./public/images/tux.png)
+
