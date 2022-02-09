@@ -14,9 +14,14 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
+        return \response([Carbon::now()]);
+        $request->validate([
+            'email'=>'required|email',
+            'password'=>'required'
+        ]);
         //login
         if (!auth()->attempt($request->only('email','password'))){
-            return response()->json()->setStatusCode(Response::HTTP_OK);
+            return response([])->setStatusCode(Response::HTTP_FORBIDDEN);
         }
         $tokenResult  = auth()->user()->createToken('authToken');
         $token = $tokenResult->token;
@@ -38,7 +43,15 @@ class AuthController extends Controller
     {
         $validatedData = $request->validate($this->rules());
         $validatedData['password']=Hash::make($request->password);
-        $user = User::create($validatedData)->assignRole('Student');
+        $validatedData['birthday']=Carbon::make($request->birthday);
+        try {
+            $user = User::create($validatedData);//->assignRole('Student')
+        }catch (\SQLiteException $e){
+            return response([
+                $e
+            ])->setStatusCode(Response::HTTP_BAD_REQUEST);
+        }
+
 
         $tokenResult = $user->createToken('authToken');
         $token=$tokenResult->token;
@@ -53,7 +66,7 @@ class AuthController extends Controller
         return [
             'name'=>'required|max:255',
             'lastname'=>'required|string',
-            'email'=>'required|confirmed|email|unique:users',
+            'email'=>'required|email|unique:users',
             'phone' => 'required',
             'birthday' =>'required',
             'password'=> ['required', Rules\Password::defaults()],
