@@ -45,14 +45,12 @@ class AuthController extends Controller
         $validatedData['password']=Hash::make($request->password);
         $validatedData['birthday']=Carbon::make($request->birthday);
         try {
-            $user = User::create($validatedData);//->assignRole('Student')
+            $user = User::create($validatedData)->assignRole('Student');
         }catch (QueryException $e){
             return response([
                 'message'=>$e
             ])->setStatusCode(Response::HTTP_BAD_REQUEST);
         }
-
-
         $tokenResult = $user->createToken('authToken');
         $token=$tokenResult->token;
         return response([
