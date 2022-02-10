@@ -1,0 +1,413 @@
+[
+  
+  { "id": 2, "data": "Escuela \nTecnológica Instituto Técnico Central" },
+  { "id": 3, "data": "Corporación \nCentro de Nuestra Señora de las Mercedes" },
+  {
+    "id": 4,
+    "data": "Colegio de Estudios Superiores de Administración (CESA)"
+  },
+  { "id": 5, "data": "Colegio \nMayor de Nuestra Señora del Rosario" },
+  { "id": 6, "data": "Escuela Colombiana de Ingeniería Julio Garavito" },
+  { "id": 7, "data": "Escuela Colombiana de Carreras Industriales (ECCI)" },
+  { "id": 8, "data": "Escuela \nde Artes y Letras" },
+  { "id": 9, "data": "Politécnico Grancolombiano" },
+  {
+    "id": 10,
+    "data": "Corporación Internacional para el Desarrollo Educativo (CIDE)"
+  },
+  { "id": 11, "data": "Universidad de América" },
+  {
+    "id": 12,
+    "data": "Universidad de Ciencias Aplicadas y Ambientales (UDCA)"
+  },
+  { "id": 13, "data": "Fundación \nUniversitaria Juan N. Corpas" },
+  { "id": 14, "data": "Fundación \nUniversitaria del Área Andina" },
+  { "id": 15, "data": "Universidad de la Sabana" },
+  { "id": 16, "data": "Corporación \nEductiva Alexander Von Humboldt" },
+  {
+    "id": 17,
+    "data": "Corporación \nUnificada Nacional de Educación Superior (CUN)"
+  },
+  { "id": 18, "data": "Corporación \nUniversitaria Republicana" },
+  { "id": 19, "data": "Corporación \nTecnológica de Bogotá" },
+  { "id": 20, "data": "Corporación \nTecnológica Industrial Colombiana" },
+  {
+    "id": 21,
+    "data": "Escuela \nMilitar de Cadetes General José María Córdova"
+  },
+  {
+    "id": 22,
+    "data": "Fundación \nUniversitaria Agraria de Colombia (Uniagraria)"
+  },
+  { "id": 23, "data": "Fundación \nColombo Germana" },
+  { "id": 24, "data": "Fundación \nUniversitaria CAFAM" },
+  { "id": 25, "data": "Fundación \nUniversitaria Konrad Lorenz" },
+  { "id": 26, "data": "Fundación \nUniversitaria Los Libertadores" },
+  { "id": 27, "data": "Politécnico \nColombo Andino" },
+  {
+    "id": 28,
+    "data": "Corporación \nUniversal de Investigación y Tecnología CORUNIVERSITEC"
+  },
+  { "id": 29, "data": "Corporación Universitaria de Ciencia y Desarrollo" },
+  { "id": 30, "data": "Corporación Universitaria IDEAS" },
+  { "id": 31, "data": "Corporación Universitaria Minuto de Dios" },
+  { "id": 32, "data": "Policía \nNacional de Colombia" },
+  { "id": 33, "data": "Escuela \nMilitar de Aviación Marco Fidel Suárez" },
+  { "id": 34, "data": "Escuela \nSuperior de Guerra" },
+  { "id": 35, "data": "Fundación \nde Educación Superior Nueva América" },
+  { "id": 36, "data": "Escuela \nColombiana de Rehabilitación" },
+  { "id": 37, "data": "Fundación \nInteramericana Técnica" },
+  { "id": 38, "data": "Fundación \nPolitécnica CORPO" },
+  {
+    "id": 39,
+    "data": "Fundación \nUniversitaria Cervantes San Agustín - UNICERVANTES"
+  },
+  { "id": 40, "data": "Fundación \nUniversitaria de Ciencias de la Salud" },
+  { "id": 41, "data": "Fundación \nUniversitaria San Martín" },
+  {
+    "id": 42,
+    "data": "Institución \nUniversitaria Colegios de Colombia UNICOC"
+  },
+  { "id": 43, "data": "Universitaria \nde Colombia" },
+  { "id": 44, "data": "Instituto \nCaro y Cuervo" },
+  { "id": 45, "data": "Instituto ICSEF" },
+  { "id": 46, "data": "Universidad de San Buenaventura (USB)" },
+  { "id": 47, "data": "Universidad del Sinú (UNISINU)" },
+  { "id": 48, "data": "Universidad Pontificia \nBolivariana (UPB)" },
+  { "id": 49, "data": "Fundación \nde Educación Superior ESATEC" },
+  { "id": 50, "data": "Universidad Antonio Nariño (UAN)" },
+  { "id": 51, "data": "Institución de Educación Superior CE-ART" },
+  { "id": 52, "data": "Fundación \nUniversitaria Monserrate" },
+  { "id": 53, "data": "Fundación \nUniversitaria Panamericana" },
+  { "id": 54, "data": "Fundación \nUniversitaria San Alfonso" },
+  { "id": 55, "data": "Fundación \nUniversitaria Sanitas" },
+  { "id": 56, "data": " \nCorporación de Estudios Superiores Salamandra" },
+  { "id": 57, "data": "Corporación \nUniversitaria INPAHU" },
+  { "id": 58, "data": "Politécnico \nICAFT" },
+  { "id": 59, "data": "Politécnico \nInternacional" },
+  { "id": 60, "data": "Universidad Autónoma de Colombia (FUAC)" },
+  { "id": 61, "data": "Universidad Libre" },
+  { "id": 62, "data": "Universidad Manuela \nBeltrán (UMB)" },
+  { "id": 63, "data": "Universidad San Martín" },
+  { "id": 64, "data": "Universidad La Gran \nColombia" },
+  { "id": 65, "data": "Universidad EAN" },
+  { "id": 66, "data": "Universidad Incca de Colombia (UNINCCA)" },
+  { "id": 67, "data": "Universidad Central" },
+  { "id": 68, "data": "Universidad de los Andes" },
+  { "id": 69, "data": "Universidad de la Salle" },
+  { "id": 70, "data": "Universidad \nExternado de Colombia" },
+  { "id": 71, "data": "Universidad El Bosque" },
+  { "id": 72, "data": "Universidad Piloto de Colombia" },
+  { "id": 73, "data": "Universidad del Rosario" },
+  { "id": 74, "data": "Universidad \nCatólica de Colombia" },
+  { "id": 75, "data": "Pontificia Universidad Javeriana" },
+  { "id": 76, "data": "Universidad de Bogotá \"Jorge Tadeo Lozano\"" },
+  { "id": 77, "data": "Corporación Politécnico de Cundinamarca" },
+  { "id": 78, "data": "\nUniversidad del Área Andina" },
+  { "id": 79, "data": "\nUniversitaria Agustiniana" },
+  { "id": 80, "data": "IMF Business School" },
+  { "id": 81, "data": " Corporación de Educación Superior ISES" },
+  { "id": 82, "data": "\nCorporación Técnica de Colombia" },
+  { "id": 83, "data": "\nCorporación Universitaria UNITEC" },
+  { "id": 84, "data": "\nCorporación Universitaria CENDA" },
+  { "id": 85, "data": "\nCorporación Universitaria Iberoamericana" },
+  { "id": 86, "data": "\nEscuela de Ingenieros Militares" },
+  { "id": 87, "data": "Escuela de Logística" },
+  { "id": 88, "data": "\nEscuela de Ciencias Empresariales" },
+  { "id": 89, "data": "\nEscuela Superior de Oftalmología" },
+  {
+    "id": 90,
+    "data": "Fundación Centro de Ed. Sup. Investigación y \nProfesionalización CEDINPRO"
+  },
+  { "id": 91, "data": "Escuela Colombiana de Hotelería y Turismo ECOTET" },
+  { "id": 92, "data": "Instituto Superior de Carreras Técnicas INSUTEC" },
+  { "id": 93, "data": "\nFundación Universitaria San Mateo" },
+  { "id": 94, "data": "Fundación Tecnológica Autónoma de Bogotá" },
+  { "id": 95, "data": "Fundación \nUniversitaria CIEO" },
+  { "id": 96, "data": "\nUniversidad Católica Luis Amigó" },
+  {
+    "id": 97,
+    "data": "Fundación Universitaria Empresarial de la Cámara \nde Comercio de Botogá"
+  },
+  { "id": 98, "data": "Institución Universitaria Colombo Americana ÚNICA" },
+  { "id": 99, "data": " Institución Universitaria Latina" },
+  { "id": 100, "data": " Instituto Militar Aeronaútico" },
+  { "id": 101, "data": "\nPolitécnico Santafé de Bogotá" },
+  { "id": 102, "data": "Unión Americana de Educación Superior" },
+  { "id": 103, "data": "Tecnológica \ndel Sur" },
+  { "id": 104, "data": "Universidad CES" },
+  { "id": 105, "data": "Universidad de Santander \n(UDES)" },
+  { "id": 106, "data": "Universidad EAFIT" },
+  { "id": 107, "data": "Corporación Universitaria Remington" },
+  { "id": 108, "data": "Universidad Santo Tomás (USTA)" },
+  { "id": 109, "data": "Universidad \nCooperativa de Colombia (UCC)" },
+  { "id": 110, "data": "Servicio Nacional de Aprendizaje (SENA)" },
+  
+  { "id": 112, "data": "Tecnológico de Antioquía (TDEA)" },
+  { "id": 113, "data": "Universidad \nAutónoma Latinoam. (UNAULA)" },
+  { "id": 114, "data": "Universidad Pontificia Bolivariana (UPB)" },
+  { "id": 115, "data": "Universidad \nCatólica de Oriente (UCO)" },
+  { "id": 116, "data": "Universidad de Medellín \n(UDEM)" },
+  {
+    "id": 117,
+    "data": "Corporación \nUniv. de Ciencia y Tecnología de Colombia"
+  },
+  { "id": 118, "data": "Corporación Universitaria Lasallista " },
+  {
+    "id": 119,
+    "data": "Corporación \nTecnológica Católica de Occidente (TECOC)"
+  },
+  { "id": 120, "data": "Corporación \nAcademia Superior de Artes" },
+  { "id": 121, "data": "Corporación \nTecnológico Copacabana (TECO)" },
+  { "id": 122, "data": "Corporación \nUniversitaria Americana" },
+  {
+    "id": 123,
+    "data": "Corporación Universitaria de Sabaneta J. E. \nValderrama"
+  },
+  { "id": 124, "data": "Corporación Politécnico Marco Fidel Suárez\n" },
+  { "id": 125, "data": "Corporación \nUniversitaria Adventista (UNAC)" },
+  { "id": 126, "data": "Corporación de Estudios \nSuperiores Salamandra" },
+  { "id": 127, "data": "Fundación \nTecnológica Rural COREDI " },
+  { "id": 128, "data": "Corporación para Investiga. Biológicas (CIB)" },
+  { "id": 129, "data": "Centro Educacional de Cómputos y Sistemas" },
+  {
+    "id": 130,
+    "data": "Fundación de Estudios Superiores Univ. de \nUraba (FESU)"
+  },
+  { "id": 131, "data": "Fundación Universitaria Católica del Norte (UCN)" },
+  {
+    "id": 132,
+    "data": "Fundación Universitaria Seminario Bíblico de \nColombia"
+  },
+  { "id": 133, "data": "Fundación Universitaria Bellas Artes de \nMedellín" },
+  { "id": 134, "data": "Fundación Universitaria Autónoma de las \nAméricas" },
+  { "id": 135, "data": "Escuela de \nIngeniería de Antioquía (EIA)" },
+  { "id": 136, "data": "Escuela Universitaria de Mercadotecnia (ESCOLME)" },
+  { "id": 137, "data": "Institución \nUniversitaria Esumer" },
+  { "id": 138, "data": "Institución Universitaria Pascual Bravo" },
+  { "id": 139, "data": "Instituto Superior IDEARTES" },
+  { "id": 140, "data": "Institución Universitaria Colegiatura \nColombiana " },
+  { "id": 141, "data": "Institución Universitaria Ceipa" },
+  { "id": 142, "data": "Institución Universitaria Salazar y Herrera (IUSH)\n" },
+  { "id": 143, "data": "Corporación Academia Tecnológica de Colombia" },
+  { "id": 144, "data": "\nCorporación Universitaria IDEAS" },
+  { "id": 145, "data": "Politécnico de Antioquía" },
+  { "id": 146, "data": " \nCentro de Comercio Regional Antioquía" },
+  { "id": 147, "data": "\nUniversidad Pontificia Bolivariana" },
+  {
+    "id": 148,
+    "data": " \nEscuela Superior Tecnológica de Artes Debora Arango"
+  },
+  { "id": 149, "data": "Escuela de Tecnologías de Antioquía" },
+  { "id": 150, "data": "Fundación \nUniversitaria Maria Cano" },
+  
+  
+  { "id": 153, "data": "Politécnico \nSantafé de Bogotá" },
+  
+  
+  { "id": 156, "data": "Institución \nUniversitaria ITSA " },
+  { "id": 157, "data": "Universidad del Norte \n(UNINORTE)" },
+  { "id": 158, "data": "Universidad Simón \nBolívar" },
+  { "id": 159, "data": "Universidad \nAutónoma del Caribe (UAC)" },
+  { "id": 160, "data": "Universidad Metropolitana" },
+  { "id": 161, "data": "Corporación \nUniversitaria de la Costa (CUC)" },
+  { "id": 162, "data": "Corporación \nUniversitaria Latinoamericana (CUL)" },
+  { "id": 163, "data": "Corporación \nTecnológica Indoamérica" },
+  { "id": 164, "data": "Corporación \nEducativa del Litoral (CEL)" },
+  { "id": 165, "data": "Corporación \nUniv. Empresarial de Salamanca (CUES) " },
+  {
+    "id": 166,
+    "data": "Corp. \nUni. de Cs. Empre. Educación y Salud (CORSALUD)"
+  },
+  { "id": 167, "data": "Corporación \nUniversitaria Reformada" },
+  { "id": 168, "data": "Politécnico \nCosta Atlántica (PCA)" },
+  { "id": 169, "data": "Corporación Universitaria Rafael Núñez (CURN)" },
+  { "id": 170, "data": "Fundación \nTecnológica Antonio de Arévalo (TECNAR)" },
+  { "id": 171, "data": "Instituto \nTecnológico de Soledad" },
+  { "id": 172, "data": "Universidad Sergio \nArboleda" },
+  { "id": 173, "data": "\nUniversidad del Sinú (UNISINU)" },
+  {
+    "id": 174,
+    "data": "Inst. Univ. Bellas Artes y Ciencias de Bolívar (ESBA)"
+  },
+  { "id": 175, "data": "Fundación Universitaria Tecnológico Comfenalco" },
+  { "id": 176, "data": "Corporación Universitaria Rafael Núñez (CURN) " },
+  { "id": 177, "data": "Fundación Tecnológica Antonio de Arévalo (TECNAR)" },
+  { "id": 178, "data": "Fundación Univ. Colombo Internacional (UNICOLOMBO)" },
+  {
+    "id": 179,
+    "data": "Corporación Universitaria Regional del Caribe (IAFIC)"
+  },
+  {
+    "id": 180,
+    "data": "Corporación \nUniversitaria Autónoma de Nariño (AUNAR)"
+  },
+  { "id": 181, "data": "Universidad Tecnológica de Bolívar" },
+ 
+  { "id": 184, "data": "Universidad de Boyacá" },
+  { "id": 185, "data": "Fundación \nUniversitaria Juan de Castellanos (JDC)" },
+  { "id": 186, "data": "Instituto \nTécnico de Colombia" },
+  { "id": 187, "data": "Instituto \nCenis de Colombia" },
+  { "id": 188, "data": "Academia \nNacional de Aprendizaje" },
+  { "id": 189, "data": "Centro \nColombiano Americano" },
+  { "id": 190, "data": "Fundación \nUniversitaria de San Gil (UNISANGIL)" },
+  { "id": 191, "data": "Universidad Católica de Manizales (UCM)" },
+  { "id": 192, "data": "Universidad de Manizales" },
+  { "id": 193, "data": "Universidad Autónoma de Manizales" },
+  {
+    "id": 194,
+    "data": "Corporación de Educ. del Norte del Tolima (COREDUCACION)"
+  },
+
+  {
+    "id": 197,
+    "data": "Fundación Universitaria Internacional del Trópico \nAmericano"
+  },
+  {
+    "id": 198,
+    "data": " Fundación Universitaria Tecnológica de Casanare \n(FUC)"
+  },
+  { "id": 199, "data": " Universidad de San Gil" },
+
+  { "id": 202, "data": "Fundación \nUniversitaria Claretiana (FUCLA)" },
+  { "id": 203, "data": "\nFundación Universitaria del Área Andina" },
+
+
+  { "id": 206, "data": "Corporación \nUniversitaria del Caribe (CECAR)" },
+  { "id": 207, "data": "Universidad Católica Luis Amigó" },
+
+  { "id": 210, "data": "Universidad Piloto \nde Colombia" },
+  { "id": 211, "data": "\nFundación Tecnológica de Madrid " },
+  { "id": 212, "data": " Fundación Educativa Comercial (FUNDEC)" },
+  { "id": 213, "data": "Escuela de Comunicaciones Militares" },
+  { "id": 214, "data": "Fundación Educativa San Juan Bautista " },
+  { "id": 217, "data": "Corporación \nUniversitaria del Huila (CORHUILA)" },
+  { "id": 218, "data": "Corporación Universitaria \nIberoamericana" },
+  { "id": 219, "data": "Fundación \nEscuela Tecnológica de Neiva " },
+
+  {
+    "id": 223,
+    "data": "Instituto \nNac. de Formación Técnica Prof. Humberto Velásquez García"
+  },
+  { "id": 224, "data": "Corporación Universitaria del Meta (UNIMETA)" },
+  { "id": 225, "data": "Fundación CIDCA" },
+  { "id": 226, "data": "\nUniversidad Autónoma de Nariño" },
+  { "id": 227, "data": "Instituto Politécnico Agro Industrial" },
+
+
+  { "id": 230, "data": "Universidad Mariana" },
+  { "id": 231, "data": "Institución \nUniversitaria CESMAG" },
+  {
+    "id": 232,
+    "data": "Institución \nUniversitaria Centro de Estudios Superiores Maria Goretti"
+  },
+  { "id": 233, "data": "Instituto Superior de Educación Rural (ISER) " },
+  { "id": 234, "data": "Fundación de Estudios Superiores FESC" },
+
+  {
+    "id": 237,
+    "data": "Fundación Universitaria Cervantes San Agustín - \nUNICERVANTES"
+  },
+  {
+    "id": 238,
+    "data": "Esc. de Administración y Mercadotecnia del Quindío (EAM)"
+  },
+  {
+    "id": 239,
+    "data": "Corporación Uni. Empresarial Alexander von Humboldt (CUE)"
+  },
+  { "id": 240, "data": "Universidad \nSan Martín" },
+  {
+    "id": 241,
+    "data": "Instituto \nde Educación Técnica Profesional de Roldanillo"
+  },
+
+  { "id": 244, "data": "Universidad Católica Popu. de Risaralda (UCPR)" },
+  { "id": 245, "data": "Universidad \nCatólica de Pereira (UCP)" },
+  {
+    "id": 246,
+    "data": "Corporación \nInstituto de Administración y Finanzas (CIAF) "
+  },
+  { "id": 247, "data": "Corporación \nCentro Técnico Arquitectónico (CTA)" },
+  { "id": 248, "data": "Corporación \nUniv. Santa Rosa de Cabal (UNISARC)" },
+
+  { "id": 250, "data": "Universidad \nAutónoma de Bucaramanga (UNAB)" },
+  { "id": 251, "data": "Instituto \nUniversitario de La Paz" },
+  { "id": 252, "data": "Corporación \nEducativa ITAE" },
+  { "id": 253, "data": "Corporación \nUniversitaria Remington" },
+  {
+    "id": 254,
+    "data": "Corporación \nInteramericana de Educ. Sup. (CORPOCIDES)"
+  },
+  {
+    "id": 255,
+    "data": "Corporación \nUniv. de Investigación y Desarrollo (UDI)"
+  },
+  { "id": 256, "data": "Corporación Escuela Tecnológica del Oriente" },
+  { "id": 257, "data": "Tecnológica \nFITEC" },
+  { "id": 258, "data": "Fundación Universitaria Comfenalco Santander" },
+  { "id": 259, "data": "\nFundación Universitaria de San Gil (UNISANGIL)" },
+  { "id": 260, "data": " \nUniversidad Corciencia (UNICIENCIA) " },
+  { "id": 261, "data": "\nInstituto Tecnológico FITEC" },
+  { "id": 262, "data": "Fundación Autónoma de Santander (FAS)" },
+  { "id": 263, "data": "Multithec Centro De Educación para el trabajo" },
+  { "id": 264, "data": "\nInstituto Multicomputo Santander" },
+  { "id": 265, "data": "Fundación Educativa Del Oriente Colombiano" },
+  { "id": 268, "data": "Corporación \nUniversitaria de Sucre (CORPOSUCRE)" },
+  { "id": 269, "data": "Conservatorio del Tolima" },
+  { "id": 270, "data": "Universidad de Ibagué" },
+  { "id": 271, "data": "Fundación Universitaria del Espinal (FUNDES)" },
+  {
+    "id": 272,
+    "data": "Corporación de Educación del Norte del Tolima \n(COREDUCACION)"
+  },
+  {
+    "id": 273,
+    "data": "Fundación de Estudios Sup. Monseñor Abraham Escudero \nMontoya"
+  },
+  { "id": 274, "data": "Institución Universitaria Antonio José Camacho" },
+  {
+    "id": 275,
+    "data": "Escuela \nSuperior de Administración y Estudios Tecnológicos"
+  },
+  { "id": 276, "data": "Ctro. I. de Entrenamiento e Inv. Médicas (CIDEIM)" },
+  { "id": 277, "data": "Instituto \nde Bellas Artes" },
+  {
+    "id": 278,
+    "data": "UNICATÓLICA \nFundación Univ. Católica \nLumen Gentium"
+  },
+  { "id": 279, "data": "Universidad Autónoma de Occidente (UAO)" },
+  { "id": 280, "data": "Universidad Icesi" },
+  { "id": 281, "data": "Universidad \nSantiago de Cali (USC)" },
+  { "id": 282, "data": "Universidad \nCentral del Valle del Cauca" },
+  { "id": 283, "data": "Universidad \nBautista" },
+  { "id": 284, "data": "Corporación Universitaria de los Andes " },
+  {
+    "id": 285,
+    "data": "Corporación de Estudios Tecnológicos del Norte del Valle "
+  },
+  { "id": 286, "data": "Corporación \nUniversitaria Taller Cinco " },
+  { "id": 287, "data": "Corporación \nUniversitaria UNICUCES" },
+  {
+    "id": 288,
+    "data": "Corporación Universitaria \npara el Desarrollo Empresarial y Social CUDES"
+  },
+  { "id": 289, "data": "Fundación \nAcademia de Dibujo Profesional" },
+  {
+    "id": 290,
+    "data": "Fundación \nCentro Colombiano de Estudios Profesionales "
+  },
+  { "id": 291, "data": "Tecnológica \nAutónoma del Pacífico " },
+  { "id": 292, "data": "Instituto \nTécnico Agrícola ITA" },
+  {
+    "id": 293,
+    "data": "Instituto \nTécnico Nacional de Comercio \"Simón Rodríguez\" "
+  },
+  { "id": 294, "data": "Corporación \nCRES" },
+  { "id": 295, "data": "Centro Universitario de Bienestar Rural (CUBR)" },
+  { "id": 296, "data": "Corporación Universitaria Autónoma del Cauca" },
+  { "id": 297, "data": "Fundación Universitaria de Popayán (FUP)" },
+  { "id": 298, "data": "Cooperación Universitaria Autónoma del Cauca" },
+  { "id": 299, "data": "Cooperación Universitaria Comfacauca" }
+
+]

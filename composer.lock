@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d78c70c48a87a8f661b13d5f56ef36a5",
+    "content-hash": "ef65b3d99e6eec65cd49074153cc0095",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1084,16 +1084,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v9.0.0",
+            "version": "v9.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "fbe7ed828819eadabb3cb9f95847a2ffe8846fd6"
+                "reference": "afeb58d019b203ecb1a1c4063a66a029ea6bea63"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/fbe7ed828819eadabb3cb9f95847a2ffe8846fd6",
-                "reference": "fbe7ed828819eadabb3cb9f95847a2ffe8846fd6",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/afeb58d019b203ecb1a1c4063a66a029ea6bea63",
+                "reference": "afeb58d019b203ecb1a1c4063a66a029ea6bea63",
                 "shasum": ""
             },
             "require": {
@@ -1259,7 +1259,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2022-02-08T15:48:31+00:00"
+            "time": "2022-02-09T15:00:05+00:00"
         },
         {
             "name": "laravel/passport",
@@ -6146,6 +6146,50 @@
                 "source": "https://github.com/webmozarts/assert/tree/1.10.0"
             },
             "time": "2021-03-09T10:59:23+00:00"
+        },
+        {
+            "name": "wisdom-diala/countrypkg-laravel",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wisdom-diala/countrypkg-laravel.git",
+                "reference": "03dbb8e09e323a8718c63ea5a9c140874dd3afc2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wisdom-diala/countrypkg-laravel/zipball/03dbb8e09e323a8718c63ea5a9c140874dd3afc2",
+                "reference": "03dbb8e09e323a8718c63ea5a9c140874dd3afc2",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "WisdomDiala\\Countrypkg\\CountrypkgServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "WisdomDiala\\Countrypkg\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Wisdom Diala",
+                    "email": "dialawisdom@gmail.com"
+                }
+            ],
+            "description": "package to fetch all countries and states around the world and store in the database",
+            "support": {
+                "issues": "https://github.com/wisdom-diala/countrypkg-laravel/issues",
+                "source": "https://github.com/wisdom-diala/countrypkg-laravel/tree/1.0.2"
+            },
+            "time": "2021-04-10T12:29:25+00:00"
         }
     ],
     "packages-dev": [
