@@ -11,7 +11,8 @@ Using backend EasyWork
    > php artisan passport:install
 3. check routes of the app with next command
    > php artisan r:l
-
+4. Local storage of the app:
+   > php artisan storage:link
 `` Si quieres iniciar un servidor en tu red local solo inicia este comando ``
 `` php artisan serve --host="la ip de tu pc (ipconfig(windows), ifconfig(linux))" --port=8000``
 

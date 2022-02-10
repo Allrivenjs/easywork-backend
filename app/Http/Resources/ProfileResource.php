@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Models\profile;
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -21,7 +20,7 @@ class ProfileResource extends JsonResource
         $userdata['updated_at']=Carbon::parse($this->updated_at)->diffForHumans();
         $data = array_merge($userdata, [
             'profile'=> $this->profile,
-            'images'=> $this->profile?->images
+//            'images'=> $this->profile?->images
         ]);
         return $data;
     }

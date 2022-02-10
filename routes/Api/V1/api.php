@@ -17,11 +17,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('login',[AuthController::class, 'login']);
-Route::post('register',[AuthController::class, 'register']);
+Route::post('login',[AuthController::class, 'login'])->name('login');
+Route::post('register',[AuthController::class, 'register'])->name('register');
 
 
 Route::middleware('auth:api')->group(function (){
-    Route::get('user',[UserController::class, 'index']);
+    Route::get('user', [UserController::class, 'index'])->name('user.index');
+    Route::post('user/update', [UserController::class, 'update'])->name('user.update');
 });
 
