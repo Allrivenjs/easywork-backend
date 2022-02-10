@@ -1,4 +1,4 @@
-<p align="center"><a href="#" target="_blank"><img src="./public/images/tux.png" width="130"></a></p>
+<p align="center"><a href="#" target="_blank"><img src="./public/assets/Frame%204.svg" width="530"></a></p>
 
 
 Using backend EasyWork
@@ -17,4 +17,7 @@ Using backend EasyWork
 
 ### Your app is ready :D
 
+<br>
 
+##### made by PrimiparosCompany
+<p align="center"><a href="#" target="_blank"><img src="./public/images/tux.png" width="130"></a></p>
