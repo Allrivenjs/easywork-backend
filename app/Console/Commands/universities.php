@@ -59,8 +59,6 @@ class universities extends Command
             DB::statement('SET FOREIGN_KEY_CHECKS=0;');
             university::truncate();
             DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-            $num = 0;
-
         }
         if (university::all()->count() <= 0) {
             for ($i = 0; $i < $no_if_universities; $i++) {

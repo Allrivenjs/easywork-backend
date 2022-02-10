@@ -17,10 +17,10 @@ class profile extends Model
     ];
 
     public function images(){
-        return $this->morphToMany(Image::class, 'imageable');
+        return $this->morphMany(Image::class, 'imageable');
     }
     public function files(){
-        return $this->morphToMany(Files::class, 'fileable');
+        return $this->morphMany(Files::class, 'fileable');
     }
     public function user(){
         return $this->belongsTo(User::class);
