@@ -13,7 +13,11 @@ Using backend EasyWork
    > php artisan r:l
 4. Local storage of the app:
    > php artisan storage:link
-`` Si quieres iniciar un servidor en tu red local solo inicia este comando ``
+5. Record that you must configure the .env where the server is hosted to be able to access the images while being local. :D
+
+<br>
+
+``Si quieres iniciar un servidor en tu red local solo inicia este comando``
 `` php artisan serve --host="la ip de tu pc (ipconfig(windows), ifconfig(linux))" --port=8000``
 
 <br>
