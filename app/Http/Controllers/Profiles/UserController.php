@@ -4,11 +4,9 @@ namespace App\Http\Controllers\Profiles;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProfileResource;
-use App\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
@@ -22,6 +20,7 @@ class UserController extends Controller
         $url ='';
         try {
             if ($request->hasFile('profile_photo_path')){
+//                if ()
                 $url = Storage::put('Images/users', $request->file('profile_photo_path'));
             }
             $validate['profile_photo_path']=env('APP_URL').'/storage/'.$url;

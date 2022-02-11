@@ -16,10 +16,10 @@ class UserObserver
      */
     public function created(User $user)
     {
-        if(!\App::runningInConsole()){
-            //EmailVerification
-            event(new Registered($user));
-        }
+//        if(!\App::runningInConsole()){
+//            //EmailVerification
+//            event(new Registered($user));
+//        }
         $random = rand(0, 1000);
         $random2 = rand(2000, 3000);
         $user->assignRole('Student');

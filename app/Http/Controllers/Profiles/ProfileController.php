@@ -30,7 +30,7 @@ class ProfileController extends Controller
         try {
             auth()->user()->profile()->update($validate);
         }catch (QueryException $e){
-            return response([])->setStatusCode(Response::HTTP_BAD_REQUEST);
+            return response([$e])->setStatusCode(Response::HTTP_BAD_REQUEST);
         }
 
         return response([])->setStatusCode(Response::HTTP_OK);

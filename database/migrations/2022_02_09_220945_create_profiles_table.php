@@ -21,7 +21,6 @@ return new class extends Migration
             //Type_user is 0 because user is not a worker, this change to 1 when user is a worker
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-
             $table->timestamps();
             $table->softDeletes();
         });

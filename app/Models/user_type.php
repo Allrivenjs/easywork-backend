@@ -9,10 +9,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class user_type extends Model
 {
     use HasFactory, SoftDeletes;
+    protected $fillable = ['name'];
 
     protected $dates = [
         'created_at',
         'updated_at',
         'deleted_at'
     ];
+
 }

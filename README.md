@@ -17,6 +17,12 @@ Using backend EasyWork
 
 <br>
 
+6. **New, now running in console this command for execute previous commands**
+   > php artisan start::system --help <- "Know all your options"
+
+
+<br>
+
 ``Si quieres iniciar un servidor en tu red local solo inicia este comando``
 `` php artisan serve --host="la ip de tu pc (ipconfig(windows), ifconfig(linux))" --port=8000``
 
