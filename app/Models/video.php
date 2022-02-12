@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Database\Factories\videoFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -15,6 +16,15 @@ class video extends Model
     protected static function newFactory()
     {
         return videoFactory::new();
+    }
+
+
+    public function getCreatedAtAttribute($value){
+        return Carbon::parse($value)->diffForHumans();
+    }
+
+    public function getUpdatedAtAttribute($value){
+        return Carbon::parse($value)->diffForHumans();
     }
 
     public function sections(){

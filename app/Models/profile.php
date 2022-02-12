@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -15,6 +16,24 @@ class profile extends Model
         'updated_at',
         'deleted_at'
     ];
+
+    public function getRouteKeyName()
+    {
+        return "slug";
+    }
+
+    public function getCreatedAtAttribute($value){
+        return Carbon::parse($value)->diffForHumans();
+    }
+
+    public function getUpdatedAtAttribute($value){
+        return Carbon::parse($value)->diffForHumans();
+    }
+
+    public function getDeletedAtAttribute($value){
+        if ($value==null) return;
+        return Carbon::parse($value)->diffForHumans();
+    }
 
     public function images(){
         return $this->morphMany(Image::class, 'imageable');

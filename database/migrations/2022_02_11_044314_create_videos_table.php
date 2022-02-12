@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('url');
             $table->text('description');
-
+            $table->string('duration')->nullable();
             $table->unsignedBigInteger('section_id');
             $table->foreign('section_id')->references('id')->on('sections')->onDelete('cascade');
 

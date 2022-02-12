@@ -37,6 +37,13 @@ Route::middleware('auth:api')->group(function (){
     Route::get('courses/{course}',[CoursesController::class, 'showCoursesWithSections'])->name('courses.show');
 
 
+Route::prefix('coursesAdmin')->group(function (){
+    Route::post('courses',[CoursesController::class, 'storeCourse'])->name('coursesAdmin.store.course ');
+    Route::post('section/{course}',[CoursesController::class, 'storeSection'])->name('coursesAdmin.store.section');
+    Route::post('video/{section}',[CoursesController::class, 'storeVideo'])->name('coursesAdmin.store.video');
+});
+
+
     //  Route::post('userType/{userType}',[ UserTypeController::class, 'update']);
 
 

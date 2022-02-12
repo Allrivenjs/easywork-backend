@@ -56,6 +56,25 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    public function getCreatedAtAttribute($value){
+        return Carbon::parse($value)->diffForHumans();
+    }
+
+    public function getUpdatedAtAttribute($value){
+        if ($value==null) return;
+        return Carbon::parse($value)->diffForHumans();
+    }
+
+    public function getDeletedAtAttribute($value){
+        if ($value==null) return;
+        return Carbon::parse($value)->diffForHumans();
+    }
+
+//    public function getBirthdayAttribute($value){
+//        return Carbon::parse($value)->format("d-m-y");
+//    }
+
+
     public function profile(){
         return $this->hasOne(profile::class);
     }

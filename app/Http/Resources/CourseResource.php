@@ -19,10 +19,11 @@ class CourseResource extends JsonResource
         return [
             'id'=>$this->id,
             'name'=>$this->name,
+            'slug'=>$this->slug,
             'description'=>$this->description,
             'owner'=>$this->owner,
-            'created_at'=>Carbon::parse($this->created_at)->diffForHumans(),
-            'updated_at'=>Carbon::parse($this->updated_at)->diffForHumans(),
+            'created_at'=>$this->created_at,
+            'updated_at'=>$this->updated_at,
             'sections'=>section::with('videos')->where('course_id','=', $this->id)->get()
         ];
     }

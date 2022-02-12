@@ -16,8 +16,6 @@ class ProfileResource extends JsonResource
     public function toArray($request)
     {
         $userdata = parent::toArray($request);
-        $userdata['created_at']=Carbon::parse($this->created_at)->diffForHumans();
-        $userdata['updated_at']=Carbon::parse($this->updated_at)->diffForHumans();
         $data = array_merge($userdata, [
             'profile'=> $this->profile,
 //            'images'=> $this->profile?->images

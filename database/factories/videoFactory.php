@@ -20,7 +20,7 @@ class videoFactory extends Factory
     {
         return [
             'name'=>$this->faker->name(),
-            'url'=>'storage/Images/courses/'.$this->faker->image('public/storage/Images/courses', 640,480, 'null', false),
+            'url'=>env('APP_URL').'/storage/Images/courses/'.$this->faker->image('public/storage/Images/courses', 640,480, 'null', false),
             'description'=>$this->faker->text(300)
         ];
     }

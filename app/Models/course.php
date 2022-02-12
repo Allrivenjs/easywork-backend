@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Database\Factories\coursesFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,7 +15,22 @@ class course extends Model
     {
         return coursesFactory::new();
     }
+
+
     protected $fillable = ['name','slug','description','owner'];
+
+    public function getOwnerAttribute($value){
+        $user= User::query()->findOrFail($value);
+        return strtoupper("$user->name $user->lastname");
+    }
+
+    public function getCreatedAtAttribute($value){
+        return Carbon::parse($value)->diffForHumans();
+    }
+
+    public function getUpdatedAtAttribute($value){
+        return Carbon::parse($value)->diffForHumans();
+    }
 
     public function sections(){
         return $this->hasMany(section::class);
