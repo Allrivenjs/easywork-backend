@@ -22,6 +22,9 @@ class DatabaseSeeder extends Seeder
         Storage::deleteDirectory('Images/profiles');
         Storage::makeDirectory('Images/profiles');
 
+        Storage::deleteDirectory('Images/courses');
+        Storage::makeDirectory('Images/courses');
+
         Storage::deleteDirectory('Files/jobs');
         Storage::makeDirectory('Files/jobs');
 
@@ -29,7 +32,8 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
         $this->call([
             RoleSeeder::class,
-            UserSeeder::class
+            UserSeeder::class,
+            CourseSeeder::class,
         ]);
     }
 }

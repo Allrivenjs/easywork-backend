@@ -2,6 +2,7 @@
 
 
 use App\Http\Controllers\Auth\V1\AuthController;
+use App\Http\Controllers\Courses\CoursesController;
 use App\Http\Controllers\Profiles\ProfileController;
 use App\Http\Controllers\Profiles\UserController;
 use App\Http\Controllers\Profiles\UserTypeController;
@@ -31,6 +32,14 @@ Route::middleware('auth:api')->group(function (){
     Route::post('profile/update',[ProfileController::class, 'updateAboutProfile'])->name('profile.update');
 
     Route::apiResource('userType', UserTypeController::class);
-  //  Route::post('userType/{userType}',[ UserTypeController::class, 'update']);
+
+    Route::get('courses',[CoursesController::class, 'getCourses'])->name('courses');
+    Route::get('courses/{course}',[CoursesController::class, 'showCoursesWithSections'])->name('courses.show');
+
+
+    //  Route::post('userType/{userType}',[ UserTypeController::class, 'update']);
+
+
+
 });
 
