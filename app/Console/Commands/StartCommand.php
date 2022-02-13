@@ -43,12 +43,13 @@ class StartCommand extends Command
 
         if ($this->option('reset')){
             $this->alert('Start migrations and seeds');
-            $this->call('migrate:fresh', [
-                '--seed'=>'default'
-            ]);
             $this->call('storage:link',[
                 '--force'=>'default'
             ]);
+            $this->call('migrate:fresh', [
+                '--seed'=>'default'
+            ]);
+
             $this->alert('finished migrations and seeds');
             $this->alert('Creating keys of passport');
             $this->call('passport:install');
