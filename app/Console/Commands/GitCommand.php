@@ -40,9 +40,9 @@ class GitCommand extends Command
     public function handle()
     {
         try {
-            exec('git checkout cpanel-production');
+            //exec('git checkout cpanel-production');
             exec('git pull');
-            exec('composer install');
+            exec('php composer.phar install');
             $this->info('Command success');
         }catch (Exception $e){
             Log::info($e);
