@@ -24,6 +24,7 @@ class CourseResource extends JsonResource
             'owner'=>$this->owner,
             'created_at'=>$this->created_at,
             'updated_at'=>$this->updated_at,
+            'image'=>$this->image,
             'sections'=>section::with('videos')->where('course_id','=', $this->id)->get()
         ];
     }

@@ -36,7 +36,7 @@ class CoursesController extends Controller
 
     public function showVideo($course,$video){
         course::query()->where('slug','LIKE',"%$course%")->firstOrFail();
-        $courseD=video::query()->where('slug','LIKE',"%$video%")->first();
+        $courseD=video::query()->where('slug','LIKE',"%$video%")->with('image')->first();
         return response([$courseD])->setStatusCode(Response::HTTP_OK);
     }
 
@@ -49,12 +49,18 @@ class CoursesController extends Controller
      */
     public function storeCourse(Request $request){
         $validate = $request->validate([
-                        'name'=>'required',
-                        'description'=>'required'
-                    ]);
+            'name'=>'required',
+            'description'=>'required',
+            'image'=>'required|image'
+        ]);
+
         $validate['owner']=Auth()->guard('web')->user()->getAuthIdentifier();
         $validate['slug']=Str::slug($request->name.rand(10, 10000));
         $course=course::create($validate);
+        $url = Storage::put('Images/courses', $request->file('image'));
+        $course->image()->create([
+            'url'=>env('APP_URL').'/storage/'.$url
+        ]);
         return response([$course])->setStatusCode(Response::HTTP_OK);
     }
 
@@ -83,14 +89,21 @@ class CoursesController extends Controller
         $validate = $request->validate([
             'name'=>'required',
             'description'=>'required',
-            'video' => 'required|mimes:mp4,ogx,oga,ogv,ogg,webm | max:102400'
+            'video' => 'required|mimes:mp4,ogx,oga,ogv,ogg,webm | max:102400',
+            'image'=>'required|image'
         ]);
         $url=Storage::put('Courses/videos',$request->file('video'));
         $data = array_merge($validate, [
             'url'=>env('APP_URL').'/storage/'.$url,
             'section_id'=>$section->id
         ]);
+
         $video = video::create($data);
+
+        $url = Storage::put('Images/videos', $request->file('image'));
+        $video->image()->create([
+            'url'=>env('APP_URL').'/storage/'.$url
+        ]);
         return response([$video])->setStatusCode(Response::HTTP_OK);
     }
 

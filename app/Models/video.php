@@ -33,4 +33,8 @@ class video extends Model
         return $this->belongsTo(section::class);
     }
 
+    public function image(){
+        return $this->morphOne(Image::class, 'imageable');
+    }
+
 }

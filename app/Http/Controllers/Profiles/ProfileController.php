@@ -8,6 +8,8 @@ use App\Models\profile;
 use App\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProfileController extends Controller
@@ -31,14 +33,33 @@ class ProfileController extends Controller
     public function updateAboutProfile(Request $request){
 
         $validate = $request->validate($this->rules());
+
         try {
-           Auth()->guard('web')->user()->profile()->update($validate);
+            Auth()->guard('api')->user()->profile()->update($validate);
         }catch (QueryException $e){
             return response([$e])->setStatusCode(Response::HTTP_BAD_REQUEST);
         }
-
         return response([])->setStatusCode(Response::HTTP_OK);
     }
+
+    public function updateImageprofile(Request $request){
+        $request->validate([
+            'image'=>'image|required'
+        ]);
+        $profile=profile::query()->findOrFail( Auth()->guard('api')->user()->profile->id);
+        $url = Storage::put('Images/profiles', $request->file('image'));
+        if ($profile->image){
+            $profile->image()->update([
+                'url'=> env('APP_URL').'/storage/'.$url
+            ]);
+        }else{
+            $profile->image()->create([
+                'url'=> env('APP_URL').'/storage/'.$url
+            ]);
+        }
+        return response([$profile->image])->setStatusCode(Response::HTTP_OK);
+    }
+
 
     private function rules(){
         return [
