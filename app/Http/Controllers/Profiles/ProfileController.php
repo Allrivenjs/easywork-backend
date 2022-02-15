@@ -49,12 +49,13 @@ class ProfileController extends Controller
         $profile=profile::query()->findOrFail( Auth()->guard('api')->user()->profile->id);
         $url = Storage::put('Images/profiles', $request->file('image'));
         if ($profile->image){
+            Storage::delete(str_replace(env('APP_URL').'/storage/', '', $profile->image->url));
             $profile->image()->update([
-                'url'=> env('APP_URL').'/storage/'.$url
+                'url'=> $url
             ]);
         }else{
             $profile->image()->create([
-                'url'=> env('APP_URL').'/storage/'.$url
+                'url'=> $url
             ]);
         }
         return response([$profile->image])->setStatusCode(Response::HTTP_OK);

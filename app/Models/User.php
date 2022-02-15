@@ -60,6 +60,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return Carbon::parse($value)->diffForHumans();
     }
 
+    public function getProfilePhotoPathAttribute($value){
+        return env('APP_URL').'/storage/'.$value;
+    }
+
+
     public function getUpdatedAtAttribute($value){
         if ($value==null) return;
         return Carbon::parse($value)->diffForHumans();

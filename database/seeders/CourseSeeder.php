@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\course;
+use App\Models\Image;
 use App\Models\section;
 use App\Models\User;
 use App\Models\video;
@@ -23,13 +24,23 @@ class CourseSeeder extends Seeder
         ]);
 
         foreach ($courses as $course){
+            Image::factory(1)->create([
+                'imageable_id' => $course->id,
+                'imageable_type' => course::class,
+            ]);
            $sections= section::factory(5)->create([
                 'course_id'=>$course->id
             ]);
             foreach ($sections as $section){
-                video::factory(8)->create([
+                $videos=video::factory(8)->create([
                     'section_id'=>$section->id
                 ]);
+                foreach ($videos as $video){
+                    Image::factory(1)->create([
+                        'imageable_id' => $video->id,
+                        'imageable_type' => video::class,
+                    ]);
+                }
             }
         }
 

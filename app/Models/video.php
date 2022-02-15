@@ -20,6 +20,9 @@ class video extends Model
         return videoFactory::new();
     }
 
+    public function getUrlAttribute($value){
+        return env('APP_URL').'/storage/'.$value;
+    }
 
     public function getCreatedAtAttribute($value){
         return Carbon::parse($value)->diffForHumans();

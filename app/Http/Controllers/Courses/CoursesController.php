@@ -59,7 +59,7 @@ class CoursesController extends Controller
         $course=course::create($validate);
         $url = Storage::put('Images/courses', $request->file('image'));
         $course->image()->create([
-            'url'=>env('APP_URL').'/storage/'.$url
+            'url'=>$url
         ]);
         return response([$course])->setStatusCode(Response::HTTP_OK);
     }
@@ -94,7 +94,7 @@ class CoursesController extends Controller
         ]);
         $url=Storage::put('Courses/videos',$request->file('video'));
         $data = array_merge($validate, [
-            'url'=>env('APP_URL').'/storage/'.$url,
+            'url'=>$url,
             'section_id'=>$section->id
         ]);
 
@@ -102,7 +102,7 @@ class CoursesController extends Controller
 
         $url = Storage::put('Images/videos', $request->file('image'));
         $video->image()->create([
-            'url'=>env('APP_URL').'/storage/'.$url
+            'url'=>$url
         ]);
         return response([$video])->setStatusCode(Response::HTTP_OK);
     }
@@ -118,8 +118,23 @@ class CoursesController extends Controller
         $courseD = course::query()->findOrFail($course);
         $validate = $request->validate([
             'name'=>'required',
-            'description'=>'required'
+            'description'=>'required',
+            'image'=>'image'
         ]);
+        if ($request->hasFile('image')){
+          if ($courseD->image){
+              Storage::delete(str_replace(env('APP_URL').'/storage/', '', $courseD->image->url));
+              $url = Storage::put('Images/courses', $request->file('image'));
+              $courseD->image()->update([
+                  'url'=>$url
+              ]);
+          }else{
+              $url = Storage::put('Images/courses', $request->file('image'));
+              $courseD->image()->create([
+                  'url'=>$url
+              ]);
+          }
+        }
         $courseD->updateOrFail($validate);
         return response([$courseD])->setStatusCode(Response::HTTP_OK);
     }
@@ -151,8 +166,25 @@ class CoursesController extends Controller
         $videoD = section::query()->findOrFail($video);
         $validate = $request->validate([
             'name'=>'required',
+            'image'=>'image'
         ]);
+        if ($request->hasFile('image')){
+            if ($videoD->image){
+                Storage::delete(str_replace(env('APP_URL').'/storage/', '', $videoD->image->url));
+                $url = Storage::put('Images/videos', $request->file('image'));
+                $video->image()->update([
+                    'url'=>$url
+                ]);
+            }else{
+                $url = Storage::put('Images/videos', $request->file('image'));
+                $video->image()->create([
+                    'url'=>$url
+                ]);
+            }
+        }
+
         $videoD->updateOrFail($validate);
+
         return response([$videoD])->setStatusCode(Response::HTTP_OK);
     }
 
@@ -222,7 +254,14 @@ class CoursesController extends Controller
      */
     public function forceDeleteCourse($course): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
-        course::withTrashed()->findOrFail($course)->forceDelete();
+        try {
+
+            $courseD =course::withTrashed()->findOrFail($course);
+            Storage::delete(str_replace(env('APP_URL').'/storage/', '', $courseD->image->url));
+            $courseD->forceDelete();
+
+        }catch (\Exception $exception){}
+
         return response()->setStatusCode(Response::HTTP_OK);
     }
 
@@ -242,7 +281,12 @@ class CoursesController extends Controller
      */
     public function forceDeleteVideo($video): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
-        video::withTrashed()->findOrFail($video)->forceDelete();
+        try {
+            $videD=video::withTrashed()->findOrFail($video);
+            Storage::delete(str_replace(env('APP_URL').'/storage/', '', $videD->image->url));
+            $videD->forceDelete();
+        }catch (\Exception $exception){}
+
         return response([])->setStatusCode(Response::HTTP_OK);
     }
 

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Database\Factories\ImageFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,6 +15,12 @@ class Image extends Model
         'created_at',
         'updated_at'
     ];
+
+    /** @return ImageFactory */
+    protected static function newFactory()
+    {
+        return ImageFactory::new();
+    }
 
     public function getCreatedAtAttribute($value){
         return Carbon::parse($value)->diffForHumans();
