@@ -70,6 +70,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return Carbon::parse($value)->diffForHumans();
     }
 
+
 //    public function getBirthdayAttribute($value){
 //        return Carbon::parse($value)->format("d-m-y");
 //    }

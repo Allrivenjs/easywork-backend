@@ -6,10 +6,12 @@ use Carbon\Carbon;
 use Database\Factories\coursesFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class course extends Model
 {
     use HasFactory;
+    use SoftDeletes;
     /** @return coursesFactory */
     protected static function newFactory()
     {

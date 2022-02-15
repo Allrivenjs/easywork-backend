@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ProfileController extends Controller
 {
     public function getProfileForSlug($profile){
-        $Profile = profile::query()
+        $Profile = profile::query()->with('profile')
             ->where('slug', $profile)
             ->orWhere('id',$profile)
             ->first();
@@ -28,7 +28,7 @@ class ProfileController extends Controller
 
         $validate = $request->validate($this->rules());
         try {
-            auth()->user()->profile()->update($validate);
+           Auth()->guard('api')->user()->profile()->update($validate);
         }catch (QueryException $e){
             return response([$e])->setStatusCode(Response::HTTP_BAD_REQUEST);
         }

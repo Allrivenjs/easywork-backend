@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
 
             $table->string('name');
-            $table->string('slug');
+            $table->string('slug')->unique();
             $table->longText('description');
 
             $table->unsignedBigInteger('owner');
@@ -25,6 +25,7 @@ return new class extends Migration
 
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

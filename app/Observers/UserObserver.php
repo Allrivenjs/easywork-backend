@@ -20,6 +20,7 @@ class UserObserver
 //            //EmailVerification
 //            event(new Registered($user));
 //        }
+
         $random = rand(0, 1000);
         $random2 = rand(2000, 3000);
         $user->assignRole('student');

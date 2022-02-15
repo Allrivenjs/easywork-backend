@@ -17,6 +17,7 @@ class ProfileResource extends JsonResource
     {
         $userdata = parent::toArray($request);
         $data = array_merge($userdata, [
+            'role'=>$this->getRoleNames(),
             'profile'=> $this->profile,
 //            'images'=> $this->profile?->images
         ]);

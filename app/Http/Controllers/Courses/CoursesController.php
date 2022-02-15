@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CoursesController extends Controller
 {
+    // Search courses and videos
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
@@ -25,14 +26,23 @@ class CoursesController extends Controller
      * @param $course
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function showCoursesWithSections($course): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    public function showCoursesWithSections($course)
     {
         return response([new CourseResource(
-            course::query()->where('slug','Like' ,$course)->first()
+            course::query()->where('slug','LIKE' ,$course)->first()
         )])->setStatusCode(Response::HTTP_OK);
     }
 
 
+    public function showVideo($course,$video){
+        course::query()->where('slug','LIKE',"%$course%")->firstOrFail();
+        $courseD=video::query()->where('slug','LIKE',"%$video%")->first();
+        return response([$courseD])->setStatusCode(Response::HTTP_OK);
+    }
+
+
+
+    /// Create, update, delete and forceDelete
     /**
      * @param Request $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
@@ -42,7 +52,7 @@ class CoursesController extends Controller
                         'name'=>'required',
                         'description'=>'required'
                     ]);
-        $validate['owner']=auth()->user()->getAuthIdentifier();
+        $validate['owner']=Auth()->guard('web')->user()->getAuthIdentifier();
         $validate['slug']=Str::slug($request->name.rand(10, 10000));
         $course=course::create($validate);
         return response([$course])->setStatusCode(Response::HTTP_OK);
@@ -84,5 +94,143 @@ class CoursesController extends Controller
         return response([$video])->setStatusCode(Response::HTTP_OK);
     }
 
-    //rama heroku
+    /**
+     * @param Request $request
+     * @param $course
+     * @return \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+     * @throws \Throwable
+     */
+    public function updateCourse(Request $request, $course): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    {
+        $courseD = course::query()->findOrFail($course);
+        $validate = $request->validate([
+            'name'=>'required',
+            'description'=>'required'
+        ]);
+        $courseD->updateOrFail($validate);
+        return response([$courseD])->setStatusCode(Response::HTTP_OK);
+    }
+
+    /**
+     * @param Request $request
+     * @param $section
+     * @return \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+     * @throws \Throwable
+     */
+    public function updateSection(Request $request, $section): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    {
+        $sectionD = section::query()->findOrFail($section);
+        $validate = $request->validate([
+            'name'=>'required',
+        ]);
+        $sectionD->updateOrFail($validate);
+        return response([$sectionD])->setStatusCode(Response::HTTP_OK);
+    }
+
+    /**
+     * @param Request $request
+     * @param $video
+     * @return \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+     * @throws \Throwable
+     */
+    public function updateVideo(Request $request, $video): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    {
+        $videoD = section::query()->findOrFail($video);
+        $validate = $request->validate([
+            'name'=>'required',
+        ]);
+        $videoD->updateOrFail($validate);
+        return response([$videoD])->setStatusCode(Response::HTTP_OK);
+    }
+
+    /**
+     * @param $course
+     * @return \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+     */
+    public function deleteCourse($course): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    {
+        course::query()->findOrFail($course)->delete();
+        return response()->setStatusCode(Response::HTTP_OK);
+    }
+
+    /**
+     * @param $section
+     * @return \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+     */
+    public function deleteSection($section): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    {
+        section::query()->findOrFail($section)->delete();
+        return response([])->setStatusCode(Response::HTTP_OK);
+    }
+
+    /**
+     * @param $video
+     * @return \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+     */
+    public function deleteVideo($video): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    {
+        section::query()->findOrFail($video)->delete();
+        return response([])->setStatusCode(Response::HTTP_OK);
+    }
+
+    /**
+     * @param $course
+     * @return \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+     */
+    public function restoreCourse($course): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    {
+        course::withTrashed()->findOrFail($course)->restore();
+        return response()->setStatusCode(Response::HTTP_OK);
+    }
+
+    /**
+     * @param $section
+     * @return \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+     */
+    public function restoreSection($section): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    {
+        section::withTrashed()->findOrFail($section)->restore();
+        return response([])->setStatusCode(Response::HTTP_OK);
+    }
+
+    /**
+     * @param $video
+     * @return \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+     */
+    public function restoreVideo($video): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    {
+        video::withTrashed()->findOrFail($video)->restore();
+        return response([])->setStatusCode(Response::HTTP_OK);
+    }
+
+    /**
+     * @param $course
+     * @return \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+     */
+    public function forceDeleteCourse($course): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    {
+        course::withTrashed()->findOrFail($course)->forceDelete();
+        return response()->setStatusCode(Response::HTTP_OK);
+    }
+
+    /**
+     * @param $section
+     * @return \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+     */
+    public function forceDeleteSection($section): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    {
+        section::withTrashed()->findOrFail($section)->forceDelete();
+        return response([])->setStatusCode(Response::HTTP_OK);
+    }
+
+    /**
+     * @param $video
+     * @return \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+     */
+    public function forceDeleteVideo($video): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    {
+        video::withTrashed()->findOrFail($video)->forceDelete();
+        return response([])->setStatusCode(Response::HTTP_OK);
+    }
+
 }

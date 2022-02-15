@@ -20,10 +20,10 @@ class AuthController extends Controller
             'password'=>'required'
         ]);
         //login
-        if (!auth()->attempt($request->only('email','password'))){
+        if (!Auth()->guard('web')->attempt($request->only('email','password'))){
             return response([])->setStatusCode(Response::HTTP_FORBIDDEN);
         }
-        $tokenResult  = auth()->user()->createToken('authToken');
+        $tokenResult  = Auth()->guard('web')->user()->createToken('authToken');
         $token = $tokenResult->token;
         $this->remember_me($token,$request);
         $token->save();

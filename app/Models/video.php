@@ -6,11 +6,13 @@ use Carbon\Carbon;
 use Database\Factories\videoFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class video extends Model
 {
     use HasFactory;
-    protected $fillable=['name','url','description','section_id'];
+    use SoftDeletes;
+    protected $fillable=['name','url','slug','description','section_id'];
 
     /** @return videoFactory */
     protected static function newFactory()
@@ -27,7 +29,7 @@ class video extends Model
         return Carbon::parse($value)->diffForHumans();
     }
 
-    public function sections(){
+    public function section(){
         return $this->belongsTo(section::class);
     }
 

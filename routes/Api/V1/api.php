@@ -25,6 +25,10 @@ Route::post('register',[AuthController::class, 'register'])->name('register');
 
 Route::get('profile/{profile}', [ProfileController::class, 'getProfileForSlug'])->name('profile.search');
 
+Route::get('courses',[CoursesController::class, 'getCourses'])->name('courses');
+Route::get('courses/{course}',[CoursesController::class, 'showCoursesWithSections']);
+Route::get('courses/{course}/{video} ',[CoursesController::class, 'showVideo']);
+
 Route::middleware('auth:api')->group(function (){
 
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
@@ -35,14 +39,30 @@ Route::middleware('auth:api')->group(function (){
 
     Route::apiResource('userType', UserTypeController::class);
 
-    Route::get('courses',[CoursesController::class, 'getCourses'])->name('courses');
-    Route::get('courses/{course}',[CoursesController::class, 'showCoursesWithSections'])->name('courses.show');
-
-
 Route::prefix('coursesAdmin')->group(function (){
-    Route::post('courses',[CoursesController::class, 'storeCourse'])->name('coursesAdmin.store.course ');
-    Route::post('section/{course}',[CoursesController::class, 'storeSection'])->name('coursesAdmin.store.section');
-    Route::post('video/{section}',[CoursesController::class, 'storeVideo'])->name('coursesAdmin.store.video');
+
+    Route::middleware('can:coursesAdmin.course')->group(function (){
+        //store
+        Route::post('courses',[CoursesController::class, 'storeCourse'])->name('coursesAdmin.store.course ');
+        Route::post('section/{course}',[CoursesController::class, 'storeSection'])->name('coursesAdmin.store.section');
+        Route::post('video/{section}',[CoursesController::class, 'storeVideo'])->name('coursesAdmin.store.video');
+        //update
+        Route::post('courses/update/{course}',[CoursesController::class, 'updateCourse'])->name('coursesAdmin.update.course ');
+        Route::post('section/update/{section}',[CoursesController::class, 'updateSection'])->name('coursesAdmin.update.section');
+        Route::post('video/update/{video}',[CoursesController::class, 'updateVideo'])->name('coursesAdmin.update.video');
+        //soft delete or hidden
+        Route::delete('courses/hidden/{course}',[CoursesController::class, 'deleteCourse'])->name('coursesAdmin.delete.course ');
+        Route::delete('section/hidden/{section}',[CoursesController::class, 'deleteSection'])->name('coursesAdmin.delete.section');
+        Route::delete('video/hidden/{video}',[CoursesController::class, 'deleteVideo'])->name('coursesAdmin.delete.video');
+        //force delete
+        Route::delete('courses/hidden/{course}',[CoursesController::class, 'forceDeleteCourse'])->name('coursesAdmin.forceDelete.course ');
+        Route::delete('section/hidden/{section}',[CoursesController::class, 'forceDeleteSection'])->name('coursesAdmin.forceDelete.section');
+        Route::delete('video/hidden/{video}',[CoursesController::class, 'forceDeleteVideo'])->name('coursesAdmin.forceDelete.video');
+
+    });
+
+
+
 });
 
 

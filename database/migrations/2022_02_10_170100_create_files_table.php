@@ -19,7 +19,6 @@ return new class extends Migration
             $table->unsignedBigInteger('fileable_id');
             $table->string('fileable_type');
             $table->timestamps();
-
         });
     }
 

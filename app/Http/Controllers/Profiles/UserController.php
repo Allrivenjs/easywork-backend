@@ -20,11 +20,10 @@ class UserController extends Controller
         $url ='';
         try {
             if ($request->hasFile('profile_photo_path')){
-//                if ()
                 $url = Storage::put('Images/users', $request->file('profile_photo_path'));
             }
             $validate['profile_photo_path']=env('APP_URL').'/storage/'.$url;
-            auth()->user()->update($validate);
+            Auth()->guard('api')->user()->update($validate);
         }catch (QueryException $e){
             Storage::delete($url);
             return response([$e])->setStatusCode(Response::HTTP_BAD_REQUEST);
