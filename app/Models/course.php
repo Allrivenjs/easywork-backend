@@ -41,4 +41,8 @@ class course extends Model
     public function owner(){
         return $this->belongsTo(User::class);
     }
+
+    public function image(){
+        return $this->morphTo(Image::class, 'imageable');
+    }
 }

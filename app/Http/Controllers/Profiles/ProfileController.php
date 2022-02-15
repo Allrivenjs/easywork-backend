@@ -24,11 +24,15 @@ class ProfileController extends Controller
         return response([new ProfileResource($Profile->user)])->setStatusCode(Response::HTTP_OK);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
     public function updateAboutProfile(Request $request){
 
         $validate = $request->validate($this->rules());
         try {
-           Auth()->guard('api')->user()->profile()->update($validate);
+           Auth()->guard('web')->user()->profile()->update($validate);
         }catch (QueryException $e){
             return response([$e])->setStatusCode(Response::HTTP_BAD_REQUEST);
         }
