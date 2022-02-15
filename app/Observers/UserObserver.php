@@ -22,7 +22,7 @@ class UserObserver
 //        }
         $random = rand(0, 1000);
         $random2 = rand(2000, 3000);
-        $user->assignRole('Student');
+        $user->assignRole('student');
         $user->Profile()->create([
             'slug' => Str::of($user->name .'-'. $user->lastname.'-'.$random . $random2)->slug('-'),
             'user_id' => $user->id,

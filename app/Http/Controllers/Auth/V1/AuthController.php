@@ -45,7 +45,7 @@ class AuthController extends Controller
         $validatedData['password']=Hash::make($request->password);
         $validatedData['birthday']=Carbon::make($request->birthday);
         try {
-            $user = User::create($validatedData)->assignRole('Student');
+            $user = User::create($validatedData);
         }catch (QueryException $e){
             return response([
                 'message'=>$e
