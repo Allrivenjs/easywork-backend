@@ -19,7 +19,7 @@ class CoursesController extends Controller
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
     public function getCourses(){
-        return response([course::all()])->setStatusCode(Response::HTTP_OK);
+        return response([course::with('image')->get()])->setStatusCode(Response::HTTP_OK);
     }
 
     /**

@@ -11,6 +11,7 @@ class Image extends Model
 {
     use HasFactory;
     protected $fillable=['url'];
+    protected $hidden=['imageable_id','imageable_type'];
     protected $dates = [
         'created_at',
         'updated_at'

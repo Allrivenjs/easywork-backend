@@ -61,6 +61,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function getProfilePhotoPathAttribute($value){
+        if ($value==null) return;
         return env('APP_URL').'/storage/'.$value;
     }
 
