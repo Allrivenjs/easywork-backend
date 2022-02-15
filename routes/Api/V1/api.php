@@ -27,6 +27,8 @@ Route::get('profile/{profile}', [ProfileController::class, 'getProfileForSlug'])
 
 Route::middleware('auth:api')->group(function (){
 
+    Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+
     Route::get('user', [UserController::class, 'index'])->name('user.index');
     Route::post('user/update', [UserController::class, 'update'])->name('user.update');
     Route::post('profile/update',[ProfileController::class, 'updateAboutProfile'])->name('profile.update');
