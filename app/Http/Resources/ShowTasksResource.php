@@ -14,14 +14,19 @@ class ShowTasksResource extends JsonResource
      */
     public function toArray($request)
     {
-        //return parent::toArray($request);
+//        return parent::toArray($request);
         return [
             'id'=>$this->id,
             'name'=>$this->name,
             'slug'=>$this->slug,
             'description'=>$this->description,
             'difficulty'=>$this->difficulty,
-            'own'=>$this->own_id,
+            'owner'=> [
+                'name'=>$this->owner->name,
+                'lastname'=>$this->owner->lastname,
+                'profile_photo_path'=>$this->owner->profile_photo_path,
+                'profile_slug'=>$this->owner->profile->slug
+            ],
             'topics'=>$this->topics,
             'created_at'=>$this->created_at,
             'updated_at'=>$this->updated_at

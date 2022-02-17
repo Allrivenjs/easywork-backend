@@ -31,7 +31,7 @@ class TasksSeeder extends Seeder
         'Asignado',
         'En proceso',
         'Finalizado',
-        'Entragado'
+        'Entregado'
     ];
     /**
      * Run the database seeds.

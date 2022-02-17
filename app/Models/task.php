@@ -26,16 +26,23 @@ class task extends Model
         return TaskFactory::new();
     }
 
-    public function getOwnIdAttribute($value){
-        return User::query()->find($value)->FullName();
-    }
+//    public function getOwnIdAttribute($value){
+//
+//        return User::query()->find($value)->FullName();
+//    }
 
     public function getCreatedAtAttribute($value){
         return Carbon::parse($value)->diffForHumans();
     }
 
+
     public function getUpdatedAtAttribute($value){
         return Carbon::parse($value)->diffForHumans();
+    }
+
+    public function owner()
+    {
+        return $this->belongsTo(User::class, 'own_id')->with('profile');
     }
 
     public function topics(){

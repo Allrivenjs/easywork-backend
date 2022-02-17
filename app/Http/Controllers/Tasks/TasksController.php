@@ -23,7 +23,7 @@ class TasksController extends Controller
 
         //Show basic task
         return response([
-            ShowTasksResource::collection(task::query()->with('topics')
+            ShowTasksResource::collection(task::query()->with('topics','owner')
                 ->paginate($request->input('num')?? 5))
                 ->response()->getData(true)
         ])->setStatusCode(Response::HTTP_OK);
