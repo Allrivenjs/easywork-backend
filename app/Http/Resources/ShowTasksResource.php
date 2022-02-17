@@ -22,7 +22,9 @@ class ShowTasksResource extends JsonResource
             'description'=>$this->description,
             'difficulty'=>$this->difficulty,
             'own'=>$this->own_id,
-            'topics'=>$this->topics
+            'topics'=>$this->topics,
+            'created_at'=>$this->created_at,
+            'updated_at'=>$this->updated_at
         ];
     }
 }
