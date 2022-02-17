@@ -82,6 +82,9 @@ class User extends Authenticatable implements MustVerifyEmail
 //        return Carbon::parse($value)->format("d-m-y");
 //    }
 
+    public function FullName(){
+        return strtoupper("$this->name $this->lastname");
+    }
 
     public function profile(){
         return $this->hasOne(profile::class);

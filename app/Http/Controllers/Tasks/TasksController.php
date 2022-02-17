@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Tasks;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ShowTasksResource;
 use App\Models\task;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +17,11 @@ class TasksController extends Controller
      */
     public function index(Request $request)
     {
-        return response([task::query()->paginate($request->input('num'))])->setStatusCode(Response::HTTP_OK);
+        return response([
+            ShowTasksResource::collection(task::query()->with('topics')
+                ->paginate($request->input('num')))
+                ->response()->getData(true)
+        ])->setStatusCode(Response::HTTP_OK);
     }
 
     /**

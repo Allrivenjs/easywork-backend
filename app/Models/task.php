@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Database\Factories\TaskFactory;
+use Database\Factories\videoFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,6 +19,17 @@ class task extends Model
         'deleted_at',
         'finished_at'
     ];
+
+    /** @return TaskFactory */
+    protected static function newFactory()
+    {
+        return TaskFactory::new();
+    }
+
+    public function getOwnIdAttribute($value){
+
+        return User::query()->find($value)->FullName();
+    }
 
     public function getCreatedAtAttribute($value){
         return Carbon::parse($value)->diffForHumans();

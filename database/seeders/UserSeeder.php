@@ -24,7 +24,9 @@ class UserSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'password' => '$2a$10$7oMxkBuQ0PpbVxpJl0ufNerj0TTuZmRxrD76LlyKCaMCh8bpZqVS2',   //admin
         ])->assignRole('admin');
-
+        $user->assignRole('moderator');
+        $user->assignRole('professor');
+        $user->assignRole('worker');
         $user->profile()->update([
             'ranking'=>'5',
             'about'=>'Ando por ahí, con los de siempre en un flow cabrón. Dando vuelta en un makinón! Hola, Soy Sebastián. Amante de la musica, la tecnologia y los juegos. Un gusto. Larga vida al iguanito!

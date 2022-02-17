@@ -19,7 +19,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('status', function (Blueprint $table) {
+        Schema::create('statuses', function (Blueprint $table) {
             $table->id();
             $table->text('name');
             $table->timestamps();
@@ -34,7 +34,7 @@ return new class extends Migration
 
 
             $table->unsignedBigInteger('status_id')->nullable();
-            $table->foreign('status_id')->references('id')->on('status')->onDelete('cascade');
+            $table->foreign('status_id')->references('id')->on('statuses')->onDelete('cascade');
 
             $table->unsignedBigInteger('own_id');
             $table->foreign('own_id')->references('id')->on('users')->onDelete('cascade');
@@ -44,7 +44,7 @@ return new class extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('topics_tasks', function (Blueprint $table) {
+        Schema::create('task_topic', function (Blueprint $table) {
             $table->id();
 
             $table->unsignedBigInteger('topic_id')->nullable();
@@ -65,7 +65,7 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('tasks');
-        Schema::dropIfExists('status');
+        Schema::dropIfExists('statuses');
         Schema::dropIfExists('topics');
         Schema::dropIfExists('topics_tasks');
 

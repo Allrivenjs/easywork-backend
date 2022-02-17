@@ -15,6 +15,15 @@ class Topic extends Model
         'updated_at'
     ];
 
+    protected $visible=[
+        'id',
+        'name',
+        'created_at',
+        'updated_at'
+    ];
+
+
+
     public function tasks(){
         return $this->belongsToMany(task::class);
     }
