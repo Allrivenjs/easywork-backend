@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\ShowTasksResource;
 use App\Models\task;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
 class TasksController extends Controller
@@ -17,11 +18,26 @@ class TasksController extends Controller
      */
     public function index(Request $request)
     {
+        //Create system show tasks, topics relevant, and show for event
+
+
+        //Show basic task
         return response([
             ShowTasksResource::collection(task::query()->with('topics')
-                ->paginate($request->input('num')))
+                ->paginate($request->input('num')?? 5))
                 ->response()->getData(true)
         ])->setStatusCode(Response::HTTP_OK);
+    }
+
+
+    private function rules(){
+        return [
+            'name' => 'required',
+            'description' => 'required',
+            'difficulty'=>[Rule::in(['easy','easy-medium','medium','medium-hard','hard'])],
+            'status'=>'exists:App\Models\Status,id'
+        ];
+
     }
 
     /**
@@ -32,7 +48,7 @@ class TasksController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**

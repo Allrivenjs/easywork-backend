@@ -27,7 +27,6 @@ class task extends Model
     }
 
     public function getOwnIdAttribute($value){
-
         return User::query()->find($value)->FullName();
     }
 
