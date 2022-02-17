@@ -23,8 +23,10 @@ class TasksController extends Controller
 
         //Show basic task
         return response([
-            ShowTasksResource::collection(task::query()->with('topics','owner')
-                ->whereHas('status',)
+            ShowTasksResource::collection(task::query()->with(['topics','owner', 'status'])
+                ->whereHas('status', function ($query){
+                    $query->whereIn('name', ['Creado', 'Publicado', 'Por asignar']);
+                })
                 ->paginate($request->input('num')?? 5))
                 ->response()->getData(true)
         ])->setStatusCode(Response::HTTP_OK);
@@ -36,7 +38,9 @@ class TasksController extends Controller
             'name' => 'required',
             'description' => 'required',
             'difficulty'=>[Rule::in(['easy','easy-medium','medium','medium-hard','hard'])],
-            'status'=>'exists:App\Models\Status,id'
+            'status'=>'exists:App\Models\Status,id',
+            'topic'=>'required'
+
         ];
 
     }
@@ -49,7 +53,7 @@ class TasksController extends Controller
      */
     public function store(Request $request)
     {
-
+        $request->validate($this->rules());
     }
 
     /**

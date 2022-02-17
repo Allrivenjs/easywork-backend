@@ -66,9 +66,9 @@ Route::prefix('coursesAdmin')->group(function (){
 
 });
     Route::apiResource('userType', UserTypeController::class);
-    Route::apiResource('status',StatusController::class)->names('status');
-    Route::apiResource('topics', TopicController::class)->names('topics');
-
     //  Route::post('userType/{use rType}',[ UserTypeController::class, 'update']);
 });
 Route::apiResource('tasks', TasksController::class);
+Route::apiResource('status',StatusController::class)->names('status');
+Route::apiResource('topics', TopicController::class)->names('topics');
+
