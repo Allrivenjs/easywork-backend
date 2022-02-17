@@ -17,6 +17,7 @@ class RoleSeeder extends Seeder
     public function run()
     {
         $role1 = Role::create(['name' => 'admin']);
+        $role5 = Role::create(['name' => 'moderator']);
         $role3 = Role::create(['name' => 'professor']);
         $role2 = Role::create(['name' => 'worker']);
         $role4 = Role::create(['name' => 'student']);
@@ -44,6 +45,12 @@ class RoleSeeder extends Seeder
             'guard_name'=>'api',
             'name' => 'coursesAdmin.course',
             'description' => 'Total control on courses'])->syncRoles([$role1, $role3]);
+
+        Permission::create([
+            'guard_name'=>'api',
+            'name' => 'taskAdmin.task',
+            'description' => 'Total control on task, status and topic'])->syncRoles([$role1, $role5]);
+
 
 
 //        Permission::create(['name' => 'role.add',

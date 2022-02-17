@@ -31,6 +31,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'profile_photo_path'
     ];
+
     protected $dates = [
         'created_at',
         'updated_at',

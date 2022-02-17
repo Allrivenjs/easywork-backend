@@ -23,7 +23,7 @@ class videoFactory extends Factory
         return [
             'name'=>$name,
             'slug'=>Str::slug($name),
-            'url'=>env('APP_URL').'/storage/Images/courses/'.$this->faker->image('public/storage/Images/courses', 640,480, 'null', false),
+            'url'=>'Images/courses/'.$this->faker->image('public/storage/Images/courses', 640,480, 'null', false),
             'description'=>$this->faker->text(300)
         ];
     }

@@ -6,6 +6,8 @@ use App\Http\Controllers\Courses\CoursesController;
 use App\Http\Controllers\Profiles\ProfileController;
 use App\Http\Controllers\Profiles\UserController;
 use App\Http\Controllers\Profiles\UserTypeController;
+use App\Http\Controllers\Tasks\StatusController;
+use App\Http\Controllers\Tasks\TasksController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,8 +40,6 @@ Route::middleware('auth:api')->group(function (){
     Route::post('profile/update',[ProfileController::class, 'updateAboutProfile'])->name('profile.update');
     Route::post('profile/image/update',[ProfileController::class, 'updateImageprofile'])->name('profile.image.update');
 
-    Route::apiResource('userType', UserTypeController::class);
-
 Route::prefix('coursesAdmin')->group(function (){
 
     Route::middleware('can:coursesAdmin.course')->group(function (){
@@ -63,13 +63,10 @@ Route::prefix('coursesAdmin')->group(function (){
     });
 
 
-
 });
+    Route::apiResource('userType', UserTypeController::class);
+    Route::apiResource('status',StatusController::class)->names('status');
 
-
-    //  Route::post('userType/{userType}',[ UserTypeController::class, 'update']);
-
-
-
+    //  Route::post('userType/{use rType}',[ UserTypeController::class, 'update']);
 });
-
+Route::apiResource('tasks', TasksController::class);

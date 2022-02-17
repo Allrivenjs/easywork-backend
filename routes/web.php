@@ -19,10 +19,6 @@ Route::get('/', function () {
 });
 
 Route::get('/event', function () {
-    try {
         event(new MessageNotification('This is our first broadcast message'));
-    }catch (Exception $e){
-        echo $e;
-    }
 });
 
