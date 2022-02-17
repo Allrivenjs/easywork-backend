@@ -8,6 +8,7 @@ use App\Http\Controllers\Profiles\UserController;
 use App\Http\Controllers\Profiles\UserTypeController;
 use App\Http\Controllers\Tasks\StatusController;
 use App\Http\Controllers\Tasks\TasksController;
+use App\Http\Controllers\Tasks\TopicController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -66,6 +67,7 @@ Route::prefix('coursesAdmin')->group(function (){
 });
     Route::apiResource('userType', UserTypeController::class);
     Route::apiResource('status',StatusController::class)->names('status');
+    Route::apiResource('topics', TopicController::class)->names('topics');
 
     //  Route::post('userType/{use rType}',[ UserTypeController::class, 'update']);
 });

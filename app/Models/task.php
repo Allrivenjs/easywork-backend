@@ -56,4 +56,6 @@ class task extends Model
     public function status_last(){
         return $this->hasOne(Status::class)->latest();
     }
+
+
 }
