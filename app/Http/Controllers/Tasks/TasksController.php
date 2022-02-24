@@ -36,7 +36,6 @@ class TasksController extends Controller
             'name' => 'required',
             'description' => 'required',
             'difficulty'=>['required',Rule::in(['easy','easy-medium','medium','medium-hard','hard'])],
-            'status'=>'required|exists:App\Models\Status,id',
             'topics'=>'required',
             'file'=>'mimes:png,jpg,jpeg,csv,txt,xlx,xls,pdf,doc,docx|max:2048'
 
