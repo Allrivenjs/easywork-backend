@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
+use function PHPUnit\Framework\isJson;
 
 class TasksController extends Controller
 {
@@ -24,7 +25,7 @@ class TasksController extends Controller
         //Create system show tasks, topics relevant, and show for event
         //Show basic task
         return response([
-            ShowTasksResource::collection(task::query()->with(['topics','owner', 'status', 'files'])
+            ShowTasksResource::collection(task::with(['topics','owner', 'status', 'files'])
                 ->whereHas('status', function ($query){
                     $query->whereIn('name', ['Creado', 'Publicado', 'Por asignar']);
                 })
@@ -41,13 +42,11 @@ class TasksController extends Controller
      */
     public function getTasksForSlug($task): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
-
+        $task = task::with(['files','topics','owner', 'status'])
+            ->where('slug','LIKE', $task)
+            ->firstOrFail();
         return response([
-            new  ShowTasksResource(task::query()->with(['files','topics','owner', 'status'])
-                ->where('slug','LIKE', $task)
-                ->orWhereHas('status', function ($query){
-                    $query->whereIn('name', ['Creado', 'Publicado', 'Por asignar']);
-                })->firstOrFail())
+            new  ShowTasksResource($task),
         ])->setStatusCode(Response::HTTP_OK);
     }
 
