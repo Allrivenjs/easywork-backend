@@ -27,9 +27,7 @@ class Image extends Model
         return Carbon::parse($value)->diffForHumans();
     }
 
-    public function getUrlAttribute($value){
-        return env('APP_URL').'/storage/'.$value;
-    }
+
 
 
     public function getUpdatedAtAttribute($value){

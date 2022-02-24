@@ -51,7 +51,7 @@ class TasksSeeder extends Seeder
             ]);
         }
 
-        $tasks = task::factory(50)->create([
+        $tasks = task::factory(1)->create([
             'status_id'=>Status::all()->random()->id
         ]);
 

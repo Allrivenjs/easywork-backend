@@ -5,13 +5,10 @@ namespace App\Http\Controllers\Tasks;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TaskStoreResquest;
 use App\Http\Resources\ShowTasksResource;
-use App\Jobs\SaveFileTaskJob;
 use App\Models\task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
-use function PHPUnit\Framework\isJson;
 
 class TasksController extends Controller
 {
@@ -65,7 +62,8 @@ class TasksController extends Controller
             foreach ($request->file('files') as $item){
                 $task->files()->create([
                     "url"=> Storage::disk('local')->put('Files/jobs', $item),
-                    'mime'=> $item->extension()
+                    'mime'=> $item->extension(),
+                    'originalName'=> $item->getFilename()
                 ]);
             }
         }

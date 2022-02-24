@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 class Files extends Model
 {
     use HasFactory;
-    protected $fillable = ['url', 'mime'];
-    protected $visible = ['url', 'mime'];
+    protected $fillable = ['url', 'mime','originalName'];
+    protected $visible = ['url', 'mime','originalName'];
     protected $dates = [
         'created_at',
         'updated_at'
@@ -22,10 +22,7 @@ class Files extends Model
     public function getUpdatedAtAttribute($value){
         return Carbon::parse($value)->diffForHumans();
     }
-    public function getUrlAttribute($value){
-        if ($value==null) return;
-        return env('APP_URL').'/storage/'.$value;
-    }
+
 
     public function fileables(){
         return $this->morphTo();
