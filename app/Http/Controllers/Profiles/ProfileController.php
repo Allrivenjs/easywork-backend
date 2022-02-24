@@ -57,7 +57,8 @@ class ProfileController extends Controller
                 'url'=> $url
             ]);
         }
-        return response([$profile->image])->setStatusCode(Response::HTTP_OK);
+        return response([])->setStatusCode(Response::HTTP_OK);
+
     }
 
 

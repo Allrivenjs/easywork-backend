@@ -6,6 +6,7 @@ use App\Http\Controllers\Courses\CoursesController;
 use App\Http\Controllers\Profiles\ProfileController;
 use App\Http\Controllers\Profiles\UserController;
 use App\Http\Controllers\Profiles\UserTypeController;
+use App\Http\Controllers\ShowContentFileBlockController;
 use App\Http\Controllers\Tasks\StatusController;
 use App\Http\Controllers\Tasks\TasksController;
 use App\Http\Controllers\Tasks\TopicController;
@@ -66,10 +67,13 @@ Route::prefix('coursesAdmin')->group(function (){
 
 });
     Route::apiResource('userType', UserTypeController::class);
+    Route::get('getImage', [ShowContentFileBlockController::class, 'getImagePath']);
+    Route::get('getVideo', [ShowContentFileBlockController::class, 'getVideoPath']);
     //  Route::post('userType/{use rType}',[ UserTypeController::class, 'update']);
 });
 Route::apiResource('tasks', TasksController::class);
 Route::get('tasks/{task}', [TasksController::class, 'getTasksForSlug']);
 Route::apiResource('status',StatusController::class)->names('status');
 Route::apiResource('topics', TopicController::class)->names('topics');
+
 

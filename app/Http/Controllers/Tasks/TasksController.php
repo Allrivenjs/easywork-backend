@@ -64,7 +64,7 @@ class TasksController extends Controller
         if ($request->hasFile('files')){
             foreach ($request->file('files') as $item){
                 $task->files()->create([
-                    "url"=> Storage::disk('public')->put('Files/jobs', $item),
+                    "url"=> Storage::disk('local')->put('Files/jobs', $item),
                     'mime'=> $item->extension()
                 ]);
             }
@@ -80,7 +80,7 @@ class TasksController extends Controller
      */
     public function show(task $task)
     {
-        //
+
     }
 
     /**

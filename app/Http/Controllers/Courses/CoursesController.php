@@ -163,11 +163,13 @@ class CoursesController extends Controller
      */
     public function updateVideo(Request $request, $video): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
-        $videoD = section::query()->findOrFail($video);
+        $videoD = video::query()->findOrFail($video);
         $validate = $request->validate([
             'name'=>'required',
-            'image'=>'image'
+            'image'=>'image',
+            'video'=>'mimes:mp4,ogx,oga,ogv,ogg,webm | max:102400'
         ]);
+
         if ($request->hasFile('image')){
             if ($videoD->image){
                 Storage::delete(str_replace(env('APP_URL').'/storage/', '', $videoD->image->url));
@@ -182,9 +184,13 @@ class CoursesController extends Controller
                 ]);
             }
         }
-
-        $videoD->updateOrFail($validate);
-
+        if ($request->hasFile('video')){
+            $url=Storage::put('Courses/videos',$request->file('video'));
+            $data = array_merge($validate, [
+                'url'=>$url,
+            ]);
+        }
+        $videoD->updateOrFail($data);
         return response([$videoD])->setStatusCode(Response::HTTP_OK);
     }
 
