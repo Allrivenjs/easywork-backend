@@ -32,6 +32,11 @@ class SendTaskStoredJob implements ShouldQueue
      */
     public function handle()
     {
-         $this->task->owner->notify(new TaskStoreNotification($this->task));
+        try {
+            $this->task->owner->notify(new TaskStoreNotification($this->task));
+        }catch (\Throwable $exception){
+
+        }
+
     }
 }
