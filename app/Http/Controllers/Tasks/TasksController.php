@@ -19,8 +19,6 @@ class TasksController extends Controller
     public function index(Request $request)
     {
         //Create system show tasks, topics relevant, and show for event
-
-
         //Show basic task
         return response([
             ShowTasksResource::collection(task::query()->with(['topics','owner', 'status'])
@@ -37,9 +35,10 @@ class TasksController extends Controller
         return [
             'name' => 'required',
             'description' => 'required',
-            'difficulty'=>[Rule::in(['easy','easy-medium','medium','medium-hard','hard'])],
-            'status'=>'exists:App\Models\Status,id',
-            'topic'=>'required'
+            'difficulty'=>['required',Rule::in(['easy','easy-medium','medium','medium-hard','hard'])],
+            'status'=>'required|exists:App\Models\Status,id',
+            'topics'=>'required',
+            'file'=>'mimes:png,jpg,jpeg,csv,txt,xlx,xls,pdf,doc,docx|max:2048'
 
         ];
 

@@ -16,7 +16,7 @@ class ProfileController extends Controller
 {
     public function getProfileForSlug($profile){
         $Profile = profile::query()->with('profile')
-            ->where('slug', $profile)
+            ->where('slug','LIKE', $profile)
             ->orWhere('id',$profile)
             ->first();
         if (is_null($Profile)){
