@@ -14,7 +14,7 @@ class ShowContentFileBlockController extends Controller
         $path = storage_path('app/public/'.$request->input('path'));
         abort_if(!File::exists($path), 404);
         $file = File::get($path);
-        $type = File::mimeType($path);
+        $type = File::extension($path);
 
         $response = Response::make($file, 200);
         $response->header("Content-Type", $type);
