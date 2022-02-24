@@ -21,11 +21,9 @@ class UserObserver
 //            event(new Registered($user));
 //        }
 
-        $random = rand(0, 1000);
-        $random2 = rand(2000, 3000);
         $user->assignRole('student');
         $user->Profile()->create([
-            'slug' => Str::of($user->name .'-'. $user->lastname.'-'.$random . $random2)->slug('-'),
+            'slug' => Str::uuid(),
             'user_id' => $user->id,
         ]);
     }

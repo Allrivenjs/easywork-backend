@@ -14,7 +14,7 @@ class ShowTasksResource extends JsonResource
      */
     public function toArray($request)
     {
-//        return parent::toArray($request);
+
         return [
             'id'=>$this->id,
             'name'=>$this->name,
@@ -28,6 +28,7 @@ class ShowTasksResource extends JsonResource
                 'profile_slug'=>$this->owner->profile->slug
             ],
             'topics'=>$this->topics,
+            'files'=>$this->files,
             'created_at'=>$this->created_at,
             'updated_at'=>$this->updated_at
         ];

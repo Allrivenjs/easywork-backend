@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 
+use App\Models\task;
+use App\Observers\TaskObserve;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -28,5 +30,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(125);
         Model::preventLazyLoading(! app()->isProduction());
+        task::observe(TaskObserve::class);
     }
 }

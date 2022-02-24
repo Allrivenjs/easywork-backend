@@ -18,7 +18,7 @@ class ProfileController extends Controller
         $Profile = profile::query()->with('user')
             ->where('slug','LIKE', $profile)
             ->orWhere('id',$profile)
-            ->first();
+            ->firstOrFail();
         if (is_null($Profile)){
             return response(['message'=>'Profile not found'])->setStatusCode(Response::HTTP_NOT_FOUND);
         }

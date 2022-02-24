@@ -7,6 +7,7 @@ use Database\Factories\TaskFactory;
 use Database\Factories\videoFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class task extends Model
 {
@@ -55,6 +56,10 @@ class task extends Model
 
     public function status_last(){
         return $this->hasOne(Status::class)->latest();
+    }
+
+    public function files(){
+        return $this->morphMany(Files::class, 'fileable');
     }
 
 
