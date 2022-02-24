@@ -17,6 +17,8 @@ class ShowContentFileBlockController extends Controller
         $type = File::extension($path);
 
         $response = Response::make(base64_decode($file), 200);
+        //a
+        //a
         $response->header("Content-Type", $type);
 
         return $response;
