@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ProfileController extends Controller
 {
     public function getProfileForSlug($profile){
-        $Profile = profile::query()->with('profile')
+        $Profile = profile::query()->with('user')
             ->where('slug','LIKE', $profile)
             ->orWhere('id',$profile)
             ->first();
@@ -33,7 +33,6 @@ class ProfileController extends Controller
     public function updateAboutProfile(Request $request){
 
         $validate = $request->validate($this->rules());
-
         try {
             Auth()->guard('api')->user()->profile()->update($validate);
         }catch (QueryException $e){
