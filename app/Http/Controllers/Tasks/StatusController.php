@@ -9,9 +9,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class StatusController extends Controller
 {
+    //Comentado para que no se muestre el mensaje de error
+
     public function __construct()
     {
-        $this->middleware('can:taskAdmin.task')->except('index','show');
+        $this->middleware('can:taskAdmin.task')->except('index', 'show');
     }
 
     /**
@@ -19,7 +21,7 @@ class StatusController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): \Illuminate\Http\Response
     {
         return response([Status::all()])->setStatusCode(Response::HTTP_OK);
     }
@@ -27,10 +29,10 @@ class StatusController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request): \Illuminate\Http\Response
     {
         $request->validate([
             'name'
@@ -42,7 +44,7 @@ class StatusController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Status  $status
+     * @param \App\Models\Status $status
      * @return \Illuminate\Http\Response
      */
     public function show(Status $status)
@@ -53,8 +55,8 @@ class StatusController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Status  $status
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Status $status
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Status $status)
@@ -69,7 +71,7 @@ class StatusController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Status  $status
+     * @param \App\Models\Status $status
      * @return \Illuminate\Http\Response
      */
     public function destroy(Status $status)
