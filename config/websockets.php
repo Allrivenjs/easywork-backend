@@ -70,8 +70,8 @@ return [
             'secret' => env('PUSHER_APP_SECRET'),
             'path' => env('PUSHER_APP_PATH'),
             'capacity' => null,
-            'enable_client_messages' => false,
-            'enable_statistics' => true,
+            'enable_client_messages' => true,
+            'enable_statistics' => false,
             'allowed_origins' => [
                 // env('LARAVEL_WEBSOCKETS_DOMAIN'),
             ],
