@@ -71,7 +71,7 @@ return [
             'path' => env('PUSHER_APP_PATH'),
             'capacity' => null,
             'enable_client_messages' => true,
-            'enable_statistics' => false,
+            'enable_statistics' => true,
             'allowed_origins' => [
                 // env('LARAVEL_WEBSOCKETS_DOMAIN'),
             ],
