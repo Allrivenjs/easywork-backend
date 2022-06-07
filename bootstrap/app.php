@@ -41,9 +41,11 @@ $app->singleton(
     App\Exceptions\Handler::class
 );
 
-//$app->bind('path.public',function(){
-//    return realpath('./../public/');
-//});
+if ($app->isProduction()){
+    $app->bind('path.public',function(){
+        return realpath('./../public/');
+    });
+}
 
 
 /*
