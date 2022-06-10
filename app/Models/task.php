@@ -4,10 +4,10 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Database\Factories\TaskFactory;
-use Database\Factories\videoFactory;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
+
 
 class task extends Model
 {

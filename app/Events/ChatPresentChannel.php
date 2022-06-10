@@ -2,31 +2,28 @@
 
 namespace App\Events;
 
-use Illuminate\Broadcasting\Channel;
+use App\Models\User;
+
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class MessageNotification implements ShouldBroadcast
+class ChatPresentChannel implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public array $response;
+    public User $user;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($response)
+    public function __construct($user)
     {
-        $this->response =[
-            'message' => $response['message'],
-            'room_id' => $response['room_id'],
-        ];
+        $this->user = $user;
     }
 
     /**
@@ -36,6 +33,6 @@ class MessageNotification implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel("chat-channel.$this->response['room_id']");
+        return new PresenceChannel('channel-session');
     }
 }

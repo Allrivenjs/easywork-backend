@@ -39,7 +39,7 @@ class profile extends Model
         return $this->morphOne(Image::class, 'imageable');
     }
     public function files(){
-        return $this->morphMany(Files::class, 'fileable');
+        return $this->morphMany(File::class, 'fileable');
     }
     public function user(){
         return $this->belongsTo(User::class);
