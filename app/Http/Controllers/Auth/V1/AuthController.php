@@ -28,6 +28,7 @@ class AuthController extends Controller
         $this->remember_me($token,$request);
         $token->save();
         return response([
+            'user'=>Auth()->guard('web')->user(),
             'access_token' =>$tokenResult->accessToken,
             'token_type' => 'Bearer',
             'expires_at' => Carbon::parse($token->expires_at)->toDateTimeString(),

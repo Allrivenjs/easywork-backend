@@ -4,8 +4,10 @@ namespace App\Events;
 
 use App\Models\User;
 
+use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
+use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
@@ -14,7 +16,7 @@ class ChatPresentChannel implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public User $user;
+    public $user;
 
     /**
      * Create a new event instance.
@@ -33,6 +35,7 @@ class ChatPresentChannel implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PresenceChannel('channel-session');
+        return new PrivateChannel('channel-session');
     }
+
 }
