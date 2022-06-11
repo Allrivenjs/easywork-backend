@@ -19,3 +19,10 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 </IfModule>
+
+RewriteEngine On
+  RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]
+  RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d
+  RewriteRule ^ - [L]
+
+  RewriteRule ^ /index.php [L]
