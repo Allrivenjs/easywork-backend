@@ -27,7 +27,7 @@ class UserTypeController extends Controller
         user_type::create([
            'name'=> $request->name
         ]);
-        return response([])->setStatusCode(Response::HTTP_OK);
+        return response(null)->setStatusCode(Response::HTTP_OK);
     }
 
     /**
@@ -43,7 +43,7 @@ class UserTypeController extends Controller
         user_type::query()->findOrFail($user_type)->update([
             'name'=>$request->name
         ]);
-        return response([])->setStatusCode(Response::HTTP_OK);
+        return response(null)->setStatusCode(Response::HTTP_OK);
     }
 
     /**
@@ -52,6 +52,6 @@ class UserTypeController extends Controller
      */
     public function destroy($user_type){
         user_type::query()->findOrFail($user_type)->delete();
-        return response([])->setStatusCode(Response::HTTP_OK);
+        return response(null)->setStatusCode(Response::HTTP_OK);
     }
 }

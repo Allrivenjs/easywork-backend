@@ -38,7 +38,7 @@ class StatusController extends Controller
             'name'
         ]);
         Status::create([$request->input('name')]);
-        return response([])->setStatusCode(Response::HTTP_OK);
+        return response(null)->setStatusCode(Response::HTTP_OK);
     }
 
     /**
@@ -65,7 +65,7 @@ class StatusController extends Controller
             'name'
         ]);
         $status->update([$request->input('name')]);
-        return response([])->setStatusCode(Response::HTTP_OK);
+        return response(null)->setStatusCode(Response::HTTP_OK);
     }
 
     /**
@@ -77,6 +77,6 @@ class StatusController extends Controller
     public function destroy(Status $status)
     {
         $status->delete();
-        return response([])->setStatusCode(Response::HTTP_OK);
+        return response(null)->setStatusCode(Response::HTTP_OK);
     }
 }

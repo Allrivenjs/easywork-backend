@@ -38,7 +38,7 @@ class ProfileController extends Controller
         }catch (QueryException $e){
             return response([$e])->setStatusCode(Response::HTTP_BAD_REQUEST);
         }
-        return response([])->setStatusCode(Response::HTTP_OK);
+        return response(null)->setStatusCode(Response::HTTP_OK);
     }
 
     public function updateImageprofile(Request $request){
@@ -57,7 +57,7 @@ class ProfileController extends Controller
                 'url'=> $url
             ]);
         }
-        return response([])->setStatusCode(Response::HTTP_OK);
+        return response(null)->setStatusCode(Response::HTTP_CREATED);
 
     }
 

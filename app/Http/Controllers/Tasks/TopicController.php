@@ -37,7 +37,7 @@ class TopicController extends Controller
             'name'
         ]);
         Topic::create([$request->input('name')]);
-        return response([])->setStatusCode(Response::HTTP_OK);
+        return response(null)->setStatusCode(Response::HTTP_OK);
     }
 
     /**
@@ -64,7 +64,7 @@ class TopicController extends Controller
             'name'
         ]);
         $topic->update([$request->input('name')]);
-        return response([])->setStatusCode(Response::HTTP_OK);
+        return response(null)->setStatusCode(Response::HTTP_OK);
     }
 
     /**
@@ -76,6 +76,6 @@ class TopicController extends Controller
     public function destroy(Topic $topic)
     {
         $topic->delete();
-        return response([])->setStatusCode(Response::HTTP_OK);
+        return response(null)->setStatusCode(Response::HTTP_OK);
     }
 }

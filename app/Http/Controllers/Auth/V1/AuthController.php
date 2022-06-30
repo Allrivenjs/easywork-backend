@@ -20,15 +20,15 @@ class AuthController extends Controller
             'password'=>'required'
         ]);
         //login
-        if (!Auth()->guard('web')->attempt($request->only('email','password'))){
-            return response([])->setStatusCode(Response::HTTP_FORBIDDEN);
+        if (!$this->authWeb()->attempt($request->only('email','password'))){
+            return response(null)->setStatusCode(Response::HTTP_FORBIDDEN);
         }
-        $tokenResult  = Auth()->guard('web')->user()->createToken('authToken');
+        $tokenResult  = $this->authWeb()->user()->createToken('authToken');
         $token = $tokenResult->token;
         $this->remember_me($token,$request);
         $token->save();
         return response([
-            'user'=>Auth()->guard('web')->user(),
+            'user'=>$this->authWeb()->user(),
             'access_token' =>$tokenResult->accessToken,
             'token_type' => 'Bearer',
             'expires_at' => Carbon::parse($token->expires_at)->toDateTimeString(),

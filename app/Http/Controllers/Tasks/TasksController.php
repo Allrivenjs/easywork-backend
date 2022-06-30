@@ -67,7 +67,7 @@ class TasksController extends Controller
                 ]);
             }
         }
-        return response([])->setStatusCode(Response::HTTP_OK);
+        return response(null)->setStatusCode(Response::HTTP_OK);
     }
 
     /**

@@ -54,7 +54,7 @@ class CoursesController extends Controller
             'image'=>'required|image'
         ]);
 
-        $validate['owner']=Auth()->guard('web')->user()->getAuthIdentifier();
+        $validate['owner']=$this->authWeb()->user()->getAuthIdentifier();
         $validate['slug']=Str::slug($request->name.rand(10, 10000));
         $course=course::create($validate);
         $url = Storage::put('Images/courses', $request->file('image'));
@@ -211,7 +211,7 @@ class CoursesController extends Controller
     public function deleteSection($section): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         section::query()->findOrFail($section)->delete();
-        return response([])->setStatusCode(Response::HTTP_OK);
+        return response(null)->setStatusCode(Response::HTTP_OK);
     }
 
     /**
@@ -221,7 +221,7 @@ class CoursesController extends Controller
     public function deleteVideo($video): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         section::query()->findOrFail($video)->delete();
-        return response([])->setStatusCode(Response::HTTP_OK);
+        return response(null)->setStatusCode(Response::HTTP_OK);
     }
 
     /**
@@ -241,7 +241,7 @@ class CoursesController extends Controller
     public function restoreSection($section): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         section::withTrashed()->findOrFail($section)->restore();
-        return response([])->setStatusCode(Response::HTTP_OK);
+        return response(null)->setStatusCode(Response::HTTP_OK);
     }
 
     /**
@@ -251,7 +251,7 @@ class CoursesController extends Controller
     public function restoreVideo($video): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         video::withTrashed()->findOrFail($video)->restore();
-        return response([])->setStatusCode(Response::HTTP_OK);
+        return response(null)->setStatusCode(Response::HTTP_OK);
     }
 
     /**
@@ -278,7 +278,7 @@ class CoursesController extends Controller
     public function forceDeleteSection($section): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         section::withTrashed()->findOrFail($section)->forceDelete();
-        return response([])->setStatusCode(Response::HTTP_OK);
+        return response(null)->setStatusCode(Response::HTTP_OK);
     }
 
     /**
@@ -293,7 +293,7 @@ class CoursesController extends Controller
             $videD->forceDelete();
         }catch (\Exception $exception){}
 
-        return response([])->setStatusCode(Response::HTTP_OK);
+        return response(null)->setStatusCode(Response::HTTP_OK);
     }
 
 }
