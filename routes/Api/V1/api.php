@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\Auth\V1\AuthController;
 use App\Http\Controllers\Chat\ChatController;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\Courses\CoursesController;
 use App\Http\Controllers\Profiles\ProfileController;
 use App\Http\Controllers\Profiles\UserController;
@@ -76,9 +77,9 @@ Route::prefix('coursesAdmin')->group(function (){
 
 });
     Route::apiResource('userType', UserTypeController::class);
-    Route::get('getImage', [ShowContentFileBlockController::class, 'getImagePath']);
-    Route::get('getVideo', [ShowContentFileBlockController::class, 'getVideoPath']);
-    //  Route::post('userType/{use rType}',[ UserTypeController::class, 'update']);
+
+    Route::get('getAnyFile', [Controller::class, 'getAnyFile']);
+
 });
 Route::apiResource('tasks', TasksController::class);
 Route::get('tasks/{task}', [TasksController::class, 'getTasksForSlug']);

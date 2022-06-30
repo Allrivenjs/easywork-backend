@@ -27,7 +27,7 @@ class UniversityController extends Controller
         university::create([
             'name'=> $request->name
         ]);
-        return response([])->setStatusCode(Response::HTTP_OK);
+        return response(null)->setStatusCode(Response::HTTP_OK);
     }
 
     /**
@@ -43,7 +43,7 @@ class UniversityController extends Controller
         university::query()->findOrFail($university)->update([
             'name'=>$request->name
         ]);
-        return response([])->setStatusCode(Response::HTTP_OK);
+        return response(null)->setStatusCode(Response::HTTP_OK);
     }
 
     /**
@@ -52,6 +52,6 @@ class UniversityController extends Controller
      */
     public function destroy($university){
         university::query()->findOrFail($university)->delete();
-        return response([])->setStatusCode(Response::HTTP_OK);
+        return response(null)->setStatusCode(Response::HTTP_OK);
     }
 }
