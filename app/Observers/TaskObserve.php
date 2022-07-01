@@ -30,7 +30,7 @@ class TaskObserve
         if(!\App::runningInConsole()) {
             $task->slug = Str::uuid();
             $task->status_id = 1;
-            $task->own_id = Auth()->guard('api')->user()->getAuthIdentifier();
+            $task->own_id = Auth()->guard('web')->user()->getAuthIdentifier();
         }
     }
 
