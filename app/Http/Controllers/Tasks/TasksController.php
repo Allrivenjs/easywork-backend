@@ -56,6 +56,7 @@ class TasksController extends Controller
      */
     public function store(TaskStoreResquest $request)
     {
+
         $task = task::create($request->all());
         $task->topics()->attach(json_decode($request->input('topics')));
         if ($request->hasFile('files')){
