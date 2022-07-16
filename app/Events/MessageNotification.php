@@ -2,9 +2,8 @@
 
 namespace App\Events;
 
-use Illuminate\Broadcasting\Channel;
+
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
@@ -14,14 +13,14 @@ class MessageNotification implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public array $response;
+
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($response)
+    public function __construct(public $response)
     {
         $this->response =[
             'message' => $response['message'],
@@ -36,6 +35,10 @@ class MessageNotification implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel("chat-channel.$this->response['room_id']");
+        $room = (string) $this->response['room_id'];
+        print_r($this->response);
+
+
+        return new PrivateChannel("chat-channel.$room");
     }
 }

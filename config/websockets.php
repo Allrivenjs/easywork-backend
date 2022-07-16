@@ -26,26 +26,6 @@ return [
 
     ],
 
-    'managers' => [
-
-        /*
-        |--------------------------------------------------------------------------
-        | Application Manager
-        |--------------------------------------------------------------------------
-        |
-        | An Application manager determines how your websocket server allows
-        | the use of the TCP protocol based on, for example, a list of allowed
-        | applications.
-        | By default, it uses the defined array in the config file, but you can
-        | anytime implement the same interface as the class and add your own
-        | custom method to retrieve the apps.
-        |
-        */
-
-        'app' => \BeyondCode\LaravelWebSockets\Apps\ConfigAppManager::class,
-
-    ],
-
     /*
     |--------------------------------------------------------------------------
     | Applications Repository
@@ -70,7 +50,7 @@ return [
             'secret' => env('PUSHER_APP_SECRET'),
             'path' => env('PUSHER_APP_PATH'),
             'capacity' => null,
-            'enable_client_messages' => true,
+            'enable_client_messages' => false,
             'enable_statistics' => true,
             'allowed_origins' => [
                 // env('LARAVEL_WEBSOCKETS_DOMAIN'),
@@ -79,163 +59,58 @@ return [
     ],
 
     /*
-    |--------------------------------------------------------------------------
-    | Broadcasting Replication PubSub
-    |--------------------------------------------------------------------------
-    |
-    | You can enable replication to publish and subscribe to
-    | messages across the driver.
-    |
-    | By default, it is set to 'local', but you can configure it to use drivers
-    | like Redis to ensure connection between multiple instances of
-    | WebSocket servers. Just set the driver to 'redis' to enable the PubSub using Redis.
-    |
-    */
+     * This class is responsible for finding the apps. The default provider
+     * will use the apps defined in this config file.
+     *
+     * You can create a custom provider by implementing the
+     * `AppProvider` interface.
+     */
+    'app_provider' => BeyondCode\LaravelWebSockets\Apps\ConfigAppProvider::class,
 
-    'replication' => [
-
-        'mode' => env('WEBSOCKETS_REPLICATION_MODE', 'local'),
-
-        'modes' => [
-
-            /*
-            |--------------------------------------------------------------------------
-            | Local Replication
-            |--------------------------------------------------------------------------
-            |
-            | Local replication is actually a null replicator, meaning that it
-            | is the default behaviour of storing the connections into an array.
-            |
-            */
-
-            'local' => [
-
-                /*
-                |--------------------------------------------------------------------------
-                | Channel Manager
-                |--------------------------------------------------------------------------
-                |
-                | The channel manager is responsible for storing, tracking and retrieving
-                | the channels as long as their members and connections.
-                |
-                */
-
-                'channel_manager' => \BeyondCode\LaravelWebSockets\ChannelManagers\LocalChannelManager::class,
-
-                /*
-                |--------------------------------------------------------------------------
-                | Statistics Collector
-                |--------------------------------------------------------------------------
-                |
-                | The Statistics Collector will, by default, handle the incoming statistics,
-                | storing them until they will become dumped into another database, usually
-                | a MySQL database or a time-series database.
-                |
-                */
-
-                'collector' => \BeyondCode\LaravelWebSockets\Statistics\Collectors\MemoryCollector::class,
-
-            ],
-
-            'redis' => [
-
-                'connection' => env('WEBSOCKETS_REDIS_REPLICATION_CONNECTION', 'default'),
-
-                /*
-                |--------------------------------------------------------------------------
-                | Channel Manager
-                |--------------------------------------------------------------------------
-                |
-                | The channel manager is responsible for storing, tracking and retrieving
-                | the channels as long as their members and connections.
-                |
-                */
-
-                'channel_manager' => \BeyondCode\LaravelWebSockets\ChannelManagers\RedisChannelManager::class,
-
-                /*
-                |--------------------------------------------------------------------------
-                | Statistics Collector
-                |--------------------------------------------------------------------------
-                |
-                | The Statistics Collector will, by default, handle the incoming statistics,
-                | storing them until they will become dumped into another database, usually
-                | a MySQL database or a time-series database.
-                |
-                */
-
-                'collector' => \BeyondCode\LaravelWebSockets\Statistics\Collectors\RedisCollector::class,
-
-            ],
-
-        ],
-
-    ],
-
-    'statistics' => [
-
-        /*
-        |--------------------------------------------------------------------------
-        | Statistics Store
-        |--------------------------------------------------------------------------
-        |
-        | The Statistics Store is the place where all the temporary stats will
-        | be dumped. This is a much reliable store and will be used to display
-        | graphs or handle it later on your app.
-        |
-        */
-
-        'store' => \BeyondCode\LaravelWebSockets\Statistics\Stores\DatabaseStore::class,
-
-        /*
-        |--------------------------------------------------------------------------
-        | Statistics Interval Period
-        |--------------------------------------------------------------------------
-        |
-        | Here you can specify the interval in seconds at which
-        | statistics should be logged.
-        |
-        */
-
-        'interval_in_seconds' => 60,
-
-        /*
-        |--------------------------------------------------------------------------
-        | Statistics Deletion Period
-        |--------------------------------------------------------------------------
-        |
-        | When the clean-command is executed, all recorded statistics older than
-        | the number of days specified here will be deleted.
-        |
-        */
-
-        'delete_statistics_older_than_days' => 60,
-
+    /*
+     * This array contains the hosts of which you want to allow incoming requests.
+     * Leave this empty if you want to accept requests from all hosts.
+     */
+    'allowed_origins' => [
+        //
     ],
 
     /*
-    |--------------------------------------------------------------------------
-    | Maximum Request Size
-    |--------------------------------------------------------------------------
-    |
-    | The maximum request size in kilobytes that is allowed for
-    | an incoming WebSocket request.
-    |
-    */
-
+     * The maximum request size in kilobytes that is allowed for an incoming WebSocket request.
+     */
     'max_request_size_in_kb' => 250,
 
     /*
-    |--------------------------------------------------------------------------
-    | SSL Configuration
-    |--------------------------------------------------------------------------
-    |
-    | By default, the configuration allows only on HTTP. For SSL, you need
-    | to set up the the certificate, the key, and optionally, the passphrase
-    | for the private key.
-    | You will need to restart the server for the settings to take place.
-    |
-    */
+     * This path will be used to register the necessary routes for the package.
+     */
+    'path' => 'laravel-websockets',
+
+    'statistics' => [
+        /*
+         * This model will be used to store the statistics of the WebSocketsServer.
+         * The only requirement is that the model should extend
+         * `WebSocketsStatisticsEntry` provided by this package.
+         */
+        'model' => \BeyondCode\LaravelWebSockets\Statistics\Models\WebSocketsStatisticsEntry::class,
+
+        /*
+         * Here you can specify the interval in seconds at which statistics should be logged.
+         */
+        'interval_in_seconds' => 60,
+
+        /*
+         * When the clean-command is executed, all recorded statistics older than
+         * the number of days specified here will be deleted.
+         */
+        'delete_statistics_older_than_days' => 60,
+
+        /*
+         * Use an DNS resolver to make the requests to the statistics logger
+         * default is to resolve everything to 127.0.0.1.
+         */
+        'perform_dns_lookup' => false,
+    ],
+
 
     'ssl' => [
 

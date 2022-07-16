@@ -42,22 +42,23 @@ class Chat implements ChatInterface
         $data = [
             'message'=>$message,
             'user_id'=>$user,
-            'room_id'=>$roomIdId->id
+            'room_id'=>$roomIdId
         ];
         $message = new Message($data);
         $message->save();
         broadcast(new MessageNotification($data))->toOthers();
     }
 
-    public function getRooms(): array
+    public function getRooms(): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Builder|array|null
     {
-        return User::query()->find(Auth::guard('api')->user()->getAuthIdentifier())->rooms;
+        return User::query()->with('rooms.users','rooms.lastMessage')
+            ->find(Auth::guard('api')->user()->getAuthIdentifier());
     }
 
 
     public function getMessages($roomId)
     {
-        $room = Room::query()->with('messages')->find($roomId);
+        $room = Room::query()->with('messages.user')->find($roomId);
         return $room->messages;
     }
 

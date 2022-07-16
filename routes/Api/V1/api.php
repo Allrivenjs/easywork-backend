@@ -44,7 +44,7 @@ Route::middleware('auth:api')->group(function (){
     Route::post('profile/update',[ProfileController::class, 'updateAboutProfile'])->name('profile.update');
     Route::post('profile/image/update',[ProfileController::class, 'updateImageprofile'])->name('profile.image.update');
 
-
+        Route::get('get-my-rooms', [ChatController::class, 'getRooms'])->name('get-my-rooms');
         Route::get('chat/message/{room_id}', [ChatController::class, 'getMessages'])->name('chat.getMessages');
         Route::get('chat/exist-room-or-create', [ChatController::class, 'getExistRoom'])->name('chat.getExistRoom');
         Route::post('chat/send-message', [ChatController::class, 'sendMessage'])->name('chat.sendMessage');
@@ -77,14 +77,12 @@ Route::prefix('coursesAdmin')->group(function (){
 
 });
     Route::apiResource('userType', UserTypeController::class);
-
     Route::get('getAnyFile', [Controller::class, 'getAnyFile']);
-    Route::apiResource('tasks', TasksController::class);
-    Route::get('tasks/{task}', [TasksController::class, 'getTasksForSlug']);
-    Route::apiResource('status',StatusController::class)->names('status');
-    Route::apiResource('topics', TopicController::class)->names('topics');
 });
 
-
+Route::get('tasks/{task}', [TasksController::class, 'getTasksForSlug']);
+Route::apiResource('tasks', TasksController::class);
+Route::apiResource('status',StatusController::class)->names('status');
+Route::apiResource('topics', TopicController::class)->names('topics');
 
 

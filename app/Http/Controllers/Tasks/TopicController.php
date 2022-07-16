@@ -13,6 +13,7 @@ class TopicController extends Controller
     public function __construct()
     {
         $this->middleware('can:taskAdmin.task')->except('index','show');
+        $this->middleware('auth:api')->except('index','show');
     }
 
     /**

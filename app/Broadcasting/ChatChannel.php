@@ -29,4 +29,5 @@ class ChatChannel
             $query->where('user_id', $user->id);
         })->where('id', $room_id)->exists();
     }
+
 }

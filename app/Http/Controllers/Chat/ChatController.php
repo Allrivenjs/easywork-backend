@@ -19,6 +19,10 @@ class ChatController extends Controller
         $this->room = $room;
     }
 
+    public function getRooms(): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    {
+        return Response($this->room->getRooms());
+    }
 
     public function getMessages($roomId): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {

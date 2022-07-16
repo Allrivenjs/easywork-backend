@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class TaskStoreResquest extends FormRequest
@@ -28,7 +29,7 @@ class TaskStoreResquest extends FormRequest
             'name' => 'required',
             'description' => 'required',
             'difficulty'=>['required',Rule::in(['easy','easy-medium','medium','medium-hard','hard'])],
-            'topics'=>'required',
+            'topics'=>'required|array',
             'files'=>'array'
         ];
     }

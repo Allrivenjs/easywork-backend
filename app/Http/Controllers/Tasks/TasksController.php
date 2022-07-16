@@ -12,6 +12,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TasksController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api')->except('index','getTasksForSlug');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -56,7 +61,6 @@ class TasksController extends Controller
      */
     public function store(TaskStoreResquest $request)
     {
-
         $task = task::create($request->all());
         $task->topics()->attach(json_decode($request->input('topics')));
         if ($request->hasFile('files')){
@@ -68,6 +72,16 @@ class TasksController extends Controller
                 ]);
             }
         }
+        //Notificamos a todos los usuarios que tengan el relacion con los topis que seleccionaron
+        //consultamos todos los usuarios que tengan alguno de los topics que seleccionaron
+        $users = $task->topics->map(function ($topic){
+            return $topic->users;
+        })->flatten()->unique();
+//        $task->topics()->get()->each(function ($topic){
+//            $topic->users()->get()->each(function ($user) use ($topic){
+//                $user->notify(new \App\Notifications\TaskCreated($user, $topic));
+//            });
+//        });
         return response(null)->setStatusCode(Response::HTTP_OK);
     }
 

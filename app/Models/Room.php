@@ -15,6 +15,11 @@ class Room extends Model
         return $this->hasMany(Message::class);
     }
 
+    public function lastMessage()
+    {
+        return $this->messages()->orderBy('created_at', 'desc')->limit(1);
+    }
+
     public function users()
     {
         return $this->belongsToMany(User::class, 'participants');

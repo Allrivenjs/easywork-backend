@@ -1,6 +1,7 @@
 <?php
 
 use App\Broadcasting\ChatChannel;
+use App\Models\Room;
 use Illuminate\Support\Facades\Broadcast;
 
 /*
@@ -18,7 +19,11 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
 
-Broadcast::channel('chat-channel.{room_id}', ChatChannel::class);
+Broadcast::channel('chat-channel.{room_id}', function ($user, $room_id) {
+    return Room::query()->whereHas('users', function ($query) use ($user) {
+        $query->where('user_id', $user->id);
+    })->where('id', $room_id)->exists();
+});
 
 Broadcast::channel('channel-session', function ($user) {
     return $user;
