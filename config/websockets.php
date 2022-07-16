@@ -1,46 +1,24 @@
 <?php
-
+use BeyondCode\LaravelWebSockets\Dashboard\Http\Middleware\Authorize;
 return [
 
     /*
-    |--------------------------------------------------------------------------
-    | Dashboard Settings
-    |--------------------------------------------------------------------------
-    |
-    | You can configure the dashboard settings from here.
-    |
-    */
-
+     * Set a custom dashboard configuration
+     */
     'dashboard' => [
-
         'port' => env('LARAVEL_WEBSOCKETS_PORT', 6001),
-
-        'domain' => env('LARAVEL_WEBSOCKETS_DOMAIN'),
-
-        'path' => env('LARAVEL_WEBSOCKETS_PATH', 'laravel-websockets'),
-
-        'middleware' => [
-            'web',
-            \BeyondCode\LaravelWebSockets\Dashboard\Http\Middleware\Authorize::class,
-        ],
-
     ],
 
     /*
-    |--------------------------------------------------------------------------
-    | Applications Repository
-    |--------------------------------------------------------------------------
-    |
-    | By default, the only allowed app is the one you define with
-    | your PUSHER_* variables from .env.
-    | You can configure to use multiple apps if you need to, or use
-    | a custom App Manager that will handle the apps from a database, per se.
-    |
-    | You can apply multiple settings, like the maximum capacity, enable
-    | client-to-client messages or statistics.
-    |
-    */
-
+     * This package comes with multi tenancy out of the box. Here you can
+     * configure the different apps that can use the webSockets server.
+     *
+     * Optionally you specify capacity so you can limit the maximum
+     * concurrent connections for a specific app.
+     *
+     * Optionally you can disable client events so clients cannot send
+     * messages to each other via the webSockets.
+     */
     'apps' => [
         [
             'id' => env('PUSHER_APP_ID'),
@@ -85,6 +63,18 @@ return [
      */
     'path' => 'laravel-websockets',
 
+    /*
+     * Dashboard Routes Middleware
+     *
+     * These middleware will be assigned to every dashboard route, giving you
+     * the chance to add your own middleware to this list or change any of
+     * the existing middleware. Or, you can simply stick with this list.
+     */
+    'middleware' => [
+        'web',
+        Authorize::class,
+    ],
+
     'statistics' => [
         /*
          * This model will be used to store the statistics of the WebSocketsServer.
@@ -92,6 +82,12 @@ return [
          * `WebSocketsStatisticsEntry` provided by this package.
          */
         'model' => \BeyondCode\LaravelWebSockets\Statistics\Models\WebSocketsStatisticsEntry::class,
+
+        /**
+         * The Statistics Logger will, by default, handle the incoming statistics, store them
+         * and then release them into the database on each interval defined below.
+         */
+        'logger' => BeyondCode\LaravelWebSockets\Statistics\Logger\HttpStatisticsLogger::class,
 
         /*
          * Here you can specify the interval in seconds at which statistics should be logged.
@@ -111,68 +107,37 @@ return [
         'perform_dns_lookup' => false,
     ],
 
-
+    /*
+     * Define the optional SSL context for your WebSocket connections.
+     * You can see all available options at: http://php.net/manual/en/context.ssl.php
+     */
     'ssl' => [
-
+        /*
+         * Path to local certificate file on filesystem. It must be a PEM encoded file which
+         * contains your certificate and private key. It can optionally contain the
+         * certificate chain of issuers. The private key also may be contained
+         * in a separate file specified by local_pk.
+         */
         'local_cert' => env('LARAVEL_WEBSOCKETS_SSL_LOCAL_CERT', null),
 
-        'capath' => env('LARAVEL_WEBSOCKETS_SSL_CA', null),
-
+        /*
+         * Path to local private key file on filesystem in case of separate files for
+         * certificate (local_cert) and private key.
+         */
         'local_pk' => env('LARAVEL_WEBSOCKETS_SSL_LOCAL_PK', null),
 
+        /*
+         * Passphrase for your local_cert file.
+         */
         'passphrase' => env('LARAVEL_WEBSOCKETS_SSL_PASSPHRASE', null),
-
-        'allow_self_signed' => TRUE, // Allow self signed certs (should be false in production)
-
-        'verify_peer' => FALSE
-
-//        'verify_peer' => env('APP_ENV') === 'production',
-//
-//        'allow_self_signed' => env('APP_ENV') !== 'production',
-
     ],
 
     /*
-    |--------------------------------------------------------------------------
-    | Route Handlers
-    |--------------------------------------------------------------------------
-    |
-    | Here you can specify the route handlers that will take over
-    | the incoming/outgoing websocket connections. You can extend the
-    | original class and implement your own logic, alongside
-    | with the existing logic.
-    |
-    */
-
-    'handlers' => [
-
-        'websocket' => \BeyondCode\LaravelWebSockets\Server\WebSocketHandler::class,
-
-        'health' => \BeyondCode\LaravelWebSockets\Server\HealthHandler::class,
-
-        'trigger_event' => \BeyondCode\LaravelWebSockets\API\TriggerEvent::class,
-
-        'fetch_channels' => \BeyondCode\LaravelWebSockets\API\FetchChannels::class,
-
-        'fetch_channel' => \BeyondCode\LaravelWebSockets\API\FetchChannel::class,
-
-        'fetch_users' => \BeyondCode\LaravelWebSockets\API\FetchUsers::class,
-
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Promise Resolver
-    |--------------------------------------------------------------------------
-    |
-    | The promise resolver is a class that takes a input value and is
-    | able to make sure the PHP code runs async by using ->then(). You can
-    | use your own Promise Resolver. This is usually changed when you want to
-    | intercept values by the promises throughout the app, like in testing
-    | to switch from async to sync.
-    |
-    */
-
-    'promise_resolver' => \React\Promise\FulfilledPromise::class,
-
+     * Channel Manager
+     * This class handles how channel persistence is handled.
+     * By default, persistence is stored in an array by the running webserver.
+     * The only requirement is that the class should implement
+     * `ChannelManager` interface provided by this package.
+     */
+    'channel_manager' => \BeyondCode\LaravelWebSockets\WebSockets\Channels\ChannelManagers\ArrayChannelManager::class,
 ];

@@ -29,7 +29,7 @@ class TaskStoreResquest extends FormRequest
             'name' => 'required',
             'description' => 'required',
             'difficulty'=>['required',Rule::in(['easy','easy-medium','medium','medium-hard','hard'])],
-            'topics'=>'required|array',
+            'topics'=>'required',
             'files'=>'array'
         ];
     }
