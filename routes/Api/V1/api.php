@@ -84,5 +84,7 @@ Route::get('tasks/{task}', [TasksController::class, 'getTasksForSlug']);
 Route::apiResource('tasks', TasksController::class);
 Route::apiResource('status',StatusController::class)->names('status');
 Route::apiResource('topics', TopicController::class)->names('topics');
-
+Route::get('ChatPresentChannel', function (){
+    broadcast(new \App\Events\ChatPresentChannel(\App\Models\User::find(1)));
+});
 
