@@ -21,5 +21,10 @@ class Message extends Model
         return $this->belongsTo(Room::class);
     }
 
+    public function markAsRead()
+    {
+        $this->read_at = Carbon::now();
+        $this->save();
+    }
 
 }

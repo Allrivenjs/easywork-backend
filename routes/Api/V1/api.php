@@ -48,7 +48,7 @@ Route::middleware('auth:api')->group(function (){
     Route::post('user/update', [UserController::class, 'update'])->name('user.update');
     Route::post('profile/update',[ProfileController::class, 'updateAboutProfile'])->name('profile.update');
     Route::post('profile/image/update',[ProfileController::class, 'updateImageProfile'])->name('profile.image.update');
-    Route::get('getAllMeTask',[ProfileController::class, 'getAllTaskMe'])->name('profile.getAllTaskMe');
+    Route::get('getAllMeTask',[ProfileController::class, 'getAllMeTask'])->name('profile.getAllTaskMe');
 
         Route::get('get-my-rooms', [ChatController::class, 'getRooms'])->name('get-my-rooms');
         Route::get('chat/message/{room_id}', [ChatController::class, 'getMessages'])->name('chat.getMessages');

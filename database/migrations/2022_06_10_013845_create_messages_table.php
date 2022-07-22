@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
             $table->string('message');
+            $table->timestamp('read_at')->nullable();
             $table->foreignIdFor(\App\Models\User::class)->constrained();
             $table->foreignIdFor(\App\Models\Room::class)->constrained();
             $table->timestamps();
