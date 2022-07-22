@@ -3,7 +3,7 @@
 
 use App\Http\Controllers\Auth\V1\AuthController;
 use App\Http\Controllers\Chat\ChatController;
-use App\Http\Controllers\CommentController;
+use App\Http\Controllers\Comment\CommentController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Courses\CoursesController;
 use App\Http\Controllers\Notification\NotificationController;
@@ -42,6 +42,9 @@ Route::middleware('auth:api')->group(function (){
     Route::get('me-notifications', [NotificationController::class, 'show']);
     Route::get('notifications-markAsRead', [NotificationController::class, 'markAsRead']);
 
+    Route::post('comment-reply', [CommentController::class,'reply'])->name('task.comment.reply');
+    Route::post('comment', [CommentController::class,'comment'])->name('task.comment');
+
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::get('user', [UserController::class, 'index'])->name('user.index');
@@ -53,6 +56,7 @@ Route::middleware('auth:api')->group(function (){
         Route::get('get-my-rooms', [ChatController::class, 'getRooms'])->name('get-my-rooms');
         Route::get('chat/message/{room_id}', [ChatController::class, 'getMessages'])->name('chat.getMessages');
         Route::get('chat/exist-room-or-create', [ChatController::class, 'getExistRoom'])->name('chat.getExistRoom');
+        Route::get('chat/markAsRead', [ChatController::class, 'markAsRead'])->name('chat.markAsRead');
         Route::post('chat/send-message', [ChatController::class, 'sendMessage'])->name('chat.sendMessage');
 
 
@@ -91,8 +95,7 @@ Route::apiResource('tasks', TasksController::class)->only('index','store');
 Route::apiResource('status',StatusController::class)->names('status');
 Route::apiResource('topics', TopicController::class)->names('topics');
 
-Route::post('comment-reply', [CommentController::class,'reply'])->name('task.comment.reply');
-Route::post('comment', [CommentController::class,'comment'])->name('task.comment');
+
 Route::get('getComments', [CommentController::class,'getComments'])->name('task.getComments');
 
 

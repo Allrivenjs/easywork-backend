@@ -57,7 +57,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    public function getCreatedAtAttribute($value){
+    public function getCreatedAtAttribute($value): string
+    {
         return Carbon::parse($value)->diffForHumans();
     }
 
@@ -76,27 +77,33 @@ class User extends Authenticatable implements MustVerifyEmail
 //        return Carbon::parse($value)->format("d-m-y");
 //    }
 
-    public function FullName(){
+    public function FullName(): string
+    {
         return strtoupper("$this->name $this->lastname");
     }
 
-    public function profile(){
+    public function profile(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
         return $this->hasOne(profile::class);
     }
 
-    public function tasks(){
+    public function tasks(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
         return $this->hasMany(task::class,'own_id');
     }
 
-    public function messages(){
+    public function messages(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
         return $this->hasMany(Message::class);
     }
 
-    public function rooms(){
+    public function rooms(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
         return $this->belongsToMany(Room::class, 'participants');
     }
 
-    public function comments(){
+    public function comments(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
         return $this->hasMany(Comment::class, 'own_id');
     }
 

@@ -18,23 +18,26 @@ class Image extends Model
     ];
 
     /** @return ImageFactory */
-    protected static function newFactory()
+    protected static function newFactory(): ImageFactory
     {
         return ImageFactory::new();
     }
 
-    public function getCreatedAtAttribute($value){
+    public function getCreatedAtAttribute($value): string
+    {
         return Carbon::parse($value)->diffForHumans();
     }
 
 
 
 
-    public function getUpdatedAtAttribute($value){
+    public function getUpdatedAtAttribute($value): string
+    {
         return Carbon::parse($value)->diffForHumans();
     }
 
-    public function imageable(){
+    public function imageable(): \Illuminate\Database\Eloquent\Relations\MorphTo
+    {
         return $this->morphTo();
     }
 }

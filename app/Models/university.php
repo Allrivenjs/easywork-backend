@@ -17,15 +17,18 @@ class university extends Model
         'deleted_at'
     ];
 
-    public function getCreatedAtAttribute($value){
+    public function getCreatedAtAttribute($value): string
+    {
         return Carbon::parse($value)->diffForHumans();
     }
 
-    public function getUpdatedAtAttribute($value){
+    public function getUpdatedAtAttribute($value): string
+    {
         return Carbon::parse($value)->diffForHumans();
     }
 
-    public function profiles(){
+    public function profiles(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
         return $this->belongsToMany(profile::class);
     }
 }

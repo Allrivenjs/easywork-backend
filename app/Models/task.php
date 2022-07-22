@@ -32,43 +32,49 @@ class task extends Model
 //        return User::query()->find($value)->FullName();
 //    }
 
-    public function getCreatedAtAttribute($value){
+    public function getCreatedAtAttribute($value): string
+    {
         return Carbon::parse($value)->diffForHumans();
     }
 
 
-    public function getUpdatedAtAttribute($value){
+    public function getUpdatedAtAttribute($value): string
+    {
         return Carbon::parse($value)->diffForHumans();
     }
 
-    public function owner()
+    public function owner(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class, 'own_id')->with('profile');
     }
 
-    public function topics(){
+    public function topics(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
         return $this->belongsToMany(Topic::class);
     }
 
-    public function status(){
+    public function status(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
         return $this->belongsTo(Status::class);
     }
 
-    public function status_last(){
-        return $this->hasOne(Status::class)->latest();
+    public function status_last(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->status()->latest();
     }
 
-    public function files(){
+    public function files(): \Illuminate\Database\Eloquent\Relations\MorphMany
+    {
         return $this->morphMany(Files::class, 'fileable');
     }
 
-    public function comments()
+    public function comments(): \Illuminate\Database\Eloquent\Relations\MorphMany
     {
         return $this->morphMany(Comment::class, 'commentable')->whereNull('parent_id');
     }
-    public function comments_lasted()
+    public function comments_lasted(): \Illuminate\Database\Eloquent\Relations\MorphMany
     {
-        return $this->morphMany(Comment::class, 'commentable')->whereNull('parent_id')->orderBy('created_at','desc')->take(1);
+        return $this->comments()->orderBy('created_at','desc')->take(1);
     }
 
 }

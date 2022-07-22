@@ -15,7 +15,8 @@ class Status extends Model
         'updated_at'
     ];
 
-    public function tasks(){
+    public function tasks(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
         return $this->hasMany(task::class);
     }
 }

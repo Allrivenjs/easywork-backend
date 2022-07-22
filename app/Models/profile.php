@@ -22,11 +22,13 @@ class profile extends Model
         return "slug";
     }
 
-    public function getCreatedAtAttribute($value){
+    public function getCreatedAtAttribute($value): string
+    {
         return Carbon::parse($value)->diffForHumans();
     }
 
-    public function getUpdatedAtAttribute($value){
+    public function getUpdatedAtAttribute($value): string
+    {
         return Carbon::parse($value)->diffForHumans();
     }
 
@@ -35,16 +37,20 @@ class profile extends Model
         return Carbon::parse($value)->diffForHumans();
     }
 
-    public function image(){
+    public function image(): \Illuminate\Database\Eloquent\Relations\MorphOne
+    {
         return $this->morphOne(Image::class, 'imageable');
     }
-    public function files(){
+    public function files(): \Illuminate\Database\Eloquent\Relations\MorphMany
+    {
         return $this->morphMany(Files::class, 'fileable');
     }
-    public function user(){
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
         return $this->belongsTo(User::class);
     }
-    public function universities(){
+    public function universities(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
         return $this->belongsToMany(university::class);
     }
 }

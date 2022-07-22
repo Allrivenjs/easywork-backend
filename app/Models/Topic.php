@@ -24,7 +24,8 @@ class Topic extends Model
 
 
 
-    public function tasks(){
+    public function tasks(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
         return $this->belongsToMany(task::class);
     }
 }

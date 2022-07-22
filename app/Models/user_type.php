@@ -13,11 +13,13 @@ class user_type extends Model
     protected $fillable = ['name'];
 
 
-    public function getCreatedAtAttribute($value){
+    public function getCreatedAtAttribute($value): string
+    {
         return Carbon::parse($value)->diffForHumans();
     }
 
-    public function getUpdatedAtAttribute($value){
+    public function getUpdatedAtAttribute($value): string
+    {
         return Carbon::parse($value)->diffForHumans();
     }
 

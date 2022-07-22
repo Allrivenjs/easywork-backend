@@ -2,29 +2,28 @@
 
 namespace App\Models;
 
+use App\Traits\AsRead;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Message extends Model
 {
     use HasFactory;
+    use AsRead;
 
+    protected $casts = [
+        'read_at' => 'datetime',
+    ];
     protected $fillable = ['message', 'user_id', 'room_id'];
 
-    public function user()
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function room()
+    public function room(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Room::class);
-    }
-
-    public function markAsRead()
-    {
-        $this->read_at = Carbon::now();
-        $this->save();
     }
 
 }

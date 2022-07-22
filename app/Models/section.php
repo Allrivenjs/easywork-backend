@@ -15,24 +15,28 @@ class section extends Model
     protected $fillable = ['name', 'course_id'];
 
     /** @return sectionsFactory */
-    protected static function newFactory()
+    protected static function newFactory(): sectionsFactory
     {
         return sectionsFactory::new();
     }
 
-    public function getCreatedAtAttribute($value){
+    public function getCreatedAtAttribute($value): string
+    {
         return Carbon::parse($value)->diffForHumans();
     }
 
-    public function getUpdatedAtAttribute($value){
+    public function getUpdatedAtAttribute($value): string
+    {
         return Carbon::parse($value)->diffForHumans();
     }
 
-    public function course(){
+    public function course(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
         return $this->belongsTo(course::class);
     }
 
-    public function videos(){
+    public function videos(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
         return $this->hasMany(video::class);
     }
 }
