@@ -9,6 +9,7 @@
         "beyondcode/laravel-websockets": "^1.13",
         "doctrine/dbal": "^3.3",
         "fruitcake/laravel-cors": "^2.0.5",
+        "garygreen/pretty-routes": "^1.0",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.0",
         "laravel/passport": "^10.3",
