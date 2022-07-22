@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Comment;
 use App\Models\task;
 use App\Models\User;
+use App\Notifications\CommentReplyNotification;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -46,10 +47,20 @@ class CommentController extends Controller
         User::query()->whereHas('comments', function ($query) use ($request) {
             $query->where('comments.id', $request->parent_id);
         })->get()->each(function ($user) use ($comment) {
-            $user->notify(new \App\Notifications\CommentReplyNotification($comment));
+            $user->notify(new CommentReplyNotification($comment));
         });
 
         return response(null)->setStatusCode(Response::HTTP_OK);
+    }
+
+    public function getComments(Request $request)
+    {
+        $request->validate([
+            'task_id' => 'required|exists:tasks,id',
+        ]);
+        return response(Comment::query()->with('replies')->whereHas('commentable',
+            fn($query)  => $query->where('tasks.id', $request->query('task_id'))
+        )->get());
     }
 
     public function delete($id)

@@ -6,6 +6,7 @@ use App\Http\Controllers\Chat\ChatController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Courses\CoursesController;
+use App\Http\Controllers\Notification\NotificationController;
 use App\Http\Controllers\Profiles\ProfileController;
 use App\Http\Controllers\Profiles\UserController;
 use App\Http\Controllers\Profiles\UserTypeController;
@@ -38,9 +39,8 @@ Route::get('courses/{course}/{video} ',[CoursesController::class, 'showVideo']);
 
 Route::middleware('auth:api')->group(function (){
 
-    Route::get('prueba', function () {
-        return auth()->guard('api')->user();
-    });
+    Route::get('me-notifications', [NotificationController::class, 'show']);
+    Route::get('notifications-markAsRead', [NotificationController::class, 'markAsRead']);
 
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
@@ -87,12 +87,14 @@ Route::prefix('coursesAdmin')->group(function (){
 });
 
 Route::get('tasks/{task}', [TasksController::class, 'getTasksForSlug']);
-Route::apiResource('tasks', TasksController::class);
+Route::apiResource('tasks', TasksController::class)->only('index','store');
 Route::apiResource('status',StatusController::class)->names('status');
 Route::apiResource('topics', TopicController::class)->names('topics');
 
-Route::post('comment-reply', [CommentController::class,'reply']);
-Route::post('comment', [CommentController::class,'comment']);
+Route::post('comment-reply', [CommentController::class,'reply'])->name('task.comment.reply');
+Route::post('comment', [CommentController::class,'comment'])->name('task.comment');
+Route::get('getComments', [CommentController::class,'getComments'])->name('task.getComments');
+
 
 Route::get('ChatPresentChannel', function (){
     broadcast(new \App\Events\ChatPresentChannel(\App\Models\User::find(1)));
