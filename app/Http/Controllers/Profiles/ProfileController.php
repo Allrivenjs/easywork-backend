@@ -5,32 +5,56 @@ namespace App\Http\Controllers\Profiles;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProfileResource;
 use App\Models\profile;
+use App\Models\task;
 use App\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use JetBrains\PhpStorm\ArrayShape;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProfileController extends Controller
 {
-    public function getProfileForSlug($profile){
-        $Profile = profile::query()->with('user')
+
+    public function getAllMeTask(): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    {
+        return response([
+            task::query()->with([
+                'comments_lasted'=>[
+                    'owner',
+                    'replies'=>[
+                        'owner',
+                    ],
+                ]
+            ])->where('own_id', auth()->id())->paginate(5)
+        ])->setStatusCode(Response::HTTP_OK);
+    }
+
+
+    public function getProfileForSlug($profile): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    {
+        $Profile = profile::query()->with([
+            'user'=> [
+                'tasks'=>[
+                    'comments_lasted'=>[
+                        'owner',
+                        'replies'=>[
+                            'owner',
+                        ],
+                    ],
+                ],
+            ]
+        ])
             ->where('slug','LIKE', $profile)
             ->orWhere('id',$profile)
             ->firstOrFail();
-        if (is_null($Profile)){
-            return response(['message'=>'Profile not found'])->setStatusCode(Response::HTTP_NOT_FOUND);
-        }
-
-        return response([new ProfileResource($Profile->user)])->setStatusCode(Response::HTTP_OK);
+        return response([new ProfileResource($Profile)])->setStatusCode(Response::HTTP_OK);
     }
 
-    /**
-     * @param Request $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
-     */
-    public function updateAboutProfile(Request $request){
+
+    public function updateAboutProfile(Request $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    {
 
         $validate = $request->validate($this->rules());
         try {
@@ -41,7 +65,8 @@ class ProfileController extends Controller
         return response(null)->setStatusCode(Response::HTTP_OK);
     }
 
-    public function updateImageprofile(Request $request){
+    public function updateImageProfile(Request $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    {
         $request->validate([
             'image'=>'image|required'
         ]);
@@ -62,7 +87,8 @@ class ProfileController extends Controller
     }
 
 
-    private function rules(){
+    #[ArrayShape(['about' => "string[]"])] private function rules(): array
+    {
         return [
             'about'=>['required','min:50','max:600','string']
         ];

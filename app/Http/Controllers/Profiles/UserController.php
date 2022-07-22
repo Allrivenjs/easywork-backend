@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Profiles;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProfileResource;
+use App\Models\profile;
 use App\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -13,7 +14,11 @@ use Symfony\Component\HttpFoundation\Response;
 class UserController extends Controller
 {
     public function index(){
-        return response([new ProfileResource(auth()->user())])->setStatusCode(Response::HTTP_OK);
+        return response([new ProfileResource(
+            profile::query()->with('user')->whereHas('user', function ($query) {
+                $query->where('id',auth()->user()->getAuthIdentifier());
+            })->first()
+        )])->setStatusCode(Response::HTTP_OK);
     }
 
     public function update(Request $request){

@@ -62,5 +62,13 @@ class task extends Model
         return $this->morphMany(Files::class, 'fileable');
     }
 
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable')->whereNull('parent_id');
+    }
+    public function comments_lasted()
+    {
+        return $this->morphMany(Comment::class, 'commentable')->whereNull('parent_id')->orderBy('created_at','desc')->take(1);
+    }
 
 }

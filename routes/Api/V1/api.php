@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\Auth\V1\AuthController;
 use App\Http\Controllers\Chat\ChatController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Courses\CoursesController;
 use App\Http\Controllers\Profiles\ProfileController;
@@ -37,12 +38,17 @@ Route::get('courses/{course}/{video} ',[CoursesController::class, 'showVideo']);
 
 Route::middleware('auth:api')->group(function (){
 
+    Route::get('prueba', function () {
+        return auth()->guard('api')->user();
+    });
+
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::get('user', [UserController::class, 'index'])->name('user.index');
     Route::post('user/update', [UserController::class, 'update'])->name('user.update');
     Route::post('profile/update',[ProfileController::class, 'updateAboutProfile'])->name('profile.update');
-    Route::post('profile/image/update',[ProfileController::class, 'updateImageprofile'])->name('profile.image.update');
+    Route::post('profile/image/update',[ProfileController::class, 'updateImageProfile'])->name('profile.image.update');
+    Route::get('getAllMeTask',[ProfileController::class, 'getAllTaskMe'])->name('profile.getAllTaskMe');
 
         Route::get('get-my-rooms', [ChatController::class, 'getRooms'])->name('get-my-rooms');
         Route::get('chat/message/{room_id}', [ChatController::class, 'getMessages'])->name('chat.getMessages');
@@ -84,7 +90,12 @@ Route::get('tasks/{task}', [TasksController::class, 'getTasksForSlug']);
 Route::apiResource('tasks', TasksController::class);
 Route::apiResource('status',StatusController::class)->names('status');
 Route::apiResource('topics', TopicController::class)->names('topics');
+
+Route::post('comment-reply', [CommentController::class,'reply']);
+Route::post('comment', [CommentController::class,'comment']);
+
 Route::get('ChatPresentChannel', function (){
     broadcast(new \App\Events\ChatPresentChannel(\App\Models\User::find(1)));
 });
+
 

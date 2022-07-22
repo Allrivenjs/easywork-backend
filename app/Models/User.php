@@ -45,6 +45,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $hidden = [
         'password',
         'remember_token',
+        'roles'
     ];
 
     /**
@@ -84,7 +85,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function tasks(){
-        return $this->hasMany(task::class);
+        return $this->hasMany(task::class,'own_id');
     }
 
     public function messages(){
@@ -94,4 +95,9 @@ class User extends Authenticatable implements MustVerifyEmail
     public function rooms(){
         return $this->belongsToMany(Room::class, 'participants');
     }
+
+    public function comments(){
+        return $this->hasMany(Comment::class, 'own_id');
+    }
+
 }
