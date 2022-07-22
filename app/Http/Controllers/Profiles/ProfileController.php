@@ -55,7 +55,6 @@ class ProfileController extends Controller
 
     public function updateAboutProfile(Request $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
-
         $validate = $request->validate($this->rules());
         try {
             Auth()->guard('api')->user()->profile()->update($validate);
