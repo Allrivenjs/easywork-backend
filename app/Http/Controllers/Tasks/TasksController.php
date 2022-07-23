@@ -25,7 +25,7 @@ class TasksController extends Controller
     public function index(Request $request)
     {
         return response(
-            new ShowTasksResource(task::with([
+            task::with([
                 'topics','owner','files',
                 'status_last',
                 'comments_lasted'=>[
@@ -38,8 +38,7 @@ class TasksController extends Controller
                     $query->whereIn('name', ['Creado', 'Publicado', 'Por asignar']);
                 })
                 ->orderBy('created_at', 'desc')
-                ->paginate($request->input('num')?? 5)))
-                ->response()->getData(true);
+                ->paginate($request->input('num')?? 5));
     }
 
 
