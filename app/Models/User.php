@@ -92,6 +92,10 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(task::class,'own_id');
     }
+    public function tasks_desc(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->tasks()->orderBy('created_at','desc');
+    }
 
     public function messages(): \Illuminate\Database\Eloquent\Relations\HasMany
     {

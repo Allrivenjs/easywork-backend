@@ -25,11 +25,19 @@ class TasksController extends Controller
     public function index(Request $request)
     {
         return response([
-            ShowTasksResource::collection(task::with(['topics','owner', 'status', 'files'])
+            ShowTasksResource::collection(task::with([
+                'topics','owner','files',
+                'status_last',
+                'comments_lasted'=>[
+                    'owner',
+                    'replies'=>[
+                        'owner',
+                    ],
+                ]])
                 ->whereHas('status', function ($query){
                     $query->whereIn('name', ['Creado', 'Publicado', 'Por asignar']);
                 })
-                ->orderByDesc('id')
+                ->orderBy('created_at', 'desc')
                 ->paginate($request->input('num')?? 5))
                 ->response()->getData(true)
         ])->setStatusCode(Response::HTTP_OK);
@@ -42,7 +50,14 @@ class TasksController extends Controller
      */
     public function getTasksForSlug($task): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
-        $task = task::with(['files','topics','owner', 'status'])
+        $task = task::with(['files','topics','owner',
+            'status_last',
+            'comments_lasted'=>[
+                'owner',
+                'replies'=>[
+                    'owner',
+                ],
+            ]])
             ->where('slug','LIKE', $task)
             ->firstOrFail();
         return response([
