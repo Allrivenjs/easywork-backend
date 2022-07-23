@@ -21,6 +21,10 @@ class ProfileController extends Controller
     {
         return response([
             task::query()->with([
+            'topics',
+            'owner',
+            'files',
+            'status_last',
                 'comments_lasted'=>[
                     'owner',
                     'replies'=>[
@@ -37,6 +41,10 @@ class ProfileController extends Controller
         $Profile = profile::query()->with([
             'user'=> [
                 'tasks'=>[
+                    'topics',
+                    'owner',
+                    'files',
+                    'status_last',
                     'comments_lasted'=>[
                         'owner',
                         'replies'=>[
