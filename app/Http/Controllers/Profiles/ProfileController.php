@@ -25,13 +25,14 @@ class ProfileController extends Controller
             'owner',
             'files',
             'status_last',
-                'comments_lasted'=>[
+            'comments_lasted'=>[
                     'owner',
                     'replies'=>[
                         'owner',
                     ],
                 ]
-            ])->where('own_id', auth()->id())->paginate(5)
+            ])->where('own_id', auth()->id())->orderBy('created_at', 'desc')
+                ->paginate(5)
         ])->setStatusCode(Response::HTTP_OK);
     }
 
