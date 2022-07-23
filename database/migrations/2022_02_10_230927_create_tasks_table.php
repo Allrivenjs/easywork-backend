@@ -60,7 +60,7 @@ return new class extends Migration
             $table->id();
 
             $table->foreignIdFor(\App\Models\profile::class)->constrained();
-            $table->foreignIdFor(\App\Models\topic::class)->constrained();
+            $table->foreignIdFor(\App\Models\Topic::class)->constrained();
 
             $table->timestamps();
         });
