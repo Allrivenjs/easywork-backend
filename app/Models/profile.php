@@ -53,4 +53,10 @@ class profile extends Model
     {
         return $this->belongsToMany(university::class);
     }
+
+    public function topics(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Topic::class);
+    }
+
 }

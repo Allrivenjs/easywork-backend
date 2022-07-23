@@ -15,7 +15,7 @@ class TaskStoreResquest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Auth::check();
     }
 
     /**
@@ -30,7 +30,6 @@ class TaskStoreResquest extends FormRequest
             'description' => 'required',
             'difficulty'=>['required',Rule::in(['easy','easy-medium','medium','medium-hard','hard'])],
             'topics'=>'required',
-            'files'=>'array'
         ];
     }
 }

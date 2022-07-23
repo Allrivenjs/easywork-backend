@@ -10,29 +10,7 @@ use Illuminate\Database\Seeder;
 
 class TasksSeeder extends Seeder
 {
-    protected $topics = [
-        'Matematicas',
-        'Fisica',
-        'Quimica',
-        'Programacion',
-        'Logica',
-        'Diseno',
-        'Negocios',
-        'Estadistica',
-        'Lenguas',
-        'Deporte',
-        'Musica'
-    ];
 
-    protected $status = [
-        'Creado',
-        'Publicado',
-        'Por asignar',
-        'Asignado',
-        'En proceso',
-        'Finalizado',
-        'Entregado'
-    ];
     /**
      * Run the database seeds.
      *
@@ -40,29 +18,8 @@ class TasksSeeder extends Seeder
      */
     public function run()
     {
-        foreach ($this->topics as $key => $data){
-            Topic::create([
-                'name'=>$data
-            ]);
-        }
-        foreach ($this->status as $key => $data){
-            Status::create([
-                'name'=>$data
-            ]);
-        }
-
-        $tasks = task::factory(1)->create([
-            'status_id'=>Status::all()->random()->id
-        ]);
-
-        foreach ($tasks as $task){
-            $task->topics()->attach([
-                rand(1,5),
-                rand(6,11)
-            ]);
-        }
-
-
-
+        task::factory()->count(100)->create(['status_id'=>Status::all()->random()->id])
+            ->each(fn ($task) =>
+            $task->topics()->attach([rand(1,5), rand(6,11)]));
     }
 }

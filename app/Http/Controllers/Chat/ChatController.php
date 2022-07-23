@@ -61,6 +61,7 @@ class ChatController extends Controller
             'message' => 'required|exists:messages,id',
         ]);
         Message::query()->find($request->query('message'))->markAsReadTo();
+        return Response(null);
     }
 
 }

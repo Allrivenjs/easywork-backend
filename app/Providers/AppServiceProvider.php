@@ -5,11 +5,8 @@ namespace App\Providers;
 
 use App\Http\Controllers\Chat\Chat;
 use App\Interfaces\Chat\RoomInterface;
-use App\Models\task;
-use App\Observers\TaskObserve;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Pluralizer;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -34,7 +31,6 @@ class AppServiceProvider extends ServiceProvider
 //        Pluralizer::useLanguage('spanish');
         Schema::defaultStringLength(125);
         Model::preventLazyLoading(! app()->isProduction());
-        task::observe(TaskObserve::class);
         $this->app->singleton(RoomInterface::class, Chat::class);
     }
 }

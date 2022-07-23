@@ -24,8 +24,6 @@ class TasksController extends Controller
      */
     public function index(Request $request)
     {
-        //Create system show tasks, topics relevant, and show for event
-        //Show basic task
         return response([
             ShowTasksResource::collection(task::with(['topics','owner', 'status', 'files'])
                 ->whereHas('status', function ($query){
@@ -59,30 +57,27 @@ class TasksController extends Controller
      * @param TaskStoreResquest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TaskStoreResquest $request)
+    public function store(TaskStoreResquest $request): \Illuminate\Http\Response
     {
-        $task = task::create($request->all());
+        $task = task::query()->create($request->all());
         $task->topics()->attach(json_decode($request->input('topics')));
-        if ($request->hasFile('files')){
-            foreach ($request->file('files') as $item){
-                $task->files()->create([
-                    "url"=> Storage::disk('local')->put('Files/jobs', $item),
-                    'mime'=> $item->extension(),
-                    'originalName'=> $item->getFilename()
-                ]);
-            }
-        }
-        //Notificamos a todos los usuarios que tengan el relacion con los topis que seleccionaron
-        //consultamos todos los usuarios que tengan alguno de los topics que seleccionaron
-        $users = $task->topics->map(function ($topic){
-            return $topic->users;
-        })->flatten()->unique();
-//        $task->topics()->get()->each(function ($topic){
-//            $topic->users()->get()->each(function ($user) use ($topic){
-//                $user->notify(new \App\Notifications\TaskCreated($user, $topic));
-//            });
-//        });
-        return response(null)->setStatusCode(Response::HTTP_OK);
+        !$request->hasFile('files') ?: $task->saveFiles($request->file('files'));
+        return response(null);
+    }
+
+    public function destroy(task $task): \Illuminate\Http\Response
+    {
+        $task->softDeletes();
+        return response(null);
+    }
+
+    public function update(TaskStoreResquest $request, task $task): \Illuminate\Http\Response
+    {
+        $task->update($request->all());
+        $task->topics()->sync(json_decode($request->input('topics')));
+        !$task->files()->exists() ?:$task->updateFiles($request->file('files'), $task->files) ;
+        !$request->hasFile('files') ?: $task->saveFiles($request->file('files'));
+        return response(null);
     }
 
 

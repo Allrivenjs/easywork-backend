@@ -2,16 +2,22 @@
 
 namespace App\Models;
 
+use App\Jobs\NotificationTaskJob;
+use App\Traits\FilesSave;
+use App\Traits\Notificate;
 use Carbon\Carbon;
 use Database\Factories\TaskFactory;
 
+use GeneaLabs\LaravelPivotEvents\Traits\PivotEventTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 class task extends Model
 {
-    use HasFactory;
+    use HasFactory, FilesSave, Notificate, PivotEventTrait, SoftDeletes;
+
     protected $fillable=['name','slug','description','difficulty','status_id','own_id','finished_at'];
 
     protected $dates=[
@@ -20,6 +26,21 @@ class task extends Model
         'deleted_at',
         'finished_at'
     ];
+
+    public static function boot()
+    {
+        parent::boot();
+        if(!\App::runningInConsole()) {
+              static::pivotAttached(fn ($model) => self::sendNotification($model));
+              static::pivotSynced(fn ($model) => self::sendNotification($model));
+        }
+    }
+
+    static function sendNotification($model){
+        NotificationTaskJob::dispatch($model)
+                  ->onQueue('notifications')
+                  ->onConnection('database');
+    }
 
     /** @return TaskFactory */
     protected static function newFactory()
@@ -50,7 +71,7 @@ class task extends Model
 
     public function topics(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Topic::class);
+        return $this->belongsToMany(Topic::class ,'task_topic');
     }
 
     public function status(): \Illuminate\Database\Eloquent\Relations\BelongsTo

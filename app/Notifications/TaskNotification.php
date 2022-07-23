@@ -4,23 +4,22 @@ namespace App\Notifications;
 
 use App\Models\task;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Str;
 
-class TaskStoreNotification extends Notification
+class TaskNotification extends Notification implements ShouldQueue, ShouldBeUnique
 {
     use Queueable;
-    private $task;
+
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(task $task)
-    {
-        $this->task = $task;
-    }
+    public function __construct(private task $task){}
 
     /**
      * Get the notification's delivery channels.
@@ -30,8 +29,9 @@ class TaskStoreNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['database','broadcast'];
     }
+
 
     /**
      * Get the mail representation of the notification.
@@ -39,13 +39,6 @@ class TaskStoreNotification extends Notification
      * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    public function toMail($notifiable)
-    {
-        return (new MailMessage)
-                    ->line('📄Task created: '.$this->task->name)
-                    ->action('View Task', env('APP_URL_FRONTEND').'/task/'.$this->task->slug)
-                    ->line('Thank you for using our application!');
-    }
 
     /**
      * Get the array representation of the notification.
@@ -56,7 +49,9 @@ class TaskStoreNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            //
+            'task'=>$this->task,
+            'user'=>$this->task->owner()->get()->first()->FullName(),
+            'message'=>Str::limit($this->task->description,50),
         ];
     }
 }

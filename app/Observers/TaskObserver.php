@@ -2,25 +2,25 @@
 
 namespace App\Observers;
 
-use App\Jobs\SendTaskStoredJob;
+
 use App\Models\task;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
 
-
-class TaskObserve
+class TaskObserver
 {
     /**
      * Handle the task "created" event.
      *
-     * @param task $task
+     * @param  \App\Models\task  $task
      * @return void
      */
     public function created(task $task)
     {
-        $task->status_id = 2;
-        dispatch(new SendTaskStoredJob($task));
+        if(!\App::runningInConsole()) {
+            $task->status_id = 2;
+        }
     }
-
     /**
      * Handle the task "creating" event.
      * @param task $task
@@ -37,18 +37,18 @@ class TaskObserve
     /**
      * Handle the task "updated" event.
      *
-     * @param task $task
+     * @param  \App\Models\task  $task
      * @return void
      */
     public function updated(task $task)
     {
-        //
+
     }
 
     /**
      * Handle the task "deleted" event.
      *
-     * @param task $task
+     * @param  \App\Models\task  $task
      * @return void
      */
     public function deleted(task $task)
@@ -59,7 +59,7 @@ class TaskObserve
     /**
      * Handle the task "restored" event.
      *
-     * @param task $task
+     * @param  \App\Models\task  $task
      * @return void
      */
     public function restored(task $task)
@@ -70,7 +70,7 @@ class TaskObserve
     /**
      * Handle the task "force deleted" event.
      *
-     * @param task $task
+     * @param  \App\Models\task  $task
      * @return void
      */
     public function forceDeleted(task $task)

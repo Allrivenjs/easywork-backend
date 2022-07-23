@@ -91,10 +91,10 @@ Route::prefix('coursesAdmin')->group(function (){
 });
 
 Route::get('tasks/{task}', [TasksController::class, 'getTasksForSlug']);
-Route::apiResource('tasks', TasksController::class)->only('index','store');
+Route::apiResource('tasks', TasksController::class)->except('show', 'update');
+Route::post('tasks/{task:id}',[TasksController::class, 'update']);
 Route::apiResource('status',StatusController::class)->names('status');
 Route::apiResource('topics', TopicController::class)->names('topics');
-
 
 Route::get('getComments', [CommentController::class,'getComments'])->name('task.getComments');
 

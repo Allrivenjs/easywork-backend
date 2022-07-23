@@ -19,6 +19,9 @@ class UserFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
+            'lastname' => $this->faker->lastName(),
+            'phone' => $this->faker->phoneNumber(),
+            'birthday'=> $this->faker->date(),
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
             'profile_photo_path'=>'Images/users/'.$this->faker->image('public/storage/Images/users', 640,480, 'null', false),

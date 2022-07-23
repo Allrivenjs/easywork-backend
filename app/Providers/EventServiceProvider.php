@@ -2,10 +2,14 @@
 
 namespace App\Providers;
 
+use App\Jobs\NotificationTaskJob;
+use App\Models\task;
 use App\Models\User;
+use App\Observers\TaskObserver;
 use App\Observers\UserObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 
@@ -30,6 +34,6 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         User::observe(UserObserver::class);
-
+        task::observe(TaskObserver::class);
     }
 }

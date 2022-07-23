@@ -31,7 +31,6 @@ class Comment extends Model
                 'updated_at'=>$this->updated_at,
                 'replies'=>$this->replies()->get(),
                 'id'=>$this->id,
-
             ],
         );
     }
@@ -40,7 +39,7 @@ class Comment extends Model
 
     public function replies(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(Comment::class, 'parent_id');
+        return $this->hasMany(Comment::class, 'parent_id')->with(['replies','owner']);
     }
 
     public function parent(): \Illuminate\Database\Eloquent\Relations\BelongsTo

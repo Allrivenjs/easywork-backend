@@ -57,6 +57,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+
     public function getCreatedAtAttribute($value): string
     {
         return Carbon::parse($value)->diffForHumans();

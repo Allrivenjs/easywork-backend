@@ -44,12 +44,8 @@ class CommentController extends Controller
             'parent_id' => $request->parent_id,
         ]);
 
-
-        User::query()->whereHas('comments', function ($query) use ($request) {
-            $query->where('comments.id', $request->parent_id);
-        })->get()->each(function ($user) use ($comment) {
-            $user->notify(new CommentReplyNotification($comment));
-        });
+        User::query()->whereHas('comments', fn ($q) => $q->where('comments.id', $request->parent_id))
+            ->get()->each(fn ($user) => $user->notify(new CommentReplyNotification($comment)));
 
         return response(null)->setStatusCode(Response::HTTP_OK);
     }
@@ -59,7 +55,7 @@ class CommentController extends Controller
         $request->validate([
             'task_id' => 'required|exists:tasks,id',
         ]);
-        return response(Comment::query()->with('replies')->whereHas('commentable',
+        return response(Comment::query()->with(['replies', 'owner'])->whereHas('commentable',
             fn($query)  => $query->where('tasks.id', $request->query('task_id'))
         )->get());
     }

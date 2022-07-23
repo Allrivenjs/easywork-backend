@@ -55,6 +55,17 @@ return new class extends Migration
 
             $table->timestamps();
         });
+
+        Schema::create('profile_topic', function (Blueprint $table) {
+            $table->id();
+
+            $table->foreignIdFor(\App\Models\profile::class)->constrained();
+            $table->foreignIdFor(\App\Models\topic::class)->constrained();
+
+            $table->timestamps();
+        });
+
+
     }
 
     /**

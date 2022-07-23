@@ -28,4 +28,9 @@ class Topic extends Model
     {
         return $this->belongsToMany(task::class);
     }
+
+    public function profiles(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(profile::class);
+    }
 }

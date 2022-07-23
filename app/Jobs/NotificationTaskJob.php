@@ -3,27 +3,29 @@
 namespace App\Jobs;
 
 use App\Models\task;
-use App\Notifications\TaskStoreNotification;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
+
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Artisan;
 
-class SendTaskStoredJob implements ShouldQueue
+
+class NotificationTaskJob  implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    private $task;
+
+
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(task $task)
-    {
-        $this->task = $task;
+    public function __construct(private task $task){
+
     }
+
 
     /**
      * Execute the job.
@@ -32,11 +34,6 @@ class SendTaskStoredJob implements ShouldQueue
      */
     public function handle()
     {
-        try {
-            $this->task->owner->notify(new TaskStoreNotification($this->task));
-        }catch (\Throwable $exception){
-
-        }
-
+        $this->task->notifyTask();
     }
 }

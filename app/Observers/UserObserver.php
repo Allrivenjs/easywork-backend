@@ -22,10 +22,12 @@ class UserObserver
 //        }
 
         $user->assignRole('student');
-        $user->Profile()->create([
-            'slug' => Str::uuid(),
-            'user_id' => $user->id,
-        ]);
+        if(!\App::runningInConsole()) {
+            $user->Profile()->create([
+                'slug' => Str::uuid(),
+                'user_id' => $user->id,
+            ]);
+        }
     }
 
     /**
