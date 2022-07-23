@@ -29,6 +29,8 @@ class ShowTasksResource extends JsonResource
             ],
             'topics'=>$this->topics,
             'files'=>$this->files,
+            'comments_lasted'=>$this->comments_lasted,
+            'status_last'=>$this->status_last,
             'created_at'=>$this->created_at,
             'updated_at'=>$this->updated_at
         ];
