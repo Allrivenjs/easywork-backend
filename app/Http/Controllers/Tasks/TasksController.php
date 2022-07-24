@@ -48,19 +48,18 @@ class TasksController extends Controller
      */
     public function getTasksForSlug($task): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
-        $task = task::with(['files','topics','owner',
-            'status_last',
-            'comments_lasted'=>[
-                'owner',
-                'replies'=>[
+        return response(
+            task::with(['files','topics','owner',
+                'status_last',
+                'comments_lasted'=>[
                     'owner',
-                ],
-            ]])
-            ->where('slug','LIKE', $task)
-            ->firstOrFail();
-        return response([
-            new  ShowTasksResource($task),
-        ])->setStatusCode(Response::HTTP_OK);
+                    'replies'=>[
+                        'owner',
+                    ],
+                ]])
+                ->where('slug','LIKE', $task)
+                ->firstOrFail()
+        );
     }
 
 

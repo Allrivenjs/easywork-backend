@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Models\PasarelaDePago;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Tarjetas extends Model
+class PaymentPlatform extends Model
 {
     use HasFactory;
 }

@@ -13,15 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tarjetas', function (Blueprint $table) {
+        Schema::create('payment_platforms', function (Blueprint $table) {
             $table->id();
-            $table->string('type_tarjeta');
-            $table->string('numero_tarjeta');
-            $table->string('fecha_tarjeta');
-            $table->string('estado_tarjeta');
-            $table->string('cvv_tarjeta');
-            $table->foreignIdFor(\App\Models\User::class)->constrained();
-            $table->json('detalles_tarjeta');
+            $table->string('name', 50);
+            $table->string('image');
+            $table->boolean('subscriptions_enabled')->default(false);
             $table->timestamps();
         });
     }
@@ -33,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tarjetas');
+        Schema::dropIfExists('payment_platforms');
     }
 };
