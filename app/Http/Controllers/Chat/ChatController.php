@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Chat;
+namespace App\Http\Controllers\Payment\Chat;
 
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Payment\Controller;
 use App\Interfaces\Chat\RoomInterface;
 use App\Models\Message;
 use Illuminate\Http\Request;

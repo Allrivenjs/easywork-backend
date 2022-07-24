@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Notification;
+namespace App\Http\Controllers\Payment\Notification;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Payment\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

@@ -1,19 +1,20 @@
 <?php
 
 
-use App\Http\Controllers\Auth\V1\AuthController;
-use App\Http\Controllers\Chat\ChatController;
-use App\Http\Controllers\Comment\CommentController;
-use App\Http\Controllers\Controller;
-use App\Http\Controllers\Courses\CoursesController;
-use App\Http\Controllers\Notification\NotificationController;
-use App\Http\Controllers\Profiles\ProfileController;
-use App\Http\Controllers\Profiles\UserController;
-use App\Http\Controllers\Profiles\UserTypeController;
-use App\Http\Controllers\ShowContentFileBlockController;
-use App\Http\Controllers\Tasks\StatusController;
-use App\Http\Controllers\Tasks\TasksController;
-use App\Http\Controllers\Tasks\TopicController;
+use App\Http\Controllers\Payment\Auth\V1\AuthController;
+use App\Http\Controllers\Payment\Chat\ChatController;
+use App\Http\Controllers\Payment\Comment\CommentController;
+use App\Http\Controllers\Payment\Controller;
+use App\Http\Controllers\Payment\Courses\CoursesController;
+use App\Http\Controllers\Payment\Notification\NotificationController;
+use App\Http\Controllers\Payment\PaymentController;
+use App\Http\Controllers\Payment\Profiles\ProfileController;
+use App\Http\Controllers\Payment\Profiles\UserController;
+use App\Http\Controllers\Payment\Profiles\UserTypeController;
+use App\Http\Controllers\Payment\ShowContentFileBlockController;
+use App\Http\Controllers\Payment\Tasks\StatusController;
+use App\Http\Controllers\Payment\Tasks\TasksController;
+use App\Http\Controllers\Payment\Tasks\TopicController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -102,5 +103,13 @@ Route::get('getComments', [CommentController::class,'getComments'])->name('task.
 Route::get('ChatPresentChannel', function (){
     broadcast(new \App\Events\ChatPresentChannel(\App\Models\User::find(1)));
 });
+
+Route::prefix('payments')->group(function (){
+    Route::post('pay', [PaymentController::class, 'pay'])->name('payments.pay');
+    Route::get('approval', [PaymentController::class, 'approval'])->name('payments.approval');
+    Route::get('cancelled', [PaymentController::class, 'cancelled'])->name('payments.cancelled');
+});
+
+
 
 

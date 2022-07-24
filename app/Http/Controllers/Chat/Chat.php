@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Chat;
+namespace App\Http\Controllers\Payment\Chat;
 
 use App\Events\MessageNotification;
 use App\Interfaces\Chat\ChatInterface;

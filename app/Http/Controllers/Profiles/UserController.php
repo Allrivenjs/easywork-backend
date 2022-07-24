@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Profiles;
+namespace App\Http\Controllers\Payment\Profiles;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Payment\Controller;
 use App\Http\Resources\ProfileResource;
 use App\Models\profile;
 use App\Models\User;
