@@ -51,7 +51,7 @@ Route::middleware('auth:api')->group(function (){
     Route::post('user/update', [UserController::class, 'update'])->name('user.update');
     Route::post('profile/update',[ProfileController::class, 'updateAboutProfile'])->name('profile.update');
     Route::post('profile/image/update',[ProfileController::class, 'updateImageProfile'])->name('profile.image.update');
-    Route::get('getAllMeTask',[ProfileController::class, 'getAllMeTask'])->name('profile.getAllTaskMe');
+
 
         Route::get('get-my-rooms', [ChatController::class, 'getRooms'])->name('get-my-rooms');
         Route::get('chat/message/{room_id}', [ChatController::class, 'getMessages'])->name('chat.getMessages');
@@ -97,7 +97,7 @@ Route::apiResource('status',StatusController::class)->names('status');
 Route::apiResource('topics', TopicController::class)->names('topics');
 
 Route::get('getComments', [CommentController::class,'getComments'])->name('task.getComments');
-
+Route::get('me/tasks',[ProfileController::class, 'index'])->name('profile.me.task')->middleware(['auth:api']);
 
 Route::get('ChatPresentChannel', function (){
     broadcast(new \App\Events\ChatPresentChannel(\App\Models\User::find(1)));

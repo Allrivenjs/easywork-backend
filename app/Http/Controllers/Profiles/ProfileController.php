@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Profiles;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProfileResource;
+
 use App\Models\profile;
 use App\Models\task;
 use Illuminate\Database\QueryException;
@@ -15,23 +16,23 @@ use Symfony\Component\HttpFoundation\Response;
 class ProfileController extends Controller
 {
 
-    public function getAllMeTask(): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    public function index(Request $request)
     {
-        return response([
-            task::query()->with([
-            'topics',
-            'owner',
-            'files',
-            'status_last',
-            'comments_lasted'=>[
+        return response(
+            task::with([
+                'topics',
+                'owner',
+                'files',
+                'status_last',
+                'comments_lasted'=>[
                     'owner',
                     'replies'=>[
                         'owner',
                     ],
                 ]
-            ])->where('own_id', auth()->id())->orderBy('created_at', 'desc')
-                ->paginate(5)
-        ])->setStatusCode(Response::HTTP_OK);
+            ])->where('own_id', auth()->id())
+                ->orderBy('created_at', 'desc')->simplePaginate($request->input('num')?? 5)
+        );
     }
 
 

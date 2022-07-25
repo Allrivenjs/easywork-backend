@@ -4,11 +4,9 @@ namespace App\Http\Controllers\Tasks;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TaskStoreResquest;
-use App\Http\Resources\ShowTasksResource;
 use App\Models\task;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Symfony\Component\HttpFoundation\Response;
+
 
 class TasksController extends Controller
 {
