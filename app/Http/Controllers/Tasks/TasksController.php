@@ -79,7 +79,7 @@ class TasksController extends Controller
 
     public function destroy(task $task): \Illuminate\Http\Response
     {
-        $task->softDeletes();
+        $task->softDeleted();
         return response(null);
     }
 
