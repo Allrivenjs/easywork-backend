@@ -3,7 +3,8 @@
 namespace App\Providers;
 
 
-use App\Http\Controllers\Payment\Chat\Chat;
+
+use App\Http\Controllers\Chat\Chat;
 use App\Interfaces\Chat\RoomInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Schema;
