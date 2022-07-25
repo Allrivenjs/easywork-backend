@@ -42,7 +42,7 @@ class GitCommand extends Command
         try {
             //exec('git checkout cpanel-production');
             exec('git pull');
-            exec('php composer.phar install');
+            exec('php composer install');
             $this->info('Command success');
         }catch (Exception $e){
             Log::info($e);
