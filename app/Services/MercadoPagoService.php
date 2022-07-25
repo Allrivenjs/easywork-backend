@@ -2,113 +2,67 @@
 
 namespace App\Services;
 
-use Illuminate\Http\Request;
-use App\Traits\ConsumesExternalServices;
-use App\Services\CurrencyConversionService;
+use JetBrains\PhpStorm\ArrayShape;
+use MercadoPago\{Payment, Payer, SDK};
 
 class MercadoPagoService
 {
-    use ConsumesExternalServices;
-
-    protected $baseUri;
-
-    protected $key;
-
-    protected $secret;
-
-    protected $baseCurrency;
-
-    protected $converter;
-
-    public function __construct(CurrencyConversionService $converter)
+    public function __construct()
     {
-        $this->baseUri = config('services.mercadopago.base_uri');
-        $this->key = config('services.mercadopago.key');
-        $this->secret = config('services.mercadopago.secret');
-        $this->baseCurrency = config('services.mercadopago.base_currency');
-
-        $this->converter = $converter;
+        SDK::setAccessToken(config('services.mercado-pago.secret'));
     }
 
-    public function resolveAuthorization(&$queryParams, &$formParams, &$headers)
+    #[ArrayShape(['status' => "string", 'status_detail' => "string", 'id' => "int", 'date_approved' => "\DateTime", 'payer' => "\MercadoPago\Payer|object"])] public function payment(array $data = []): array
     {
-        $queryParams['access_token'] = $this->resolveAccessToken();
-    }
-
-    public function decodeResponse($response)
-    {
-        return json_decode($response);
-    }
-
-    public function resolveAccessToken()
-    {
-        return $this->secret;
-    }
-
-    public function handlePayment(Request $request)
-    {
-        $request->validate([
-            'card_network' => 'required',
-            'card_token' => 'required',
-            'email' => 'required',
-        ]);
-
-        $payment = $this->createPayment(
-            $request->value,
-            $request->currency,
-            $request->card_network,
-            $request->card_token,
-            $request->email,
+        $payment = new Payment();
+        $payment->transaction_amount = (float)$data['transactionAmount'];
+        $payment->token = $data['token'];
+        $payment->description = $data['description'];
+        $payment->installments = (int)$data['installments'];
+        $payment->payment_method_id = $data['paymentMethodId'];
+        $payment->issuer_id = (int)$data['issuer'];
+        $payer = new Payer();
+        $payer->email = $data['email'];
+        $payer->identification = array(
+            "type" => $data['identificationType'],
+            "number" => $data['identificationNumber']
         );
+        $payment->payer = $payer;
+        $payment->save();
 
-        if ($payment->status === "approved") {
-            $name = $payment->payer->first_name;
-            $currency = strtoupper($payment->currency_id);
-            $amount = number_format($payment->transaction_amount, 0, ',', '.');
-
-            $originalAmount = $request->value;
-            $originalCurrency = strtoupper($request->currency);
-
-            return response(
-                ['payment' => "Thanks, {$name}. We received your {$originalAmount}{$originalCurrency} payment ({$amount}{$currency})."]
-            );
-        }
-
-        return response([
-            'error' => 'We were unable to confirm your payment. Try again, please',
-        ]);
-    }
-
-    public function handleApproval()
-    {
-        //
-    }
-
-    public function createPayment($value, $currency, $cardNetwork, $cardToken, $email, $installments = 1)
-    {
-        return $this->makeRequest(
-            'POST',
-            '/v1/payments',
-            [],
-            [
-                'payer' => [
-                    'email' => $email,
-                ],
-                'binary_mode' => true,
-                'transaction_amount' => round($value * $this->resolveFactor($currency)),
-                'payment_method_id' => $cardNetwork,
-                'token' => $cardToken,
-                'installments' => $installments,
-                'statement_descriptor' => config('app.name'),
-            ],
-            [],
-            $isJsonRequest = true,
+        return array(
+            'status' => $payment->status,
+            'status_detail' => $payment->status_detail,
+            'id' => $payment->id,
+            'date_approved' => $payment->date_approved,
+            'payer' => $payment->payer,
         );
     }
 
-    public function resolveFactor($currency)
+    #[ArrayShape(['status' => "mixed", 'status_detail' => "mixed", 'id' => "mixed", 'date_approved' => "mixed", 'payer' => "mixed"])] public function getPayment(string $id): array
     {
-        return $this->converter
-            ->convertCurrency($currency, $this->baseCurrency);
+        $payment = Payment::find_by_id($id);
+
+        return array(
+            'status' => $payment->status,
+            'status_detail' => $payment->status_detail,
+            'id' => $payment->id,
+            'date_approved' => $payment->date_approved,
+            'payer' => $payment->payer,
+        );
+    }
+    static function Rules(): array
+    {
+        return [
+            'transaction_amount'=>'required|numeric',
+            'token'=>'required',
+            'description'=>'required',
+            'installments'=>'required|numeric',
+            'payment_method_id'=>'required',
+            'issuer_id'=>'required',
+            'email'=> 'required|email,exists:users,email',
+            'identificationType'=>'required',
+            'identificationNumber'=>'required',
+        ];
     }
 }

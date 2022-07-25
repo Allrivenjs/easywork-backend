@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Payment\Comment;
+namespace App\Http\Controllers\Comment;
 
-use App\Http\Controllers\Payment\Controller;
+use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use App\Models\task;
 use App\Models\User;

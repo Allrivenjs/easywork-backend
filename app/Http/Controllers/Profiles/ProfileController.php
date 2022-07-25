@@ -1,16 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Payment\Profiles;
+namespace App\Http\Controllers\Profiles;
 
-use App\Http\Controllers\Payment\Controller;
+use App\Http\Controllers\Controller;
 use App\Http\Resources\ProfileResource;
 use App\Models\profile;
 use App\Models\task;
-use App\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use JetBrains\PhpStorm\ArrayShape;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -55,7 +53,7 @@ class ProfileController extends Controller
                 ],
             ]
         ])
-            ->where('slug','LIKE', $profile)
+            ->where('slug',$profile)
             ->orWhere('id',$profile)
             ->firstOrFail();
         return response([new ProfileResource($Profile)])->setStatusCode(Response::HTTP_OK);

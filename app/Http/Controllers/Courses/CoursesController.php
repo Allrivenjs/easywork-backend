@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Payment\Courses;
+namespace App\Http\Controllers\Courses;
 
-use App\Http\Controllers\Payment\Controller;
+use App\Http\Controllers\Controller;
 use App\Http\Resources\CourseResource;
 use App\Models\course;
 use App\Models\section;

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Payment\Profiles;
+namespace App\Http\Controllers\Profiles;
 
-use App\Http\Controllers\Payment\Controller;
+use App\Http\Controllers\Controller;
 use App\Models\university;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;

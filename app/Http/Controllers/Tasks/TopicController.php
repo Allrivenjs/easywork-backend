@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Payment\Tasks;
+namespace App\Http\Controllers\Tasks;
 
-use App\Http\Controllers\Payment\Controller;
+use App\Http\Controllers\Controller;
 use App\Models\Topic;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;

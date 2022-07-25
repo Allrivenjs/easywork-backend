@@ -18,7 +18,7 @@ return [
         'base_uri' => env('CURRENCY_CONVERSION_BASE_URI'),
         'api_key' => env('CURRENCY_CONVERSION_API_KEY'),
     ],
-    'mercadopago' => [
+    'mercado-pago' => [
         'base_uri' => env('MERCADOPAGO_BASE_URI'),
         'key' => env('MERCADOPAGO_KEY'),
         'secret' => env('MERCADOPAGO_SECRET'),

@@ -13,8 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('pagos', function (Blueprint $table) {
+        Schema::create('pays', function (Blueprint $table) {
             $table->id();
+
+             $table->foreignIdFor(\App\Models\task::class)->constrained();
+             $table->foreignIdFor(\App\Models\User::class)->constrained();
+
+
+
             $table->timestamps();
         });
     }
@@ -26,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pagos');
+        Schema::dropIfExists('pays');
     }
 };

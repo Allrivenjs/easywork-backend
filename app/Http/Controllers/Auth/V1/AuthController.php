@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Payment\Auth\V1;
+namespace App\Http\Controllers\Auth\V1;
 
-use App\Http\Controllers\Payment\Controller;
+
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\QueryException;

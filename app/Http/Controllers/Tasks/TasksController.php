@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Payment\Tasks;
+namespace App\Http\Controllers\Tasks;
 
-use App\Http\Controllers\Payment\Controller;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\TaskStoreResquest;
 use App\Http\Resources\ShowTasksResource;
 use App\Models\task;
