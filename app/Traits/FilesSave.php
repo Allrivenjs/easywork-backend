@@ -27,10 +27,7 @@ trait FilesSave
                 'originalName'=>  time()."_".$file->getClientOriginalName()
             ]);
         }
-        foreach ($oldFiles as $file) {
-            Storage::disk('local')->delete($file->url);
-            $this->files()->where('id', $file->id)->delete();
-        }
+        empty($oldFiles) ?: $this->destroyFiles($oldFiles);
     }
 
     public function destroyFiles($files): void

@@ -112,4 +112,9 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Comment::class, 'own_id');
     }
 
+    public function tasksAssigned(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(AcceptTask::class);
+    }
+
 }

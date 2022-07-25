@@ -98,4 +98,9 @@ class task extends Model
         return $this->comments()->orderBy('created_at','desc');
     }
 
+    public function accept_tasks(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(AcceptTask::class);
+    }
+
 }
