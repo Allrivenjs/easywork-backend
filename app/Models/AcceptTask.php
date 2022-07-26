@@ -9,7 +9,7 @@ class AcceptTask extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['task_id', 'user_id', 'charge', 'remove_at'];
+    protected $fillable = ['task_id', 'user_id', 'charge', 'remove_at', 'accepted_at','paid_out_at'];
 
     protected $dates = [
         'created_at',
@@ -17,12 +17,12 @@ class AcceptTask extends Model
         'remove_at',
     ];
 
-    public function task()
+    public function task(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Task::class);
     }
 
-    public function user()
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class);
     }

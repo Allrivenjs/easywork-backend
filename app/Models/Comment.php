@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -32,6 +33,16 @@ class Comment extends Model
                 'id' => $this->id,
             ],
         );
+    }
+
+    public function getCreatedAtAttribute($value): string
+    {
+        return Carbon::parse($value)->diffForHumans();
+    }
+
+    public function getUpdatedAtAttribute($value): string
+    {
+        return Carbon::parse($value)->diffForHumans();
     }
 
     public function replies(): \Illuminate\Database\Eloquent\Relations\HasMany

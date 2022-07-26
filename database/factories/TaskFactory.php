@@ -23,7 +23,7 @@ class TaskFactory extends Factory
 
         return [
             'name' => $name,
-            'slug' => Str::slug($name) . '-' . Str::random(10),
+            'slug' => Str::slug($name).'-'.Str::random(10),
             'description' => $this->faker->text(250),
             'difficulty' => $this->faker->randomElement(['easy', 'easy-medium', 'medium', 'medium-hard', 'hard']),
             'own_id' => User::all()->random()->id,

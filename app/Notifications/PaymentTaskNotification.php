@@ -3,13 +3,12 @@
 namespace App\Notifications;
 
 use App\Models\task;
-use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 
-class TaskAcceptNotification extends Notification implements ShouldQueue, ShouldBeUnique
+class PaymentTaskNotification extends Notification implements ShouldQueue, ShouldBeUnique
 {
     use Queueable;
 
@@ -18,9 +17,8 @@ class TaskAcceptNotification extends Notification implements ShouldQueue, Should
      *
      * @return void
      */
-    public function __construct(private Task $task, private User $user, private float $charge)
-    {
-    }
+    public function __construct(private $task, private float $mount){}
+
 
     /**
      * Get the notification's delivery channels.
@@ -43,8 +41,7 @@ class TaskAcceptNotification extends Notification implements ShouldQueue, Should
     {
         return [
             'task' => $this->task,
-            'user_accept' => $this->user,
-            'charge' => $this->charge,
+            'message' => "Se ha realizado el pago de {$this->mount} por la realización de la tarea: {$this->task->title}",
         ];
     }
 }

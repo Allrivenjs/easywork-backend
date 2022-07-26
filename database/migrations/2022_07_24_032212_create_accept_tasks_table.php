@@ -17,8 +17,11 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(\App\Models\task::class)->constrained();
             $table->foreignIdFor(\App\Models\User::class)->constrained();
-            $table->float('charge',20,4);
+            $table->float('charge', 20, 4);
             $table->timestamp('remove_at')->nullable();
+            $table->timestamp('accepted_at')->nullable();
+            $table->timestamp('paid_out_at')->nullable();
+
             $table->timestamps();
         });
     }

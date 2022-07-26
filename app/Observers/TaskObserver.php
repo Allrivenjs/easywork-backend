@@ -16,7 +16,7 @@ class TaskObserver
     public function created(task $task)
     {
         if (! \App::runningInConsole()) {
-            $task->status_id = 2;
+            $task->status_id = task::STATUS_PUBLICADO;
         }
     }
 
@@ -30,7 +30,7 @@ class TaskObserver
     {
         if (! \App::runningInConsole()) {
             $task->slug = Str::uuid();
-            $task->status_id = 1;
+            $task->status_id = task::STATUS_CREATED;
             $task->own_id = Auth()->guard('api')->user()->getAuthIdentifier();
         }
     }

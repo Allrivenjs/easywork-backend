@@ -9,7 +9,7 @@ use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 
-class TaskAcceptNotification extends Notification implements ShouldQueue, ShouldBeUnique
+class TaskAfterAcceptNotification extends Notification implements ShouldQueue, ShouldBeUnique
 {
     use Queueable;
 
@@ -45,6 +45,7 @@ class TaskAcceptNotification extends Notification implements ShouldQueue, Should
             'task' => $this->task,
             'user_accept' => $this->user,
             'charge' => $this->charge,
+            'message' => "El usuario {$this->user->name} ha aceptado tu petición de realizar la tarea {$this->task->title} por un monto de {$this->charge}",
         ];
     }
 }

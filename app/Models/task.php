@@ -26,11 +26,17 @@ class task extends Model
     ];
 
     const STATUS_CREATED = 1;
+
     const STATUS_PUBLICADO = 2;
+
     const STATUS_POR_ASIGNAR = 3;
+
     const STATUS_ASIGNADO = 4;
+
     const STATUS_EN_PROCESO = 5;
+
     const STATUS_FINALIZADO = 6;
+
     const STATUS_ENTREGADO = 7;
 
     public static function boot()
@@ -72,7 +78,7 @@ class task extends Model
 
     public function owner(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(User::class, 'own_id')->with(['profile'=>['image']]);
+        return $this->belongsTo(User::class, 'own_id')->with(['profile' => ['image']]);
     }
 
     public function topics(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
@@ -110,4 +116,3 @@ class task extends Model
         return $this->hasMany(AcceptTask::class);
     }
 }
-

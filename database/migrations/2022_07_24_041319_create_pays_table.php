@@ -19,9 +19,10 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\task::class)->constrained();
             $table->foreignIdFor(\App\Models\User::class)->constrained();
             $table->foreignIdFor(\App\Models\AcceptTask::class)->constrained();
-            $table->float('paying');
+            $table->float('paying',30,4);
             $table->timestamp('paid_at')->nullable();
             $table->timestamp('refund_at')->nullable();
+            $table->longText('payment_data')->nullable();
             $table->timestamps();
         });
     }

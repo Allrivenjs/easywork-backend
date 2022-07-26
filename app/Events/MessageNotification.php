@@ -17,7 +17,9 @@ class MessageNotification implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct(public $response){}
+    public function __construct(public $response)
+    {
+    }
 
     /**
      * Get the channels the event should broadcast on.

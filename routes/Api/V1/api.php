@@ -37,8 +37,10 @@ Route::get('courses/{course}', [CoursesController::class, 'showCoursesWithSectio
 Route::get('courses/{course}/{video} ', [CoursesController::class, 'showVideo']);
 
 Route::middleware('auth:api')->group(function () {
-
-    Route::post('task/accept-task', [AcceptTaskController::class, 'index'])->name('tasks.accept-task');
+    Route::post('task/before-accept-task', [AcceptTaskController::class, 'beforeAccept'])->name('tasks.accept-task.beforeAccept');
+    Route::get('task/accept-task/list', [AcceptTaskController::class, 'index'])->name('tasks.accept-task.index');
+    Route::post('task/accept-task/decline', [AcceptTaskController::class, 'decline'])->name('tasks.accept-task.decline');
+    Route::post('task/accept-task/accept', [AcceptTaskController::class, 'accept'])->name('tasks.accept-task.accept');
 
     Route::get('me-notifications', [NotificationController::class, 'show']);
     Route::get('notifications-markAsRead', [NotificationController::class, 'markAsRead']);
@@ -58,6 +60,11 @@ Route::middleware('auth:api')->group(function () {
     Route::get('chat/exist-room-or-create', [ChatController::class, 'getExistRoom'])->name('chat.getExistRoom');
     Route::get('chat/markAsRead', [ChatController::class, 'markAsRead'])->name('chat.markAsRead');
     Route::post('chat/send-message', [ChatController::class, 'sendMessage'])->name('chat.sendMessage');
+
+    Route::prefix('payments')->group(function () {
+        Route::post('pay', [PaymentController::class, 'pay'])->name('payments.pay');
+    });
+
 
     Route::prefix('coursesAdmin')->group(function () {
         Route::middleware('can:coursesAdmin.course')->group(function () {
@@ -96,6 +103,4 @@ Route::get('ChatPresentChannel', function () {
     broadcast(new \App\Events\ChatPresentChannel(\App\Models\User::find(1)));
 });
 
-Route::prefix('payments')->group(function () {
-    Route::post('pay', [PaymentController::class, 'pay'])->name('payments.pay');
-});
+
