@@ -30,14 +30,13 @@ class ChatController extends Controller
     public function getExistRoom(Request $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         $request->validate([
-            'receiver_id' => 'required|numeric',
+            'receiver_id' => 'required|integer|exists:users,id',
         ]);
         $userId = Auth::guard('api')?->user()?->getAuthIdentifier();
         $receiver_id = $request->query('receiver_id');
         throw_if(is_null($receiver_id), 'Receiver id is required for query param');
         throw_if((int) $receiver_id == (int) $userId, 'You can not chat with yourself');
-        $match = $this->room->matchUser($receiver_id, $userId);
-
+        $match = $this->room->matchUser((int)$receiver_id, (int)$userId);
         $response = $match ?: $this->createChatRoom($receiver_id);
 
         return response($response);
