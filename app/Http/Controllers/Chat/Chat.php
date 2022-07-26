@@ -31,10 +31,8 @@ class Chat implements ChatInterface
 
     public function addUser($roomId, $userId): void
     {
-        $room = Room::query()->where('id',$roomId)->firstOrFail();
-        $user = User::query()->where('id',$userId)->firstOrFail();
-        print_r($room);
-        print_r($user);
+        $room = Room::query()->find($roomId);
+        $user = User::query()->find($userId);
         $room->users()->attach($user);
     }
 
