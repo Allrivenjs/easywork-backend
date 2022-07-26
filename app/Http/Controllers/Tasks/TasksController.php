@@ -84,12 +84,7 @@ class TasksController extends Controller
     {
         $task->update($request->all());
         !$request->hasFile('files') ?: ! $task->files()->exists() ?: $task->updateFiles($request->file('files'), $task->files);
-        try {
-            $task->topics()->sync(json_decode($request->input('topics')));
-        }catch (\Exception $e) {
-            return response(['error' => $e->getMessage()], 500);
-        }
-
+        $task->topics()->sync(json_decode($request->input('topics')));
         return response(null);
     }
 }
