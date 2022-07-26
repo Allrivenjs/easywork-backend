@@ -37,6 +37,7 @@ class ChatController extends Controller
         throw_if(is_null($receiver_id), 'Receiver id is required for query param');
         throw_if($receiver_id == $userId, 'You can not chat with yourself');
         $match = $this->room->matchUser($receiver_id, $userId);
+
         $response = $match ?: $this->createChatRoom($receiver_id);
 
         return response($response);
@@ -48,7 +49,6 @@ class ChatController extends Controller
         $userId = Auth::guard('api')?->user()?->getAuthIdentifier();
         $this->room->addUser($room->id, $receiver_id);
         $this->room->addUser($room->id, $userId);
-
         return $room;
     }
 
