@@ -10,12 +10,9 @@ use Illuminate\Support\Facades\Auth;
 
 class ChatController extends Controller
 {
-    private mixed $userId;
 
-    public function __construct(private RoomInterface $room)
-    {
-        $this->userId = Auth::guard('api')?->user()?->getAuthIdentifier();
-    }
+
+    public function __construct(private RoomInterface $room){}
 
     public function getRooms(): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
@@ -35,9 +32,10 @@ class ChatController extends Controller
         $request->validate([
             'receiver_id' => 'required',
         ]);
+        $userId = Auth::guard('api')?->user()?->getAuthIdentifier();
         $receiver_id = $request->query('receiver_id');
-        if ($receiver_id == $this->userId) throw new \Exception('You can not chat with yourself');
-        $match = $this->room->matchUser($receiver_id, $this->userId);
+        if ($receiver_id == $userId) throw new \Exception('You can not chat with yourself');
+        $match = $this->room->matchUser($receiver_id, $userId);
         $response = $match ?: $this->createChatRoom($receiver_id);
 
         return response($response);
@@ -46,9 +44,9 @@ class ChatController extends Controller
     public function createChatRoom($receiver_id): \App\Models\Room
     {
         $room = $this->room->createRoom(0);
-
+        $userId = Auth::guard('api')?->user()?->getAuthIdentifier();
         $this->room->addUser($room->id, $receiver_id);
-        $this->room->addUser($room->id, $this->userId);
+        $this->room->addUser($room->id, $userId);
 
         return $room;
     }
