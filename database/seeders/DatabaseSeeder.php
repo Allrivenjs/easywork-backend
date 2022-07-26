@@ -37,7 +37,7 @@ class DatabaseSeeder extends Seeder
             TopicAndStatusSeeder::class,
             RoleSeeder::class,
             UserSeeder::class,
-            CourseSeeder::class,
+//            CourseSeeder::class,
             TasksSeeder::class,
 
         ]);
