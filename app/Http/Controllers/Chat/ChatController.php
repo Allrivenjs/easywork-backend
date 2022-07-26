@@ -30,7 +30,7 @@ class ChatController extends Controller
     public function getExistRoom(Request $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         $request->validate([
-            'receiver_id' => 'required',
+            'receiver_id' => 'required|numeric',
         ]);
         $userId = Auth::guard('api')?->user()?->getAuthIdentifier();
         $receiver_id = $request->query('receiver_id');
