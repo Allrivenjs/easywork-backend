@@ -12,6 +12,7 @@ class section extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
     protected $fillable = ['name', 'course_id'];
 
     /** @return sectionsFactory */

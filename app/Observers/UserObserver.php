@@ -22,7 +22,7 @@ class UserObserver
 //        }
 
         $user->assignRole('student');
-        if(!\App::runningInConsole()) {
+        if (! \App::runningInConsole()) {
             $user->Profile()->create([
                 'slug' => Str::uuid(),
                 'user_id' => $user->id,

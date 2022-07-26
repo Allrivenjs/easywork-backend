@@ -18,13 +18,14 @@ class TaskFactory extends Factory
      */
     public function definition()
     {
-        $name= $this->faker->name();
+        $name = $this->faker->name();
+
         return [
-            'name'=>$name,
-            'slug'=>Str::slug($name),
-            'description'=>$this->faker->text(250),
-            'difficulty'=>$this->faker->randomElement(['easy','easy-medium','medium','medium-hard','hard']),
-            'own_id'=>User::all()->random()->id,
+            'name' => $name,
+            'slug' => Str::slug($name),
+            'description' => $this->faker->text(250),
+            'difficulty' => $this->faker->randomElement(['easy', 'easy-medium', 'medium', 'medium-hard', 'hard']),
+            'own_id' => User::all()->random()->id,
         ];
     }
 }

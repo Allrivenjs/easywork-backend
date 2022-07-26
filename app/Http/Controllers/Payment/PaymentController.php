@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Services\MercadoPagoService;
 use Illuminate\Http\Request;
 
-
 class PaymentController extends Controller
 {
     public function pay(Request $request)
@@ -16,8 +15,5 @@ class PaymentController extends Controller
         $request->validate(
             MercadoPagoService::Rules()
         );
-
-
     }
-
 }

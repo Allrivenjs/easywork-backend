@@ -9,11 +9,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TopicController extends Controller
 {
-
     public function __construct()
     {
-        $this->middleware('can:taskAdmin.task')->except('index','show');
-        $this->middleware('auth:api')->except('index','show');
+        $this->middleware('can:taskAdmin.task')->except('index', 'show');
+        $this->middleware('auth:api')->except('index', 'show');
     }
 
     /**
@@ -35,9 +34,10 @@ class TopicController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'
+            'name',
         ]);
         Topic::create([$request->input('name')]);
+
         return response(null)->setStatusCode(Response::HTTP_OK);
     }
 
@@ -62,9 +62,10 @@ class TopicController extends Controller
     public function update(Request $request, Topic $topic)
     {
         $request->validate([
-            'name'
+            'name',
         ]);
         $topic->update([$request->input('name')]);
+
         return response(null)->setStatusCode(Response::HTTP_OK);
     }
 
@@ -77,6 +78,7 @@ class TopicController extends Controller
     public function destroy(Topic $topic)
     {
         $topic->delete();
+
         return response(null)->setStatusCode(Response::HTTP_OK);
     }
 }

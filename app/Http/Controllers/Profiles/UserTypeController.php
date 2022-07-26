@@ -12,46 +12,52 @@ class UserTypeController extends Controller
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function index(){
+    public function index()
+    {
         return response([user_type::all()])->setStatusCode(Response::HTTP_OK);
     }
 
     /**
-     * @param Request $request
+     * @param  Request  $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $request->validate([
-           'name'=>'required'
+            'name' => 'required',
         ]);
         user_type::create([
-           'name'=> $request->name
+            'name' => $request->name,
         ]);
+
         return response(null)->setStatusCode(Response::HTTP_OK);
     }
 
     /**
-     * @param Request $request
-     * @param user_type $user_type
+     * @param  Request  $request
+     * @param  user_type  $user_type
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function update(Request $request, $user_type){
-
+    public function update(Request $request, $user_type)
+    {
         $request->validate([
-            'name'=>'required'
+            'name' => 'required',
         ]);
         user_type::query()->findOrFail($user_type)->update([
-            'name'=>$request->name
+            'name' => $request->name,
         ]);
+
         return response(null)->setStatusCode(Response::HTTP_OK);
     }
 
     /**
-     * @param user_type $user_type
+     * @param  user_type  $user_type
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function destroy($user_type){
+    public function destroy($user_type)
+    {
         user_type::query()->findOrFail($user_type)->delete();
+
         return response(null)->setStatusCode(Response::HTTP_OK);
     }
 }

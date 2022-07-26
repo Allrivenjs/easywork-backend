@@ -28,8 +28,8 @@ class TaskStoreResquest extends FormRequest
         return [
             'name' => 'required',
             'description' => 'required',
-            'difficulty'=>['required',Rule::in(['easy','easy-medium','medium','medium-hard','hard'])],
-            'topics'=>'required',
+            'difficulty' => ['required', Rule::in(['easy', 'easy-medium', 'medium', 'medium-hard', 'hard'])],
+            'topics' => 'required',
         ];
     }
 }

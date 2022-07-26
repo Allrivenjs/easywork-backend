@@ -2,7 +2,6 @@
 
 namespace App\Events;
 
-
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
@@ -13,8 +12,6 @@ class MessageNotification implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-
-
     /**
      * Create a new event instance.
      *
@@ -22,7 +19,7 @@ class MessageNotification implements ShouldBroadcast
      */
     public function __construct(public $response)
     {
-        $this->response =[
+        $this->response = [
             'message' => $response['message'],
             'room_id' => $response['room_id'],
         ];
@@ -37,7 +34,6 @@ class MessageNotification implements ShouldBroadcast
     {
         $room = (string) $this->response['room_id'];
         print_r($this->response);
-
 
         return new PrivateChannel("chat-channel.$room");
     }

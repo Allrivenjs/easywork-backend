@@ -28,8 +28,6 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\Room::class)->constrained();
             $table->timestamps();
         });
-
-
     }
 
     /**

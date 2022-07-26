@@ -11,7 +11,8 @@ use Illuminate\Support\Str;
  */
 class videoFactory extends Factory
 {
-    protected $model=video::class;
+    protected $model = video::class;
+
     /**
      * Define the model's default state.
      *
@@ -19,12 +20,13 @@ class videoFactory extends Factory
      */
     public function definition()
     {
-        $name=$this->faker->name();
+        $name = $this->faker->name();
+
         return [
-            'name'=>$name,
-            'slug'=>Str::slug($name),
-            'url'=>'Images/courses/'.$this->faker->image('public/storage/Images/courses', 640,480, 'null', false),
-            'description'=>$this->faker->text(300)
+            'name' => $name,
+            'slug' => Str::slug($name),
+            'url' => 'Images/courses/'.$this->faker->image('public/storage/Images/courses', 640, 480, 'null', false),
+            'description' => $this->faker->text(300),
         ];
     }
 }

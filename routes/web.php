@@ -19,6 +19,5 @@ Route::get('/', function () {
 });
 
 Route::get('/event', function () {
-        event(new MessageNotification('This is our first broadcast message'));
+    event(new MessageNotification('This is our first broadcast message'));
 });
-

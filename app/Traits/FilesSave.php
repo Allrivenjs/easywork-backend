@@ -6,14 +6,13 @@ use Illuminate\Support\Facades\Storage;
 
 trait FilesSave
 {
-
     public function saveFiles($files): void
     {
         foreach ($files as $file) {
             $this->files()->create([
-                "url"=> Storage::disk('local')->put('Files/jobs', $file),
-                'mime'=> $file->extension(),
-                'originalName'=>  time()."_".$file->getClientOriginalName()
+                'url' => Storage::disk('local')->put('Files/jobs', $file),
+                'mime' => $file->extension(),
+                'originalName' => time().'_'.$file->getClientOriginalName(),
             ]);
         }
     }
@@ -22,9 +21,9 @@ trait FilesSave
     {
         foreach ($files as $file) {
             $this->files()->create([
-                "url"=> Storage::disk('local')->put('Files/jobs', $file),
-                'mime'=> $file->extension(),
-                'originalName'=>  time()."_".$file->getClientOriginalName()
+                'url' => Storage::disk('local')->put('Files/jobs', $file),
+                'mime' => $file->extension(),
+                'originalName' => time().'_'.$file->getClientOriginalName(),
             ]);
         }
         empty($oldFiles) ?: $this->destroyFiles($oldFiles);
@@ -37,5 +36,4 @@ trait FilesSave
             $this->files()->where('id', $file->id)->delete();
         }
     }
-
 }

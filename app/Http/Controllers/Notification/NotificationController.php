@@ -12,6 +12,7 @@ class NotificationController extends Controller
     public function show(): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         $notifications = User::query()->find(Auth::id())->notifications()->latest()->paginate(10);
+
         return response($notifications);
     }
 
@@ -21,6 +22,7 @@ class NotificationController extends Controller
             'notification_id' => 'required|exists:notifications,id',
         ]);
         User::query()->find(Auth::id())->notifications()->find($request->notification_id)->markAsRead();
+
         return response(null);
     }
 }

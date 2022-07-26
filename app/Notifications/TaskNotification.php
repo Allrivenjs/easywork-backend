@@ -6,7 +6,6 @@ use App\Models\task;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Str;
 
@@ -19,7 +18,9 @@ class TaskNotification extends Notification implements ShouldQueue, ShouldBeUniq
      *
      * @return void
      */
-    public function __construct(private task $task){}
+    public function __construct(private task $task)
+    {
+    }
 
     /**
      * Get the notification's delivery channels.
@@ -29,9 +30,8 @@ class TaskNotification extends Notification implements ShouldQueue, ShouldBeUniq
      */
     public function via($notifiable)
     {
-        return ['database','broadcast'];
+        return ['database', 'broadcast'];
     }
-
 
     /**
      * Get the mail representation of the notification.
@@ -49,9 +49,9 @@ class TaskNotification extends Notification implements ShouldQueue, ShouldBeUniq
     public function toArray($notifiable)
     {
         return [
-            'task'=>$this->task,
-            'user'=>$this->task->owner()->get()->first()->FullName(),
-            'message'=>Str::limit($this->task->description,50),
+            'task' => $this->task,
+            'user' => $this->task->owner()->get()->first()->FullName(),
+            'message' => Str::limit($this->task->description, 50),
         ];
     }
 }

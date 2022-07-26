@@ -12,18 +12,19 @@ class course extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
     /** @return coursesFactory */
     protected static function newFactory()
     {
         return coursesFactory::new();
     }
 
-
-    protected $fillable = ['name','slug','description','owner'];
+    protected $fillable = ['name', 'slug', 'description', 'owner'];
 
     public function getOwnerAttribute($value): string
     {
-        $user= User::query()->findOrFail($value);
+        $user = User::query()->findOrFail($value);
+
         return strtoupper("$user->name $user->lastname");
     }
 

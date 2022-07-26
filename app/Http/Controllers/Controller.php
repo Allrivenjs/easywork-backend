@@ -14,13 +14,13 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests, Auth;
 
-
     public function getAnyFile(Request $request): \Symfony\Component\HttpFoundation\StreamedResponse
     {
         $request->validate([
             'path' => 'required|string',
             'name' => 'required|string',
         ]);
+
         return Storage::download($request->query('path'), $request->query('name'));
     }
 }

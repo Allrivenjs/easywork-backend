@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Status;
 use App\Models\Topic;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class TopicAndStatusSeeder extends Seeder
@@ -20,7 +19,7 @@ class TopicAndStatusSeeder extends Seeder
         'Estadistica',
         'Lenguas',
         'Deporte',
-        'Musica'
+        'Musica',
     ];
 
     protected $status = [
@@ -30,8 +29,9 @@ class TopicAndStatusSeeder extends Seeder
         'Asignado',
         'En proceso',
         'Finalizado',
-        'Entregado'
+        'Entregado',
     ];
+
     /**
      * Run the database seeds.
      *
@@ -39,7 +39,7 @@ class TopicAndStatusSeeder extends Seeder
      */
     public function run()
     {
-        collect($this->topics)->each(fn ($topic) => Topic::create(['name' => $topic ]));
+        collect($this->topics)->each(fn ($topic) => Topic::create(['name' => $topic]));
         collect($this->status)->each(fn ($status) => Status::create(['name' => $status]));
     }
 }

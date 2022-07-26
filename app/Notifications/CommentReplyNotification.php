@@ -3,8 +3,6 @@
 namespace App\Notifications;
 
 use App\Models\Comment;
-use Illuminate\Broadcasting\Channel;
-use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Notifications\Notification;
@@ -19,8 +17,9 @@ class CommentReplyNotification extends Notification implements ShouldBroadcast
      * @return void
      */
     public function __construct(
-        public Comment $comment){}
-
+        public Comment $comment)
+    {
+    }
 
     /**
      * Get the notification's delivery channels.
@@ -30,7 +29,7 @@ class CommentReplyNotification extends Notification implements ShouldBroadcast
      */
     public function via($notifiable)
     {
-        return ['database','broadcast'];
+        return ['database', 'broadcast'];
     }
 
     /**
@@ -45,5 +44,4 @@ class CommentReplyNotification extends Notification implements ShouldBroadcast
             ...$this->comment->sendEventData,
         ];
     }
-
 }

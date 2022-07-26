@@ -1,8 +1,6 @@
 <?php
 
-use App\Broadcasting\ChatChannel;
 use App\Models\Room;
-use BeyondCode\LaravelWebSockets\Facades\WebSocketsRouter;
 use Illuminate\Support\Facades\Broadcast;
 
 /*
@@ -29,7 +27,3 @@ Broadcast::channel('chat-channel.{room_id}', function ($user, $room_id) {
 Broadcast::channel('channel-session', function ($user) {
     return $user;
 });
-
-
-
-

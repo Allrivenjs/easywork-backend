@@ -37,7 +37,6 @@ class CommentController extends Controller
             'task_id' => 'required|exists:tasks,id',
         ]);
 
-
         $comment = task::query()->find($request->task_id)->comments()->create([
             'body' => $request->body,
             'own_id' => $request->own_id,
@@ -55,15 +54,16 @@ class CommentController extends Controller
         $request->validate([
             'task_id' => 'required|exists:tasks,id',
         ]);
+
         return response(Comment::query()->with(['replies', 'owner'])->whereHas('commentable',
-            fn($query)  => $query->where('tasks.id', $request->query('task_id'))
+            fn ($query) => $query->where('tasks.id', $request->query('task_id'))
         )->get());
     }
 
     public function delete($id)
     {
         Comment::query()->findOrFail($id)->delete();
+
         return response(null)->setStatusCode(Response::HTTP_OK);
     }
-
 }

@@ -18,7 +18,8 @@ class CoursesController extends Controller
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function getCourses(){
+    public function getCourses()
+    {
         return response([course::with('image')->get()])->setStatusCode(Response::HTTP_OK);
     }
 
@@ -29,168 +30,177 @@ class CoursesController extends Controller
     public function showCoursesWithSections($course)
     {
         return response([new CourseResource(
-            course::query()->where('slug','LIKE' ,$course)->first()
+            course::query()->where('slug', 'LIKE', $course)->first()
         )])->setStatusCode(Response::HTTP_OK);
     }
 
+    public function showVideo($course, $video)
+    {
+        course::query()->where('slug', 'LIKE', "%$course%")->firstOrFail();
+        $courseD = video::query()->where('slug', 'LIKE', "%$video%")->with('image')->first();
 
-    public function showVideo($course,$video){
-        course::query()->where('slug','LIKE',"%$course%")->firstOrFail();
-        $courseD=video::query()->where('slug','LIKE',"%$video%")->with('image')->first();
         return response([$courseD])->setStatusCode(Response::HTTP_OK);
     }
 
-
-
     /// Create, update, delete and forceDelete
     /**
-     * @param Request $request
+     * @param  Request  $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function storeCourse(Request $request){
+    public function storeCourse(Request $request)
+    {
         $validate = $request->validate([
-            'name'=>'required',
-            'description'=>'required',
-            'image'=>'required|image'
+            'name' => 'required',
+            'description' => 'required',
+            'image' => 'required|image',
         ]);
 
-        $validate['owner']=$this->authWeb()->user()->getAuthIdentifier();
-        $validate['slug']=Str::slug($request->name.rand(10, 10000));
-        $course=course::create($validate);
+        $validate['owner'] = $this->authWeb()->user()->getAuthIdentifier();
+        $validate['slug'] = Str::slug($request->name.rand(10, 10000));
+        $course = course::create($validate);
         $url = Storage::put('Images/courses', $request->file('image'));
         $course->image()->create([
-            'url'=>$url
+            'url' => $url,
         ]);
+
         return response([$course])->setStatusCode(Response::HTTP_OK);
     }
 
     /**
-     * @param Request $request
-     * @param course $course
+     * @param  Request  $request
+     * @param  course  $course
      * @return \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
      */
-    public function storeSection(Request $request,course $course): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    public function storeSection(Request $request, course $course): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
-         $validate = $request->validate([
-            'name'=>'required'
-         ]);
-         $validate['course_id']=$course->id;
-         $section=section::create($validate);
-         return response([$section])->setStatusCode(Response::HTTP_OK);
+        $validate = $request->validate([
+            'name' => 'required',
+        ]);
+        $validate['course_id'] = $course->id;
+        $section = section::create($validate);
+
+        return response([$section])->setStatusCode(Response::HTTP_OK);
     }
 
     /**
-     * @param Request $request
-     * @param section $section
+     * @param  Request  $request
+     * @param  section  $section
      * @return \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
      */
-    public function storeVideo(Request $request,section $section): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    public function storeVideo(Request $request, section $section): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         $validate = $request->validate([
-            'name'=>'required',
-            'description'=>'required',
+            'name' => 'required',
+            'description' => 'required',
             'video' => 'required|mimes:mp4,ogx,oga,ogv,ogg,webm | max:102400',
-            'image'=>'required|image'
+            'image' => 'required|image',
         ]);
-        $url=Storage::put('Courses/videos',$request->file('video'));
+        $url = Storage::put('Courses/videos', $request->file('video'));
         $data = array_merge($validate, [
-            'url'=>$url,
-            'section_id'=>$section->id
+            'url' => $url,
+            'section_id' => $section->id,
         ]);
 
         $video = video::create($data);
 
         $url = Storage::put('Images/videos', $request->file('image'));
         $video->image()->create([
-            'url'=>$url
+            'url' => $url,
         ]);
+
         return response([$video])->setStatusCode(Response::HTTP_OK);
     }
 
     /**
-     * @param Request $request
+     * @param  Request  $request
      * @param $course
      * @return \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+     *
      * @throws \Throwable
      */
     public function updateCourse(Request $request, $course): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         $courseD = course::query()->findOrFail($course);
         $validate = $request->validate([
-            'name'=>'required',
-            'description'=>'required',
-            'image'=>'image'
+            'name' => 'required',
+            'description' => 'required',
+            'image' => 'image',
         ]);
-        if ($request->hasFile('image')){
-          if ($courseD->image){
-              Storage::delete(str_replace(env('APP_URL').'/storage/', '', $courseD->image->url));
-              $url = Storage::put('Images/courses', $request->file('image'));
-              $courseD->image()->update([
-                  'url'=>$url
-              ]);
-          }else{
-              $url = Storage::put('Images/courses', $request->file('image'));
-              $courseD->image()->create([
-                  'url'=>$url
-              ]);
-          }
+        if ($request->hasFile('image')) {
+            if ($courseD->image) {
+                Storage::delete(str_replace(env('APP_URL').'/storage/', '', $courseD->image->url));
+                $url = Storage::put('Images/courses', $request->file('image'));
+                $courseD->image()->update([
+                    'url' => $url,
+                ]);
+            } else {
+                $url = Storage::put('Images/courses', $request->file('image'));
+                $courseD->image()->create([
+                    'url' => $url,
+                ]);
+            }
         }
         $courseD->updateOrFail($validate);
+
         return response([$courseD])->setStatusCode(Response::HTTP_OK);
     }
 
     /**
-     * @param Request $request
+     * @param  Request  $request
      * @param $section
      * @return \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+     *
      * @throws \Throwable
      */
     public function updateSection(Request $request, $section): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         $sectionD = section::query()->findOrFail($section);
         $validate = $request->validate([
-            'name'=>'required',
+            'name' => 'required',
         ]);
         $sectionD->updateOrFail($validate);
+
         return response([$sectionD])->setStatusCode(Response::HTTP_OK);
     }
 
     /**
-     * @param Request $request
+     * @param  Request  $request
      * @param $video
      * @return \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+     *
      * @throws \Throwable
      */
     public function updateVideo(Request $request, $video): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         $videoD = video::query()->findOrFail($video);
         $validate = $request->validate([
-            'name'=>'required',
-            'image'=>'image',
-            'video'=>'mimes:mp4,ogx,oga,ogv,ogg,webm | max:102400'
+            'name' => 'required',
+            'image' => 'image',
+            'video' => 'mimes:mp4,ogx,oga,ogv,ogg,webm | max:102400',
         ]);
 
-        if ($request->hasFile('image')){
-            if ($videoD->image){
+        if ($request->hasFile('image')) {
+            if ($videoD->image) {
                 Storage::delete(str_replace(env('APP_URL').'/storage/', '', $videoD->image->url));
                 $url = Storage::put('Images/videos', $request->file('image'));
                 $video->image()->update([
-                    'url'=>$url
+                    'url' => $url,
                 ]);
-            }else{
+            } else {
                 $url = Storage::put('Images/videos', $request->file('image'));
                 $video->image()->create([
-                    'url'=>$url
+                    'url' => $url,
                 ]);
             }
         }
-        if ($request->hasFile('video')){
-            $url=Storage::put('Courses/videos',$request->file('video'));
+        if ($request->hasFile('video')) {
+            $url = Storage::put('Courses/videos', $request->file('video'));
             $data = array_merge($validate, [
-                'url'=>$url,
+                'url' => $url,
             ]);
         }
         $videoD->updateOrFail($data);
+
         return response([$videoD])->setStatusCode(Response::HTTP_OK);
     }
 
@@ -201,6 +211,7 @@ class CoursesController extends Controller
     public function deleteCourse($course): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         course::query()->findOrFail($course)->delete();
+
         return response()->setStatusCode(Response::HTTP_OK);
     }
 
@@ -211,6 +222,7 @@ class CoursesController extends Controller
     public function deleteSection($section): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         section::query()->findOrFail($section)->delete();
+
         return response(null)->setStatusCode(Response::HTTP_OK);
     }
 
@@ -221,6 +233,7 @@ class CoursesController extends Controller
     public function deleteVideo($video): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         section::query()->findOrFail($video)->delete();
+
         return response(null)->setStatusCode(Response::HTTP_OK);
     }
 
@@ -231,6 +244,7 @@ class CoursesController extends Controller
     public function restoreCourse($course): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         course::withTrashed()->findOrFail($course)->restore();
+
         return response()->setStatusCode(Response::HTTP_OK);
     }
 
@@ -241,6 +255,7 @@ class CoursesController extends Controller
     public function restoreSection($section): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         section::withTrashed()->findOrFail($section)->restore();
+
         return response(null)->setStatusCode(Response::HTTP_OK);
     }
 
@@ -251,6 +266,7 @@ class CoursesController extends Controller
     public function restoreVideo($video): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         video::withTrashed()->findOrFail($video)->restore();
+
         return response(null)->setStatusCode(Response::HTTP_OK);
     }
 
@@ -261,12 +277,11 @@ class CoursesController extends Controller
     public function forceDeleteCourse($course): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
-
-            $courseD =course::withTrashed()->findOrFail($course);
+            $courseD = course::withTrashed()->findOrFail($course);
             Storage::delete(str_replace(env('APP_URL').'/storage/', '', $courseD->image->url));
             $courseD->forceDelete();
-
-        }catch (\Exception $exception){}
+        } catch (\Exception $exception) {
+        }
 
         return response()->setStatusCode(Response::HTTP_OK);
     }
@@ -278,6 +293,7 @@ class CoursesController extends Controller
     public function forceDeleteSection($section): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         section::withTrashed()->findOrFail($section)->forceDelete();
+
         return response(null)->setStatusCode(Response::HTTP_OK);
     }
 
@@ -288,12 +304,12 @@ class CoursesController extends Controller
     public function forceDeleteVideo($video): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
-            $videD=video::withTrashed()->findOrFail($video);
+            $videD = video::withTrashed()->findOrFail($video);
             Storage::delete(str_replace(env('APP_URL').'/storage/', '', $videD->image->url));
             $videD->forceDelete();
-        }catch (\Exception $exception){}
+        } catch (\Exception $exception) {
+        }
 
         return response(null)->setStatusCode(Response::HTTP_OK);
     }
-
 }

@@ -8,11 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Status extends Model
 {
     use HasFactory;
+
     protected $fillable = ['name'];
 
     protected $dates = [
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
     public function tasks(): \Illuminate\Database\Eloquent\Relations\HasMany

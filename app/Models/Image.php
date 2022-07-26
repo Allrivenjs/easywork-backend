@@ -10,11 +10,14 @@ use Illuminate\Database\Eloquent\Model;
 class Image extends Model
 {
     use HasFactory;
-    protected $fillable=['url'];
-    protected $hidden=['imageable_id','imageable_type'];
+
+    protected $fillable = ['url'];
+
+    protected $hidden = ['imageable_id', 'imageable_type'];
+
     protected $dates = [
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
     /** @return ImageFactory */
@@ -27,9 +30,6 @@ class Image extends Model
     {
         return Carbon::parse($value)->diffForHumans();
     }
-
-
-
 
     public function getUpdatedAtAttribute($value): string
     {

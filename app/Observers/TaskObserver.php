@@ -2,9 +2,7 @@
 
 namespace App\Observers;
 
-
 use App\Models\task;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
 
 class TaskObserver
@@ -17,17 +15,20 @@ class TaskObserver
      */
     public function created(task $task)
     {
-        if(!\App::runningInConsole()) {
+        if (! \App::runningInConsole()) {
             $task->status_id = 2;
         }
     }
+
     /**
      * Handle the task "creating" event.
-     * @param task $task
+     *
+     * @param  task  $task
      * @return void
      */
-    public function creating(task $task){
-        if(!\App::runningInConsole()) {
+    public function creating(task $task)
+    {
+        if (! \App::runningInConsole()) {
             $task->slug = Str::uuid();
             $task->status_id = 1;
             $task->own_id = Auth()->guard('api')->user()->getAuthIdentifier();
@@ -42,7 +43,6 @@ class TaskObserver
      */
     public function updated(task $task)
     {
-
     }
 
     /**

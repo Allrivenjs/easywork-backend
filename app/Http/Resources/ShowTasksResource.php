@@ -14,7 +14,6 @@ class ShowTasksResource extends JsonResource
      */
     public function toArray($request)
     {
-
         return static::toArray($request);
     }
 }

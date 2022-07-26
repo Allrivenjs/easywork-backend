@@ -15,7 +15,6 @@ class StatusController extends Controller
     {
         $this->middleware('can:taskAdmin.task')->except('index', 'show');
         $this->middleware('auth:api')->except('index');
-
     }
 
     /**
@@ -31,22 +30,23 @@ class StatusController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request): \Illuminate\Http\Response
     {
         $request->validate([
-            'name'
+            'name',
         ]);
         Status::create([$request->input('name')]);
+
         return response(null)->setStatusCode(Response::HTTP_OK);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\Status $status
+     * @param  \App\Models\Status  $status
      * @return \Illuminate\Http\Response
      */
     public function show(Status $status)
@@ -57,28 +57,30 @@ class StatusController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Status $status
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Status  $status
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Status $status)
     {
         $request->validate([
-            'name'
+            'name',
         ]);
         $status->update([$request->input('name')]);
+
         return response(null)->setStatusCode(Response::HTTP_OK);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Status $status
+     * @param  \App\Models\Status  $status
      * @return \Illuminate\Http\Response
      */
     public function destroy(Status $status)
     {
         $status->delete();
+
         return response(null)->setStatusCode(Response::HTTP_OK);
     }
 }

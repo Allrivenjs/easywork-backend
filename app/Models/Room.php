@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Room extends Model
 {
     use HasFactory;
+
     protected $fillable = ['name', 'type'];
 
     public function messages(): \Illuminate\Database\Eloquent\Relations\HasMany
@@ -24,5 +25,4 @@ class Room extends Model
     {
         return $this->belongsToMany(User::class, 'participants');
     }
-
 }

@@ -44,9 +44,8 @@ class GitCommand extends Command
             exec('git pull');
             exec('php composer install');
             $this->info('Command success');
-        }catch (Exception $e){
+        } catch (Exception $e) {
             Log::info($e);
         }
-
     }
 }

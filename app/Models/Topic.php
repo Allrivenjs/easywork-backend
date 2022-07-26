@@ -8,21 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class Topic extends Model
 {
     use HasFactory;
+
     protected $fillable = ['name'];
 
     protected $dates = [
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
-    protected $visible=[
+    protected $visible = [
         'id',
         'name',
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
-
-
 
     public function tasks(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {

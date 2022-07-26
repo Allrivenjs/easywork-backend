@@ -2,8 +2,6 @@
 
 namespace App\Providers;
 
-
-
 use App\Http\Controllers\Chat\Chat;
 use App\Interfaces\Chat\RoomInterface;
 use Illuminate\Database\Eloquent\Model;

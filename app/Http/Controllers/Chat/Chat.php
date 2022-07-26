@@ -10,7 +10,6 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
-
 class Chat implements ChatInterface
 {
     public function createRoom(bool $type): Room
@@ -20,12 +19,14 @@ class Chat implements ChatInterface
         $room->name = $name;
         $room->type = $type;
         $room->save();
+
         return $room;
     }
 
     public function getUsers($roomId): User | array
     {
         $room = Room::query()->find($roomId);
+
         return $room->users;
     }
 
@@ -40,9 +41,9 @@ class Chat implements ChatInterface
     {
         $user = Auth::guard('api')->user()->getAuthIdentifier();
         $data = [
-            'message'=>$message,
-            'user_id'=>$user,
-            'room_id'=>$roomIdId
+            'message' => $message,
+            'user_id' => $user,
+            'room_id' => $roomIdId,
         ];
         $message = new Message($data);
         $message->save();
@@ -51,14 +52,14 @@ class Chat implements ChatInterface
 
     public function getRooms(): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Builder|array|null
     {
-        return User::query()->with('rooms.users','rooms.lastMessage')
+        return User::query()->with('rooms.users', 'rooms.lastMessage')
             ->find(Auth::guard('api')->user()->getAuthIdentifier());
     }
-
 
     public function getMessages($roomId)
     {
         $room = Room::query()->with('messages.user')->find($roomId);
+
         return $room->messages;
     }
 
@@ -74,6 +75,7 @@ class Chat implements ChatInterface
         if ($personOne && $personTwo) {
             return $personOne->id === $personTwo->id ? $personOne : false;
         }
+
         return false;
     }
 }

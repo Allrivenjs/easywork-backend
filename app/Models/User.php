@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -28,13 +27,13 @@ class User extends Authenticatable implements MustVerifyEmail
         'birthday',
         'email',
         'password',
-        'profile_photo_path'
+        'profile_photo_path',
     ];
 
     protected $dates = [
         'created_at',
         'updated_at',
-        'deleted_at'
+        'deleted_at',
     ];
 
     /**
@@ -45,7 +44,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $hidden = [
         'password',
         'remember_token',
-        'roles'
+        'roles',
     ];
 
     /**
@@ -57,22 +56,28 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-
     public function getCreatedAtAttribute($value): string
     {
         return Carbon::parse($value)->diffForHumans();
     }
 
-    public function getUpdatedAtAttribute($value){
-        if ($value==null) return;
+    public function getUpdatedAtAttribute($value)
+    {
+        if ($value == null) {
+            return;
+        }
+
         return Carbon::parse($value)->diffForHumans();
     }
 
-    public function getDeletedAtAttribute($value){
-        if ($value==null) return;
+    public function getDeletedAtAttribute($value)
+    {
+        if ($value == null) {
+            return;
+        }
+
         return Carbon::parse($value)->diffForHumans();
     }
-
 
 //    public function getBirthdayAttribute($value){
 //        return Carbon::parse($value)->format("d-m-y");
@@ -90,11 +95,12 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function tasks(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(task::class,'own_id');
+        return $this->hasMany(task::class, 'own_id');
     }
+
     public function tasks_desc(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->tasks()->orderBy('created_at','desc');
+        return $this->tasks()->orderBy('created_at', 'desc');
     }
 
     public function messages(): \Illuminate\Database\Eloquent\Relations\HasMany
@@ -116,5 +122,4 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(AcceptTask::class);
     }
-
 }

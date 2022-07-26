@@ -30,8 +30,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug')->unique();
             $table->longText('description');
-            $table->enum('difficulty',['easy','easy-medium','medium','medium-hard','hard']);
-
+            $table->enum('difficulty', ['easy', 'easy-medium', 'medium', 'medium-hard', 'hard']);
 
             $table->unsignedBigInteger('status_id')->nullable();
             $table->foreign('status_id')->references('id')->on('statuses')->onDelete('cascade');
@@ -64,8 +63,6 @@ return new class extends Migration
 
             $table->timestamps();
         });
-
-
     }
 
     /**
@@ -79,6 +76,5 @@ return new class extends Migration
         Schema::dropIfExists('statuses');
         Schema::dropIfExists('topics');
         Schema::dropIfExists('topics_tasks');
-
     }
 };

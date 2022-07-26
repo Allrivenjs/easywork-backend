@@ -3,8 +3,6 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Console\Scheduling\Schedule;
-use Illuminate\Support\Facades\Artisan;
 
 class StartCommand extends Command
 {
@@ -40,14 +38,13 @@ class StartCommand extends Command
      */
     public function handle()
     {
-
-        if ($this->option('reset')){
+        if ($this->option('reset')) {
             $this->alert('Start migrations and seeds');
-            $this->call('storage:link',[
-                '--force'=>'default'
+            $this->call('storage:link', [
+                '--force' => 'default',
             ]);
             $this->call('migrate:fresh', [
-                '--seed'=>'default'
+                '--seed' => 'default',
             ]);
 
             $this->alert('finished migrations and seeds');
@@ -56,19 +53,16 @@ class StartCommand extends Command
             $this->alert('Done');
         }
         $this->alert('Running serve');
-        if ($this->option('host')){
+        if ($this->option('host')) {
             $this->info('Server custom');
-            $this->call('serve',[
-                '--host'=>$this->option('host'),'--port'=> 8000
+            $this->call('serve', [
+                '--host' => $this->option('host'), '--port' => 8000,
             ]);
-        }else{
+        } else {
             $this->info('Server default');
-            $this->call('serve',[
-                '--host'=>'127.0.0.1', '--port'=> 8000
+            $this->call('serve', [
+                '--host' => '127.0.0.1', '--port' => 8000,
             ]);
         }
-
-
-
     }
 }

@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
 
@@ -32,7 +31,6 @@ class DatabaseSeeder extends Seeder
 
         Storage::deleteDirectory('Files/jobs');
         Storage::makeDirectory('Files/jobs');
-
 
         // \App\Models\User::factory(10)->create();
         $this->call([

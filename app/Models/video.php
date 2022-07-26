@@ -12,7 +12,8 @@ class video extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    protected $fillable=['name','url','slug','description','section_id'];
+
+    protected $fillable = ['name', 'url', 'slug', 'description', 'section_id'];
 
     /** @return videoFactory */
     protected static function newFactory(): videoFactory
@@ -39,5 +40,4 @@ class video extends Model
     {
         return $this->morphOne(Image::class, 'imageable');
     }
-
 }

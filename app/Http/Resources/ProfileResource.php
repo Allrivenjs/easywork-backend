@@ -2,8 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Models\profile;
-use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProfileResource extends JsonResource
@@ -18,9 +16,10 @@ class ProfileResource extends JsonResource
     {
         $userdata = parent::toArray($request);
         $data = array_merge($userdata, [
-            'role'=>$this->user->getRoleNames(),
-            'images'=> $this->image,
+            'role' => $this->user->getRoleNames(),
+            'images' => $this->image,
         ]);
+
         return $data;
     }
 }

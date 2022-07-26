@@ -15,10 +15,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        if (!env('APP_ENV')=="local"){
+        if (! env('APP_ENV') == 'local') {
             $schedule->command('git:auto')->hourly();
         }
-
     }
 
     /**
