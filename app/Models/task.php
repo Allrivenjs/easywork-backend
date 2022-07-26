@@ -64,7 +64,7 @@ class task extends Model
 
     public function owner(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(User::class, 'own_id')->with('profile');
+        return $this->belongsTo(User::class, 'own_id')->with(['profile'=>['image']]);
     }
 
     public function topics(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
