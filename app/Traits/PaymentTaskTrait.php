@@ -46,4 +46,9 @@ trait PaymentTaskTrait
         Notification::send($user, new PaymentTaskNotification($task, $data['transaction_amount']));
     }
 
+    public function getPaymentTask(Pay $pay): \Illuminate\Contracts\Pagination\LengthAwarePaginator
+    {
+        return $pay->with('task','user', 'acceptTask')->paginate(10);
+    }
+
 }
