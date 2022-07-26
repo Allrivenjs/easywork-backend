@@ -2,7 +2,6 @@
 
 namespace App\Notifications;
 
-use App\Models\task;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -17,8 +16,9 @@ class PaymentTaskNotification extends Notification implements ShouldQueue, Shoul
      *
      * @return void
      */
-    public function __construct(private $task, private float $mount){}
-
+    public function __construct(private $task, private float $mount)
+    {
+    }
 
     /**
      * Get the notification's delivery channels.

@@ -21,6 +21,7 @@ class PaymentController extends Controller
             self::rules(MercadoPagoService::Rules())
         );
         $this->paymentTask(new MercadoPagoService(), $data);
+
         return response(null);
     }
 
@@ -29,11 +30,11 @@ class PaymentController extends Controller
         $request->validate([
             'pay_id' => 'required|exists:pay,id',
         ]);
+
         return $this->getPaymentTask(Pay::find($request->input('pay_id')));
     }
 
-
-    static function rules($oldRules): array
+    public static function rules($oldRules): array
     {
         return array_merge($oldRules, [
             'task_id' => 'required|exists:tasks,id',

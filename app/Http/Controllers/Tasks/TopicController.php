@@ -20,7 +20,7 @@ class TopicController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): \Illuminate\Http\Response
     {
         return response([Topic::all()])->setStatusCode(Response::HTTP_OK);
     }
@@ -31,7 +31,7 @@ class TopicController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request): \Illuminate\Http\Response
     {
         $request->validate([
             'name',
@@ -47,7 +47,7 @@ class TopicController extends Controller
      * @param  \App\Models\Topic  $topic
      * @return \Illuminate\Http\Response
      */
-    public function show(Topic $topic)
+    public function show(Topic $topic): \Illuminate\Http\Response
     {
         return response([$topic])->setStatusCode(Response::HTTP_OK);
     }
@@ -59,7 +59,7 @@ class TopicController extends Controller
      * @param  \App\Models\Topic  $topic
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Topic $topic)
+    public function update(Request $request, Topic $topic): \Illuminate\Http\Response
     {
         $request->validate([
             'name',
@@ -75,7 +75,7 @@ class TopicController extends Controller
      * @param  \App\Models\Topic  $topic
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Topic $topic)
+    public function destroy(Topic $topic): \Illuminate\Http\Response
     {
         $topic->delete();
 

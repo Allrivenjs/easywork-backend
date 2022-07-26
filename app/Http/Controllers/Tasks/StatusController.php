@@ -49,7 +49,7 @@ class StatusController extends Controller
      * @param  \App\Models\Status  $status
      * @return \Illuminate\Http\Response
      */
-    public function show(Status $status)
+    public function show(Status $status): \Illuminate\Http\Response
     {
         return response([$status])->setStatusCode(Response::HTTP_OK);
     }
@@ -61,7 +61,7 @@ class StatusController extends Controller
      * @param  \App\Models\Status  $status
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Status $status)
+    public function update(Request $request, Status $status): \Illuminate\Http\Response
     {
         $request->validate([
             'name',
@@ -77,7 +77,7 @@ class StatusController extends Controller
      * @param  \App\Models\Status  $status
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Status $status)
+    public function destroy(Status $status): \Illuminate\Http\Response
     {
         $status->delete();
 

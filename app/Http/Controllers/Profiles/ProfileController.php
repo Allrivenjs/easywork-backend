@@ -79,6 +79,7 @@ class ProfileController extends Controller
         $url = Storage::put('Images/profiles', $request->file('image'));
         if ($profile->image) {
             Storage::delete(str_replace(env('APP_URL').'/storage/', '', $profile->image->url));
+            $profile->user()->update(['profile_photo_path' => $url]);
             $profile->image()->update([
                 'url' => $url,
             ]);
@@ -86,6 +87,7 @@ class ProfileController extends Controller
             $profile->image()->create([
                 'url' => $url,
             ]);
+            $profile->user()->update(['profile_photo_path' => $url]);
         }
 
         return response(null)->setStatusCode(Response::HTTP_CREATED);

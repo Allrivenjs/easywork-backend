@@ -12,7 +12,7 @@ class UniversityController extends Controller
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function index()
+    public function index(): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         return response([university::all()])->setStatusCode(Response::HTTP_OK);
     }
@@ -21,7 +21,7 @@ class UniversityController extends Controller
      * @param  Request  $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         $request->validate([
             'name' => 'required',
@@ -38,7 +38,7 @@ class UniversityController extends Controller
      * @param  university  $university
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function update(Request $request, $university)
+    public function update(Request $request, $university): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         $request->validate([
             'name' => 'required',
@@ -54,7 +54,7 @@ class UniversityController extends Controller
      * @param  university  $university
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function destroy($university)
+    public function destroy($university): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         university::query()->findOrFail($university)->delete();
 

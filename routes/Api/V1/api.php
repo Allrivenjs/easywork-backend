@@ -9,7 +9,6 @@ use App\Http\Controllers\Notification\NotificationController;
 use App\Http\Controllers\Payment\PaymentController;
 use App\Http\Controllers\Profiles\ProfileController;
 use App\Http\Controllers\Profiles\UserController;
-use App\Http\Controllers\Profiles\UserTypeController;
 use App\Http\Controllers\Tasks\AcceptTaskController;
 use App\Http\Controllers\Tasks\StatusController;
 use App\Http\Controllers\Tasks\TasksController;
@@ -66,7 +65,6 @@ Route::middleware('auth:api')->group(function () {
         Route::post('/', [PaymentController::class, 'getPayments'])->name('payments');
     });
 
-
     Route::prefix('coursesAdmin')->group(function () {
         Route::middleware('can:coursesAdmin.course')->group(function () {
             //store
@@ -87,7 +85,6 @@ Route::middleware('auth:api')->group(function () {
             Route::delete('video/hidden/{video}', [CoursesController::class, 'forceDeleteVideo'])->name('coursesAdmin.forceDelete.video');
         });
     });
-    Route::apiResource('userType', UserTypeController::class);
     Route::get('getAnyFile', [Controller::class, 'getAnyFile']);
 });
 
@@ -103,5 +100,3 @@ Route::get('me/tasks', [ProfileController::class, 'index'])->name('profile.me.ta
 Route::get('ChatPresentChannel', function () {
     broadcast(new \App\Events\ChatPresentChannel(\App\Models\User::find(1)));
 });
-
-

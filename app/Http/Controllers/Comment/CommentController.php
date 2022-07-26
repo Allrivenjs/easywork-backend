@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CommentController extends Controller
 {
-    public function comment(Request $request)
+    public function comment(Request $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         $request->validate([
             'body' => 'required|string',
@@ -28,7 +28,7 @@ class CommentController extends Controller
         return response(null)->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function reply(Request $request)
+    public function reply(Request $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         $request->validate([
             'body' => 'required',
@@ -49,7 +49,7 @@ class CommentController extends Controller
         return response(null)->setStatusCode(Response::HTTP_OK);
     }
 
-    public function getComments(Request $request)
+    public function getComments(Request $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         $request->validate([
             'task_id' => 'required|exists:tasks,id',
@@ -60,7 +60,7 @@ class CommentController extends Controller
         )->get());
     }
 
-    public function delete($id)
+    public function delete($id): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         Comment::query()->findOrFail($id)->delete();
 

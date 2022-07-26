@@ -25,7 +25,7 @@ trait PaymentTaskTrait
         throw_if($task->user_id !== $this->authApi()->id(), 'The user is not the owner of the task');
         throw_if($acceptTask->user_id !== $user->id, 'The user is not assigned to the task');
         throw_if(is_null($acceptTask->remmove_at), 'The task is already removed');
-        throw_if(!is_null($acceptTask->accepted_at), 'The task is not accepted');
+        throw_if(! is_null($acceptTask->accepted_at), 'The task is not accepted');
         throw_if($acceptTask->charge !== $data['transaction_amount'], 'The charge is not correct');
         $payment = $mercadoPagoService->payment($data);
         Pay::query()->create([
@@ -34,7 +34,7 @@ trait PaymentTaskTrait
             'accept_task_id' => $acceptTask->id,
             'paying' => $data['transaction_amount'],
             'paid_at' => now(),
-            'payment_data'=>json_encode($payment),
+            'payment_data' => json_encode($payment),
         ]);
         $task->updateOrFail([
             'status' => task::STATUS_FINALIZADO,
@@ -48,7 +48,6 @@ trait PaymentTaskTrait
 
     public function getPaymentTask(Pay $pay): \Illuminate\Contracts\Pagination\LengthAwarePaginator
     {
-        return $pay->with('task','user', 'acceptTask')->paginate(10);
+        return $pay->with('task', 'user', 'acceptTask')->paginate(10);
     }
-
 }

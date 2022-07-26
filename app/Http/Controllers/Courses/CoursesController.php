@@ -18,7 +18,7 @@ class CoursesController extends Controller
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function getCourses()
+    public function getCourses(): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         return response([course::with('image')->get()])->setStatusCode(Response::HTTP_OK);
     }
@@ -27,14 +27,14 @@ class CoursesController extends Controller
      * @param $course
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function showCoursesWithSections($course)
+    public function showCoursesWithSections($course): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         return response([new CourseResource(
             course::query()->where('slug', 'LIKE', $course)->first()
         )])->setStatusCode(Response::HTTP_OK);
     }
 
-    public function showVideo($course, $video)
+    public function showVideo($course, $video): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         course::query()->where('slug', 'LIKE', "%$course%")->firstOrFail();
         $courseD = video::query()->where('slug', 'LIKE', "%$video%")->with('image')->first();
@@ -47,7 +47,7 @@ class CoursesController extends Controller
      * @param  Request  $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function storeCourse(Request $request)
+    public function storeCourse(Request $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         $validate = $request->validate([
             'name' => 'required',

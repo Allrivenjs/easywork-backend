@@ -9,7 +9,7 @@ class AcceptTask extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['task_id', 'user_id', 'charge', 'remove_at', 'accepted_at','paid_out_at'];
+    protected $fillable = ['task_id', 'user_id', 'charge', 'remove_at', 'accepted_at', 'paid_out_at'];
 
     protected $dates = [
         'created_at',

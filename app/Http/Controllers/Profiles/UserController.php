@@ -8,11 +8,12 @@ use App\Models\profile;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use JetBrains\PhpStorm\ArrayShape;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         return response([new ProfileResource(
             profile::query()->with('user')->whereHas('user', function ($query) {
@@ -21,7 +22,7 @@ class UserController extends Controller
         )])->setStatusCode(Response::HTTP_OK);
     }
 
-    public function update(Request $request)
+    public function update(Request $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         $validate = $request->validate($this->rules());
         $url = '';
@@ -41,14 +42,15 @@ class UserController extends Controller
         return response(null)->setStatusCode(Response::HTTP_OK);
     }
 
-    private function rules()
-    {
-        return [
-            'name' => 'required',
-            'lastname' => 'required',
-            'phone' => 'string|required',
-            'birthday' => 'required|date',
-            'profile_photo_path' => 'image',
-        ];
-    }
+    #[ArrayShape(['name' => 'string', 'lastname' => 'string', 'phone' => 'string', 'birthday' => 'string', 'profile_photo_path' => 'string'])]
+ private function rules(): array
+ {
+     return [
+         'name' => 'required',
+         'lastname' => 'required',
+         'phone' => 'string|required',
+         'birthday' => 'required|date',
+         'profile_photo_path' => 'image',
+     ];
+ }
 }
