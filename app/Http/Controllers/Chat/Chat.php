@@ -33,6 +33,8 @@ class Chat implements ChatInterface
     {
         $room = Room::query()->where('id',$roomId)->firstOrFail();
         $user = User::query()->where('id',$userId)->firstOrFail();
+        print_r($room);
+        print_r($user);
         $room->users()->attach($user);
     }
 
