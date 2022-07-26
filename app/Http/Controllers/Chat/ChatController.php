@@ -35,7 +35,7 @@ class ChatController extends Controller
         ]);
         $userId = Auth::guard('api')?->user()?->getAuthIdentifier();
         $receiver_id = $request->query('receiver_id');
-        throw_if(isset($receiver_id), 'Receiver id is required');
+        throw_if(is_null($receiver_id), 'Receiver id is required');
         if ($receiver_id == $userId) throw new \Exception('You can not chat with yourself');
         $match = $this->room->matchUser($receiver_id, $userId);
         $response = $match ?: $this->createChatRoom($receiver_id);
