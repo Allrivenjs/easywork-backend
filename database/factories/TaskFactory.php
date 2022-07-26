@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Status;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
@@ -26,6 +27,7 @@ class TaskFactory extends Factory
             'description' => $this->faker->text(250),
             'difficulty' => $this->faker->randomElement(['easy', 'easy-medium', 'medium', 'medium-hard', 'hard']),
             'own_id' => User::all()->random()->id,
+            'status_id' => Status::all()->random()->id,
         ];
     }
 }
