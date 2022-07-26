@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\Auth;
 
 class ChatController extends Controller
 {
-
-
-    public function __construct(private RoomInterface $room){}
+    public function __construct(private RoomInterface $room)
+    {
+    }
 
     public function getRooms(): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
@@ -23,7 +23,6 @@ class ChatController extends Controller
     {
         return Response($this->room->getMessages($roomId));
     }
-
 
     /**
      * @throws \Throwable

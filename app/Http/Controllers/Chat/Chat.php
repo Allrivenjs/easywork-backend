@@ -26,6 +26,7 @@ class Chat implements ChatInterface
     public function getUsers($roomId): User | array
     {
         $room = Room::query()->find($roomId);
+
         return $room->users;
     }
 
@@ -51,8 +52,10 @@ class Chat implements ChatInterface
 
     public function getRooms(): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Builder|array|null
     {
-        return User::query()->with('rooms.users', 'rooms.lastMessage')
-            ->find(Auth::guard('api')->user()->getAuthIdentifier());
+        return User::query()->with([
+            'rooms' => ['users' => fn ($q) => $q->where('users.id', '!=', Auth::guard('api')->user()->getAuthIdentifier())],
+            'rooms.lastMessage', ])
+            ->find(Auth::guard('api')->user()->getAuthIdentifier())->only('rooms');
     }
 
     public function getMessages($roomId)
