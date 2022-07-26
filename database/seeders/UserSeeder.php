@@ -22,6 +22,7 @@ class UserSeeder extends Seeder
             'phone' => '0007',
             'birthday' => '0001-01-01',
             'email' => 'admin@gmail.com',
+            'profile_photo_path'=>'https://www.w3schools.com/howto/img_avatar.png',
             'password' => '$2a$10$7oMxkBuQ0PpbVxpJl0ufNerj0TTuZmRxrD76LlyKCaMCh8bpZqVS2',   //admin
         ])->assignRole('admin');
         $user->assignRole('moderator');
@@ -42,6 +43,7 @@ class UserSeeder extends Seeder
             'phone' => '0007',
             'birthday' => '0001-01-01',
             'email' => 'student@gmail.com',
+            'profile_photo_path'=>'https://www.w3schools.com/howto/img_avatar.png',
             'password' => '$2a$10$7oMxkBuQ0PpbVxpJl0ufNerj0TTuZmRxrD76LlyKCaMCh8bpZqVS2',   //admin
         ])->assignRole('student');
 
