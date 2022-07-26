@@ -2,7 +2,6 @@
 
 namespace App\Traits;
 
-use App\Models\AcceptTask;
 use App\Models\User;
 use App\Models\Task;
 use App\Notifications\TaskAcceptNotification;
