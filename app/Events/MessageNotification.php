@@ -17,11 +17,12 @@ class MessageNotification implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct(private $response)
+    public function __construct(public $response)
     {
         $this->response = [
             'message' => $response['message'],
-            'data' => $response,
+            'room_id' => $response['room_id'],
+            'data_complete' => $response,
         ];
     }
 
@@ -32,6 +33,8 @@ class MessageNotification implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel("chat-channel.{$this->response['room_id']}");
+        $room = (string) $this->response['room_id'];
+
+        return new PrivateChannel("chat-channel.$room");
     }
 }
