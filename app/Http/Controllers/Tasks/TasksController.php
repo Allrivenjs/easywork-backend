@@ -83,6 +83,7 @@ class TasksController extends Controller
     public function update(TaskStoreResquest $request, task $task): \Illuminate\Http\Response
     {
         $task->update($request->all());
+        throwException(json_decode($request->input('topics')));
         $task->topics()->sync(json_decode($request->input('topics')));
         ! $request->hasFile('files') ?: ! $task->files()->exists() ?: $task->updateFiles($request->file('files'), $task->files);
 
