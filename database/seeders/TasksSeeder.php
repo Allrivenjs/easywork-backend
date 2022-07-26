@@ -14,7 +14,7 @@ class TasksSeeder extends Seeder
      */
     public function run()
     {
-        task::factory()->count(20000)->create()
+        task::factory()->count(200)->create()
             ->each(fn ($task) => $task->topics()->attach([rand(1, 5), rand(6, 11)]));
     }
 }
