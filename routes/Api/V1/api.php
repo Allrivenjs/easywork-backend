@@ -38,7 +38,7 @@ Route::get('courses/{course}/{video} ', [CoursesController::class, 'showVideo'])
 
 Route::middleware('auth:api')->group(function () {
 
-    Route::post('task/accept-task', [AcceptTaskController::class, 'acceptTask'])->name('tasks.accept-task');
+    Route::post('task/accept-task', [AcceptTaskController::class, 'index'])->name('tasks.accept-task');
 
     Route::get('me-notifications', [NotificationController::class, 'show']);
     Route::get('notifications-markAsRead', [NotificationController::class, 'markAsRead']);
