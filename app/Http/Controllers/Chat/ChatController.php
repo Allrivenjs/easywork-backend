@@ -27,12 +27,16 @@ class ChatController extends Controller
         return Response($this->room->getMessages($roomId));
     }
 
+    /**
+     * @throws \Exception
+     */
     public function getExistRoom(Request $request): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
     {
         $request->validate([
             'receiver_id' => 'required',
         ]);
         $receiver_id = $request->query('receiver_id');
+        if ($receiver_id == $this->userId) throw new \Exception('You can not chat with yourself');
         $match = $this->room->matchUser($receiver_id, $this->userId);
         $response = $match ?: $this->createChatRoom($receiver_id);
 
@@ -42,10 +46,9 @@ class ChatController extends Controller
     public function createChatRoom($receiver_id): \App\Models\Room
     {
         $room = $this->room->createRoom(0);
-        if ($receiver_id == $this->userId) {
-            $this->room->addUser($room->id, $receiver_id);
-            $this->room->addUser($room->id, $this->userId);
-        }
+
+        $this->room->addUser($room->id, $receiver_id);
+        $this->room->addUser($room->id, $this->userId);
 
         return $room;
     }
