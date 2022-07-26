@@ -4,7 +4,7 @@ namespace App\Traits;
 
 use Illuminate\Support\Facades\Storage;
 
-trait FilesSave
+trait FilesSaveTrait
 {
     public function saveFiles($files): void
     {

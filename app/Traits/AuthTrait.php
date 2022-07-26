@@ -2,7 +2,7 @@
 
 namespace App\Traits;
 
-trait Auth
+trait AuthTrait
 {
     protected function authWeb(): \Illuminate\Contracts\Auth\Guard|\Illuminate\Contracts\Auth\StatefulGuard
     {

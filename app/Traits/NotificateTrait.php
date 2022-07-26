@@ -7,7 +7,7 @@ use App\Models\Topic;
 use App\Notifications\TaskNotification;
 use Illuminate\Support\Facades\Notification;
 
-trait Notificate
+trait NotificateTrait
 {
     public function notifyTask(): void
     {

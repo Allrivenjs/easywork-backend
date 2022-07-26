@@ -10,6 +10,7 @@ use App\Http\Controllers\Payment\PaymentController;
 use App\Http\Controllers\Profiles\ProfileController;
 use App\Http\Controllers\Profiles\UserController;
 use App\Http\Controllers\Profiles\UserTypeController;
+use App\Http\Controllers\Tasks\AcceptTaskController;
 use App\Http\Controllers\Tasks\StatusController;
 use App\Http\Controllers\Tasks\TasksController;
 use App\Http\Controllers\Tasks\TopicController;
@@ -36,6 +37,9 @@ Route::get('courses/{course}', [CoursesController::class, 'showCoursesWithSectio
 Route::get('courses/{course}/{video} ', [CoursesController::class, 'showVideo']);
 
 Route::middleware('auth:api')->group(function () {
+
+    Route::post('task/accept-task', [AcceptTaskController::class, 'acceptTask'])->name('tasks.accept-task');
+
     Route::get('me-notifications', [NotificationController::class, 'show']);
     Route::get('notifications-markAsRead', [NotificationController::class, 'markAsRead']);
 

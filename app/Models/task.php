@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use App\Jobs\NotificationTaskJob;
-use App\Traits\FilesSave;
-use App\Traits\Notificate;
+use App\Traits\FilesSaveTrait;
+use App\Traits\NotificateTrait;
 use Carbon\Carbon;
 use Database\Factories\TaskFactory;
 use GeneaLabs\LaravelPivotEvents\Traits\PivotEventTrait;
@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class task extends Model
 {
-    use HasFactory, FilesSave, Notificate, PivotEventTrait, SoftDeletes;
+    use HasFactory, FilesSaveTrait, NotificateTrait, PivotEventTrait, SoftDeletes;
 
     protected $fillable = ['name', 'slug', 'description', 'difficulty', 'status_id', 'own_id', 'finished_at'];
 
@@ -24,6 +24,14 @@ class task extends Model
         'deleted_at',
         'finished_at',
     ];
+
+    const STATUS_CREATED = 1;
+    const STATUS_PUBLICADO = 2;
+    const STATUS_POR_ASIGNAR = 3;
+    const STATUS_ASIGNADO = 4;
+    const STATUS_EN_PROCESO = 5;
+    const STATUS_FINALIZADO = 6;
+    const STATUS_ENTREGADO = 7;
 
     public static function boot()
     {
@@ -102,3 +110,4 @@ class task extends Model
         return $this->hasMany(AcceptTask::class);
     }
 }
+

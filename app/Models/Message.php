@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-use App\Traits\AsRead;
+use App\Traits\AsReadTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Message extends Model
 {
     use HasFactory;
-    use AsRead;
+    use AsReadTrait;
 
     protected $casts = [
         'read_at' => 'datetime',

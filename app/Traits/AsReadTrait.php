@@ -2,7 +2,7 @@
 
 namespace App\Traits;
 
-trait AsRead
+trait AsReadTrait
 {
     /**
      * Mark the notification as read.

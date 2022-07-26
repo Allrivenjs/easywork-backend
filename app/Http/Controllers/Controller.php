@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Traits\Auth;
+use App\Traits\AuthTrait;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Storage;
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests, Auth;
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests, AuthTrait;
 
     public function getAnyFile(Request $request): \Symfony\Component\HttpFoundation\StreamedResponse
     {
