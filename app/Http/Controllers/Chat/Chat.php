@@ -47,7 +47,6 @@ class Chat implements ChatInterface
         ];
         $message = new Message($data);
         $message->save();
-        MessageNotification::broadcast($data)->toOthers();
         broadcast(new MessageNotification($data))->toOthers();
     }
 
