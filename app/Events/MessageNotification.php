@@ -17,14 +17,7 @@ class MessageNotification implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct(public $response)
-    {
-        $this->response = [
-            'message' => $response['message'],
-            'room_id' => $response['room_id'],
-            'data_complete' => $response,
-        ];
-    }
+    public function __construct(public $response){}
 
     /**
      * Get the channels the event should broadcast on.
