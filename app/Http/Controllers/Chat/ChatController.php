@@ -45,7 +45,6 @@ class ChatController extends Controller
     {
         $room = $this->room->createRoom(0);
         $userId = Auth::guard('api')?->user()?->getAuthIdentifier();
-        print_r($userId);
         $this->room->addUser($room->id, $receiver_id);
         $this->room->addUser($room->id, $userId);
 

@@ -26,14 +26,13 @@ class Chat implements ChatInterface
     public function getUsers($roomId): User | array
     {
         $room = Room::query()->find($roomId);
-
         return $room->users;
     }
 
     public function addUser($roomId, $userId): void
     {
-        $room = Room::query()->find($roomId);
-        $user = User::query()->find($userId);
+        $room = Room::query()->where('id',$roomId)->firstOrFail();
+        $user = User::query()->where('id',$userId)->firstOrFail();
         $room->users()->attach($user);
     }
 
