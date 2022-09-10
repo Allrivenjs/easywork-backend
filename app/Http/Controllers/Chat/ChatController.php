@@ -7,6 +7,7 @@ use App\Interfaces\Chat\RoomInterface;
 use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 
 class ChatController extends Controller
 {
@@ -68,8 +69,10 @@ class ChatController extends Controller
         $request->validate([
             'message' => 'required|exists:messages,id',
         ]);
-        Message::query()->find($request->query('message'))->markAsReadTo();
-
+        $message = Message::query()->find($request->query('message'))->markAsReadTo();
+        Notification::send(
+            $message->room()->users()->where('id', '!=', $message->user_id)->get(),
+        );
         return Response(null);
     }
 }

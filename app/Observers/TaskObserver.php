@@ -32,7 +32,10 @@ class TaskObserver
             $task->slug = Str::uuid();
             $task->status_id = task::STATUS_CREATED;
             $task->own_id = Auth()->guard('api')->user()->getAuthIdentifier();
+        }else{
+            $task->topics()->attach([rand(1, 5), rand(6, 11)]);
         }
+
     }
 
     /**

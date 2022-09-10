@@ -20,14 +20,15 @@ class TaskFactory extends Factory
     public function definition()
     {
         $name = $this->faker->name();
-
+        $users = collect(User::all()->modelKeys());
+        $status = collect(Status::all()->modelKeys());
         return [
             'name' => $name,
             'slug' => Str::slug($name).'-'.Str::random(10),
             'description' => $this->faker->text(250),
             'difficulty' => $this->faker->randomElement(['easy', 'easy-medium', 'medium', 'medium-hard', 'hard']),
-            'own_id' => User::all()->random()->id,
-            'status_id' => Status::all()->random()->id,
+            'own_id' => $users->random(),
+            'status_id' => $status->random(),
         ];
     }
 }

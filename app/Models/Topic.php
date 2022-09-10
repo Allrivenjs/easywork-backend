@@ -17,7 +17,6 @@ class Topic extends Model
     ];
 
     protected $visible = [
-        'id',
         'name',
         'created_at',
         'updated_at',
