@@ -1,6 +1,7 @@
 <?php
 
 use App\Events\MessageNotification;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,3 +22,5 @@ Route::get('/', function () {
 Route::get('/event', function () {
     event(new MessageNotification('This is our first broadcast message'));
 });
+Route::get('/{type}/{path}', [Controller::class, 'getImages'])
+    ->name('getAnyImage')->whereIn('type', ['public', 'private']);

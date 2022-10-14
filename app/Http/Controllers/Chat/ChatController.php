@@ -70,9 +70,9 @@ class ChatController extends Controller
             'message' => 'required|exists:messages,id',
         ]);
         $message = Message::query()->find($request->query('message'))->markAsReadTo();
-        Notification::send(
-            $message->room()->users()->where('id', '!=', $message->user_id)->get(),
-        );
+//        Notification::send(
+//            $message->room()->users()->where('id', '!=', $message->user_id)->get(),
+//        );
         return Response(null);
     }
 }

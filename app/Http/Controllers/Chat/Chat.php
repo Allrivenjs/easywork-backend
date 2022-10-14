@@ -47,7 +47,7 @@ class Chat implements ChatInterface
         ];
         $message = new Message($data);
         $message->save();
-        broadcast(new MessageNotification($data))->toOthers();
+     //   broadcast(new MessageNotification($data))->toOthers();
     }
 
     public function getRooms(): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Builder|array|null

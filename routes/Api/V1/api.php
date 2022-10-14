@@ -44,8 +44,9 @@ Route::middleware('auth:api')->group(function () {
     Route::get('me-notifications', [NotificationController::class, 'show']);
     Route::get('notifications-markAsRead', [NotificationController::class, 'markAsRead']);
 
-    Route::post('comment-reply', [CommentController::class, 'reply'])->name('task.comment.reply');
-    Route::post('comment', [CommentController::class, 'comment'])->name('task.comment');
+    Route::post('comment-reply', [CommentController::class, 'reply'])->name('comment.reply');
+    Route::post('comment', [CommentController::class, 'comment'])->name('comment');
+    Route::delete('comment/{comment}', [CommentController::class, 'delete'])->name('comment.delete');
 
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
@@ -54,11 +55,11 @@ Route::middleware('auth:api')->group(function () {
     Route::post('profile/update', [ProfileController::class, 'updateAboutProfile'])->name('profile.update');
     Route::post('profile/image/update', [ProfileController::class, 'updateImageProfile'])->name('profile.image.update');
 
-    Route::get('get-my-rooms', [ChatController::class, 'getRooms'])->name('get-my-rooms');
+    Route::get('get-my-rooms', [ChatController::class, 'getRooms'])->name('chat.get-my-rooms');
     Route::get('chat/message/{room_id}', [ChatController::class, 'getMessages'])->name('chat.getMessages');
     Route::get('chat/exist-room-or-create', [ChatController::class, 'getExistRoom'])->name('chat.getExistRoom');
     Route::get('chat/markAsRead', [ChatController::class, 'markAsRead'])->name('chat.markAsRead');
-    Route::post('chat/send-message', [ChatController::class, 'sendMessage'])->name('chat.sendMessage');
+    Route::post('chat/send-message', [ChatController::class, 'sendMessage'])->name('chat.send-message');
 
     Route::prefix('payments')->group(function () {
         Route::post('pay', [PaymentController::class, 'pay'])->name('payments.pay');
@@ -85,7 +86,7 @@ Route::middleware('auth:api')->group(function () {
             Route::delete('video/hidden/{video}', [CoursesController::class, 'forceDeleteVideo'])->name('coursesAdmin.forceDelete.video');
         });
     });
-    Route::get('getAnyFile', [Controller::class, 'getAnyFile']);
+
 });
 
 Route::get('tasks/{task}', [TasksController::class, 'getTasksForSlug']);
@@ -94,9 +95,16 @@ Route::post('tasks/{task:id}', [TasksController::class, 'update']);
 Route::apiResource('status', StatusController::class)->names('status');
 Route::apiResource('topics', TopicController::class)->names('topics');
 
-Route::get('getComments', [CommentController::class, 'getComments'])->name('task.getComments');
+Route::get('getComments', [CommentController::class, 'getComments'])->name('comment.get');
+
 Route::get('me/tasks', [ProfileController::class, 'index'])->name('profile.me.task')->middleware(['auth:api']);
 
 Route::get('ChatPresentChannel', function () {
     broadcast(new \App\Events\ChatPresentChannel(\App\Models\User::find(1)));
 });
+
+//Route::apiResource('country', CountryController::class)->names('country')->only(['index', 'store', 'show']);
+//Route::apiResource('state', StateController::class)->names('state')->only(['index', 'store', 'show']);
+Route::post('upload-file', [Controller::class, 'httpResponse'])->name('upload-file');
+Route::get('/auth/{driver}/{other}/{token}/callback', [Controller::class,'redirectToCallbackSocialProvider'])
+    ->name('redirectToCallbackSocialProvider');

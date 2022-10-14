@@ -17,15 +17,15 @@ return new class extends Migration
             $table->id();
             $table->string('message');
             $table->timestamp('read_at')->nullable();
-            $table->foreignIdFor(\App\Models\User::class)->constrained();
-            $table->foreignIdFor(\App\Models\Room::class)->constrained();
+            $table->foreignIdFor(\App\Models\User::class)->constrained()->onDelete('cascade');
+            $table->foreignIdFor(\App\Models\Room::class)->constrained()->onDelete('cascade');
             $table->timestamps();
         });
 
         Schema::create('participants', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\User::class)->constrained();
-            $table->foreignIdFor(\App\Models\Room::class)->constrained();
+            $table->foreignIdFor(\App\Models\User::class)->constrained()->onDelete('cascade');
+            $table->foreignIdFor(\App\Models\Room::class)->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

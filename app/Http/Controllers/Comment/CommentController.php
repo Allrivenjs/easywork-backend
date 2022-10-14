@@ -43,8 +43,8 @@ class CommentController extends Controller
             'parent_id' => $request->parent_id,
         ]);
 
-        User::query()->whereHas('comments', fn ($q) => $q->where('comments.id', $request->parent_id))
-            ->get()->each(fn ($user) => $user->notify(new CommentReplyNotification($comment)));
+//        User::query()->whereHas('comments', fn ($q) => $q->where('comments.id', $request->parent_id))
+//            ->get()->each(fn ($user) => $user->notify(new CommentReplyNotification($comment)));
 
         return response(null)->setStatusCode(Response::HTTP_OK);
     }

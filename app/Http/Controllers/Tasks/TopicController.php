@@ -11,7 +11,7 @@ class TopicController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('can:taskAdmin.task')->except('index', 'show');
+//        $this->middleware('can:taskAdmin.task')->except('index', 'show');
         $this->middleware('auth:api')->except('index', 'show');
     }
 
@@ -36,9 +36,11 @@ class TopicController extends Controller
         $request->validate([
             'name',
         ]);
-        Topic::create([$request->input('name')]);
+        Topic::create([
+            'name' => $request->input('name'),
+        ]);
 
-        return response(null)->setStatusCode(Response::HTTP_OK);
+        return response(null)->setStatusCode(Response::HTTP_CREATED);
     }
 
     /**
@@ -49,7 +51,7 @@ class TopicController extends Controller
      */
     public function show(Topic $topic): \Illuminate\Http\Response
     {
-        return response([$topic])->setStatusCode(Response::HTTP_OK);
+        return response($topic)->setStatusCode(Response::HTTP_OK);
     }
 
     /**
@@ -64,9 +66,11 @@ class TopicController extends Controller
         $request->validate([
             'name',
         ]);
-        $topic->update([$request->input('name')]);
+        $topic->update([
+            'name' => $request->input('name'),
+        ]);
 
-        return response(null)->setStatusCode(Response::HTTP_OK);
+        return response(null);
     }
 
     /**
