@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Pay;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use PHPUnit\Exception;
@@ -39,13 +40,17 @@ class GitCommand extends Command
      */
     public function handle()
     {
-        try {
-            //exec('git checkout cpanel-production');
-            exec('git pull');
-            exec('php composer install');
-            $this->info('Command success');
-        } catch (Exception $e) {
-            Log::info($e);
-        }
+
+        echo filter_var('https://www.youtube.com/watch?v=QH2-TGUlwu4', FILTER_VALIDATE_URL);
+        echo "a";
+
+//        try {
+//            //exec('git checkout cpanel-production');
+//            exec('git pull');
+//            exec('php composer install');
+//            $this->info('Command success');
+//        } catch (Exception $e) {
+//            Log::info($e);
+//        }
     }
 }
