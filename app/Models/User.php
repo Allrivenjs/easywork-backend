@@ -61,19 +61,19 @@ class User extends Authenticatable implements MustVerifyEmail
         return Carbon::parse($value)->diffForHumans();
     }
 
-    public function getUpdatedAtAttribute($value)
+    public function getUpdatedAtAttribute($value): ?string
     {
         if ($value == null) {
-            return;
+            return null;
         }
 
         return Carbon::parse($value)->diffForHumans();
     }
 
-    public function getDeletedAtAttribute($value)
+    public function getDeletedAtAttribute($value): ?string
     {
         if ($value == null) {
-            return;
+            return null;
         }
 
         return Carbon::parse($value)->diffForHumans();

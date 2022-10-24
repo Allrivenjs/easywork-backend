@@ -8,6 +8,7 @@ use App\Http\Controllers\Courses\CoursesController;
 use App\Http\Controllers\Notification\NotificationController;
 use App\Http\Controllers\Payment\PaymentController;
 use App\Http\Controllers\Profiles\ProfileController;
+use App\Http\Controllers\Profiles\UniversityController;
 use App\Http\Controllers\Profiles\UserController;
 use App\Http\Controllers\Tasks\AcceptTaskController;
 use App\Http\Controllers\Tasks\StatusController;
@@ -41,8 +42,8 @@ Route::middleware('auth:api')->group(function () {
     Route::post('task/accept-task/decline', [AcceptTaskController::class, 'decline'])->name('tasks.accept-task.decline');
     Route::post('task/accept-task/accept', [AcceptTaskController::class, 'accept'])->name('tasks.accept-task.accept');
 
-    Route::get('me-notifications', [NotificationController::class, 'show']);
-    Route::get('notifications-markAsRead', [NotificationController::class, 'markAsRead']);
+    Route::get('me-notifications', [NotificationController::class, 'show'])->name('notification.show');
+    Route::get('notifications-markAsRead', [NotificationController::class, 'markAsRead'])->name('notification.markAsRead');
 
     Route::post('comment-reply', [CommentController::class, 'reply'])->name('comment.reply');
     Route::post('comment', [CommentController::class, 'comment'])->name('comment');
@@ -53,7 +54,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('user', [UserController::class, 'index'])->name('user.index');
     Route::post('user/update', [UserController::class, 'update'])->name('user.update');
     Route::post('profile/update', [ProfileController::class, 'updateAboutProfile'])->name('profile.update');
-    Route::post('profile/image/update', [ProfileController::class, 'updateImageProfile'])->name('profile.image.update');
+    Route::post('profile/image/update', [ProfileController::class, 'updateImageProfile'])->name('profile.update.image');
 
     Route::get('get-my-rooms', [ChatController::class, 'getRooms'])->name('chat.get-my-rooms');
     Route::get('chat/message/{room_id}', [ChatController::class, 'getMessages'])->name('chat.getMessages');
@@ -87,8 +88,10 @@ Route::middleware('auth:api')->group(function () {
         });
     });
 
+
 });
 
+Route::apiResource('university', UniversityController::class)->names('university');
 Route::get('tasks/{task}', [TasksController::class, 'getTasksForSlug']);
 Route::apiResource('tasks', TasksController::class)->except('show', 'update');
 Route::post('tasks/{task:id}', [TasksController::class, 'update']);
@@ -98,6 +101,7 @@ Route::apiResource('topics', TopicController::class)->names('topics');
 Route::get('getComments', [CommentController::class, 'getComments'])->name('comment.get');
 
 Route::get('me/tasks', [ProfileController::class, 'index'])->name('profile.me.task')->middleware(['auth:api']);
+
 
 Route::get('ChatPresentChannel', function () {
     broadcast(new \App\Events\ChatPresentChannel(\App\Models\User::find(1)));

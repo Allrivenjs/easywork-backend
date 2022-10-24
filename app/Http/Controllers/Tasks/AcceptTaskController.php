@@ -29,7 +29,6 @@ class AcceptTaskController extends Controller
             'charge' => 'required',
         ]);
         $this->beforeAcceptTask(User::find($data['user_id']), task::find($data['task_id']), $data['charge']);
-
         return response(null);
     }
 
@@ -54,13 +53,12 @@ class AcceptTaskController extends Controller
         $data = $request->validate([
             'accept_task_id' => 'required|exists:accept_tasks,id',
         ]);
-        $this->acceptTask(self::getAcceptTask($request, $data['accept_task_id']));
-
+        $this->acceptTask(self::getAcceptTask($data['accept_task_id']));
         return response(null);
     }
 
-    public static function getAcceptTask(Request $request, $accept_task_id)
+    public static function getAcceptTask($accept_task_id)
     {
-        return $request->user()->accept_tasks()->findOrFail($accept_task_id);
+        return (new self)->authApi()->user()->tasksAssigned()->findOrFail($accept_task_id);
     }
 }

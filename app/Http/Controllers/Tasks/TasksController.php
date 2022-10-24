@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\TaskStoreResquest;
 use App\Models\task;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class TasksController extends Controller
 {
@@ -17,7 +18,8 @@ class TasksController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function index(Request $request): \Illuminate\Http\Response
     {
@@ -69,7 +71,6 @@ class TasksController extends Controller
         $task = task::query()->create($request->all());
         $task->topics()->attach(json_decode($request->input('topics')));
         ! $request->hasFile('files') ?: $task->saveFiles($request->file('files'));
-
         return response(null);
     }
 

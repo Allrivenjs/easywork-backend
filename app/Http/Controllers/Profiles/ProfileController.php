@@ -75,7 +75,7 @@ class ProfileController extends Controller
         $request->validate([
             'image' => 'image|required',
         ]);
-        $profile = profile::query()->findOrFail(Auth()->guard('api')->user()->profile->id);
+        $profile = profile::query()->findOrFail($this->authApi()->user()->profile->id);
         $url = Storage::put('Images/profiles', $request->file('image'));
         if ($profile->image) {
             Storage::delete(str_replace(env('APP_URL').'/storage/', '', $profile->image->url));
@@ -94,10 +94,10 @@ class ProfileController extends Controller
     }
 
     #[ArrayShape(['about' => 'string[]'])]
- private function rules(): array
- {
-     return [
-         'about' => ['required', 'min:50', 'max:600', 'string'],
-     ];
- }
+     private function rules(): array
+     {
+         return [
+             'about' => ['required', 'min:50', 'max:600', 'string'],
+         ];
+     }
 }

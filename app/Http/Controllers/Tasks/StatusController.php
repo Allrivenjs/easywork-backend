@@ -24,7 +24,7 @@ class StatusController extends Controller
      */
     public function index(): \Illuminate\Http\Response
     {
-        return response([Status::all()])->setStatusCode(Response::HTTP_OK);
+        return response(Status::all())->setStatusCode(Response::HTTP_OK);
     }
 
     /**
@@ -35,11 +35,8 @@ class StatusController extends Controller
      */
     public function store(Request $request): \Illuminate\Http\Response
     {
-        $request->validate([
-            'name',
-        ]);
-        Status::create([$request->input('name')]);
-
+        $request->validate(['name'=>'required']);
+        Status::query()->create(['name' => $request->input('name')]);
         return response(null)->setStatusCode(Response::HTTP_OK);
     }
 
@@ -51,7 +48,7 @@ class StatusController extends Controller
      */
     public function show(Status $status): \Illuminate\Http\Response
     {
-        return response([$status])->setStatusCode(Response::HTTP_OK);
+        return response($status)->setStatusCode(Response::HTTP_OK);
     }
 
     /**
@@ -63,11 +60,8 @@ class StatusController extends Controller
      */
     public function update(Request $request, Status $status): \Illuminate\Http\Response
     {
-        $request->validate([
-            'name',
-        ]);
-        $status->update([$request->input('name')]);
-
+        $request->validate(['name'=>'required']);
+        $status->update(['name' => $request->input('name')]);
         return response(null)->setStatusCode(Response::HTTP_OK);
     }
 
@@ -80,7 +74,6 @@ class StatusController extends Controller
     public function destroy(Status $status): \Illuminate\Http\Response
     {
         $status->delete();
-
         return response(null)->setStatusCode(Response::HTTP_OK);
     }
 }
