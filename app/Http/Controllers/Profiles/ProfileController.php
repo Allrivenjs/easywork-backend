@@ -39,7 +39,6 @@ class ProfileController extends Controller
             'user',
             'topics',
             'image',
-            'universities',
         ])
             ->where('slug', $profile)
             ->orWhere('id', $profile)
