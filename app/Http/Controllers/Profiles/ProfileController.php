@@ -38,7 +38,7 @@ class ProfileController extends Controller
         $Profile = profile::query()->with([
             'user',
             'topics',
-            'images',
+            'image',
             'universities',
         ])
             ->where('slug', $profile)
