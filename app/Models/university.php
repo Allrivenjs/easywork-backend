@@ -12,6 +12,7 @@ class university extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = ['name'];
+    protected $table = 'universities';
 
     protected $dates = [
         'created_at',
