@@ -28,7 +28,7 @@ class ProfileController extends Controller
                         'owner',
                     ],
                 ],
-            ])->where('own_id', auth()->id())
+            ])->where('own_id', $request->input('own_id') ?? auth()->id())
                 ->orderBy('created_at', 'desc')->simplePaginate($request->input('num') ?? 5)
         );
     }
@@ -36,20 +36,10 @@ class ProfileController extends Controller
     public function getProfileForSlug($profile): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         $Profile = profile::query()->with([
-            'user' => [
-                'tasks_desc' => [
-                    'topics',
-                    'owner',
-                    'files',
-                    'status_last',
-                    'comments_lasted' => [
-                        'owner',
-                        'replies' => [
-                            'owner',
-                        ],
-                    ],
-                ],
-            ],
+            'user',
+            'topics',
+            'images',
+            'universities',
         ])
             ->where('slug', $profile)
             ->orWhere('id', $profile)
