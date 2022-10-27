@@ -76,6 +76,11 @@ class task extends Model
         return Carbon::parse($value)->diffForHumans();
     }
 
+//    public function getTasksAttribute($value): string
+//    {
+//        return route('profile.get.task',['user_id', $this->own_id]);
+//    }
+
     public function owner(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class, 'own_id')->with(['profile' => ['image']]);

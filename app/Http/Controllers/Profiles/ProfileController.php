@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Profiles;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProfileResource;
+use App\Http\Resources\TasksResource;
 use App\Models\profile;
 use App\Models\task;
 use Illuminate\Database\QueryException;
@@ -32,19 +33,20 @@ class ProfileController extends Controller
 
     public function getTasks($id, $num): \Illuminate\Contracts\Pagination\Paginator
     {
-        return  task::with([
-            'topics',
-            'owner',
-            'files',
-            'status_last',
-            'comments_lasted' => [
+        return
+            task::with([
+                'topics',
                 'owner',
-                'replies' => [
+                'files',
+                'status_last',
+                'comments_lasted' => [
                     'owner',
+                    'replies' => [
+                        'owner',
+                    ],
                 ],
-            ],
-        ])->where('own_id', $id )
-            ->orderBy('created_at', 'desc')->simplePaginate($num ?? 5);
+            ])->where('own_id', $id )
+                ->orderBy('created_at', 'desc')->simplePaginate($num ?? 5);
     }
 
 
@@ -58,7 +60,6 @@ class ProfileController extends Controller
             ->where('slug', $profile)
             ->orWhere('id', $profile)
             ->firstOrFail();
-
         return response([new ProfileResource($Profile)])->setStatusCode(Response::HTTP_OK);
     }
 

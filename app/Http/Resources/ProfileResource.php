@@ -12,14 +12,12 @@ class ProfileResource extends JsonResource
      * @param  \Illuminate\Http\Request  $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
-    public function toArray($request)
+    public function toArray($request): array|\JsonSerializable|\Illuminate\Contracts\Support\Arrayable
     {
-        $userdata = parent::toArray($request);
-        $data = array_merge($userdata, [
+        return array_merge(parent::toArray($request), [
             'role' => $this->user->getRoleNames(),
             'images' => $this->image,
+            'tasks' => route('profile.get.task', ['user_id'=> $this->id]),
         ]);
-
-        return $data;
     }
 }
