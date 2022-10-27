@@ -17,39 +17,43 @@ class ProfileController extends Controller
     public function index(Request $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         return response(
-            task::with([
-                'topics',
-                'owner',
-                'files',
-                'status_last',
-                'comments_lasted' => [
-                    'owner',
-                    'replies' => [
-                        'owner',
-                    ],
-                ],
-            ])->where('own_id', auth()->id())
-                ->orderBy('created_at', 'desc')->simplePaginate($request->input('num') ?? 5)
+            $this->getTasks(auth()->id(), $request->input('num'))
         );
     }
+
+
+    public function getTasksByUser(Request $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    {
+        return response(
+            $this->getTasks($request->input('user_id'), $request->input('num'))
+        );
+
+    }
+
+    public function getTasks($id, $num): \Illuminate\Contracts\Pagination\Paginator
+    {
+        return  task::with([
+            'topics',
+            'owner',
+            'files',
+            'status_last',
+            'comments_lasted' => [
+                'owner',
+                'replies' => [
+                    'owner',
+                ],
+            ],
+        ])->where('own_id', $id )
+            ->orderBy('created_at', 'desc')->simplePaginate($num ?? 5);
+    }
+
 
     public function getProfileForSlug($profile): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         $Profile = profile::query()->with([
-            'user' => [
-                'tasks_desc' => [
-                    'topics',
-                    'owner',
-                    'files',
-                    'status_last',
-                    'comments_lasted' => [
-                        'owner',
-                        'replies' => [
-                            'owner',
-                        ],
-                    ],
-                ],
-            ],
+            'user',
+            'topics',
+            'image',
         ])
             ->where('slug', $profile)
             ->orWhere('id', $profile)

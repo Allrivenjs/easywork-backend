@@ -101,6 +101,7 @@ Route::apiResource('topics', TopicController::class)->names('topics');
 Route::get('getComments', [CommentController::class, 'getComments'])->name('comment.get');
 
 Route::get('me/tasks', [ProfileController::class, 'index'])->name('profile.me.task')->middleware(['auth:api']);
+Route::get('get-tasks', [ProfileController::class, 'getTasksByUser'])->name('profile.get.task');
 
 
 Route::get('ChatPresentChannel', function () {

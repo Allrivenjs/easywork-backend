@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Pay;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use PHPUnit\Exception;
@@ -40,6 +41,7 @@ class GitCommand extends Command
     public function handle()
     {
 
+<<<<<<< HEAD
 //        $myArray = array(13,2,4,35,1, 35);
 //        ##imprimer el valor mas alto del arreglo myArray
 //        $max = max($myArray);
@@ -180,6 +182,10 @@ class GitCommand extends Command
 //        $imprimir2 = max($newArray);
 //        echo "Longest: " . $imprimir2 . PHP_EOL ."Number: " . $imprimir . PHP_EOL;
 //
+=======
+        echo filter_var('https://www.youtube.com/watch?v=QH2-TGUlwu4', FILTER_VALIDATE_URL);
+        echo "a";
+>>>>>>> 4d9236893da8bacb60dfa64451570cb085eb3513
 
 //        try {
 //            //exec('git checkout cpanel-production');
