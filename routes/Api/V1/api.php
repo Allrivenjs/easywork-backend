@@ -37,6 +37,7 @@ Route::get('courses/{course}', [CoursesController::class, 'showCoursesWithSectio
 Route::get('courses/{course}/{video} ', [CoursesController::class, 'showVideo']);
 
 Route::middleware('auth:api')->group(function () {
+
     Route::post('task/before-accept-task', [AcceptTaskController::class, 'beforeAccept'])->name('tasks.accept-task.beforeAccept');
     Route::get('task/accept-task/list', [AcceptTaskController::class, 'index'])->name('tasks.accept-task.index');
     Route::post('task/accept-task/decline', [AcceptTaskController::class, 'decline'])->name('tasks.accept-task.decline');
@@ -87,7 +88,6 @@ Route::middleware('auth:api')->group(function () {
             Route::delete('video/hidden/{video}', [CoursesController::class, 'forceDeleteVideo'])->name('coursesAdmin.forceDelete.video');
         });
     });
-
 
 });
 
