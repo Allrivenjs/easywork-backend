@@ -12,46 +12,52 @@ class UniversityController extends Controller
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function index(){
+    public function index(): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    {
         return response([university::all()])->setStatusCode(Response::HTTP_OK);
     }
 
     /**
-     * @param Request $request
+     * @param  Request  $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function store(Request $request){
+    public function store(Request $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    {
         $request->validate([
-            'name'=>'required'
+            'name' => 'required',
         ]);
         university::create([
-            'name'=> $request->name
+            'name' => $request->name,
         ]);
-        return response([])->setStatusCode(Response::HTTP_OK);
+
+        return response(null)->setStatusCode(Response::HTTP_OK);
     }
 
     /**
-     * @param Request $request
-     * @param university $university
+     * @param  Request  $request
+     * @param  university  $university
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function update(Request $request, $university){
-
+    public function update(Request $request, $university): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    {
         $request->validate([
-            'name'=>'required'
+            'name' => 'required',
         ]);
         university::query()->findOrFail($university)->update([
-            'name'=>$request->name
+            'name' => $request->name,
         ]);
-        return response([])->setStatusCode(Response::HTTP_OK);
+
+        return response(null)->setStatusCode(Response::HTTP_OK);
     }
 
     /**
-     * @param university $university
+     * @param  university  $university
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function destroy($university){
+    public function destroy($university): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    {
         university::query()->findOrFail($university)->delete();
-        return response([])->setStatusCode(Response::HTTP_OK);
+
+        return response(null)->setStatusCode(Response::HTTP_OK);
     }
 }

@@ -10,22 +10,28 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class university extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $fillable=['name'];
+
+    protected $fillable = ['name'];
+    protected $table = 'universities';
+
     protected $dates = [
         'created_at',
         'updated_at',
-        'deleted_at'
+        'deleted_at',
     ];
 
-    public function getCreatedAtAttribute($value){
+    public function getCreatedAtAttribute($value): string
+    {
         return Carbon::parse($value)->diffForHumans();
     }
 
-    public function getUpdatedAtAttribute($value){
+    public function getUpdatedAtAttribute($value): string
+    {
         return Carbon::parse($value)->diffForHumans();
     }
 
-    public function profiles(){
+    public function profiles(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
         return $this->belongsToMany(profile::class);
     }
 }

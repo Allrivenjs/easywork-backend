@@ -1,5 +1,6 @@
 <?php
 
+use App\Broadcasting\ChatChannel;
 use Illuminate\Support\Facades\Broadcast;
 
 /*
@@ -15,4 +16,10 @@ use Illuminate\Support\Facades\Broadcast;
 
 Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
+});
+
+Broadcast::channel('chat-channel.{room_id}', ChatChannel::class);
+
+Broadcast::channel('channel-session', function ($user) {
+    return $user;
 });

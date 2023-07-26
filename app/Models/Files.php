@@ -9,20 +9,28 @@ use Illuminate\Database\Eloquent\Model;
 class Files extends Model
 {
     use HasFactory;
-    protected $fillable = ['url'];
+
+    protected $fillable = ['url', 'mime', 'originalName'];
+
+    protected $visible = ['url', 'mime', 'originalName'];
+
     protected $dates = [
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
-    public function getCreatedAtAttribute($value){
+
+    public function getCreatedAtAttribute($value): string
+    {
         return Carbon::parse($value)->diffForHumans();
     }
 
-    public function getUpdatedAtAttribute($value){
+    public function getUpdatedAtAttribute($value): string
+    {
         return Carbon::parse($value)->diffForHumans();
     }
 
-    public function fileables(){
+    public function fileables(): \Illuminate\Database\Eloquent\Relations\MorphTo
+    {
         return $this->morphTo();
     }
 }

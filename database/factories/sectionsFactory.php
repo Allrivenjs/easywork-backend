@@ -10,7 +10,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class sectionsFactory extends Factory
 {
-    protected $model=section::class;
+    protected $model = section::class;
+
     /**
      * Define the model's default state.
      *
@@ -19,7 +20,7 @@ class sectionsFactory extends Factory
     public function definition()
     {
         return [
-            'name'=>$this->faker->name()
+            'name' => $this->faker->name(),
         ];
     }
 }

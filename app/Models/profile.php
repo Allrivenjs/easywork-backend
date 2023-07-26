@@ -10,41 +10,61 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class profile extends Model
 {
     use HasFactory, SoftDeletes;
+
     protected $fillable = ['ranking', 'slug', 'about', 'user_id'];
+
     protected $dates = [
         'created_at',
         'updated_at',
-        'deleted_at'
+        'deleted_at',
     ];
 
     public function getRouteKeyName()
     {
-        return "slug";
+        return 'slug';
     }
 
-    public function getCreatedAtAttribute($value){
+    public function getCreatedAtAttribute($value): string
+    {
         return Carbon::parse($value)->diffForHumans();
     }
 
-    public function getUpdatedAtAttribute($value){
+    public function getUpdatedAtAttribute($value): string
+    {
         return Carbon::parse($value)->diffForHumans();
     }
 
-    public function getDeletedAtAttribute($value){
-        if ($value==null) return;
+    public function getDeletedAtAttribute($value)
+    {
+        if ($value == null) {
+            return;
+        }
+
         return Carbon::parse($value)->diffForHumans();
     }
 
-    public function images(){
-        return $this->morphMany(Image::class, 'imageable');
+    public function image(): \Illuminate\Database\Eloquent\Relations\MorphOne
+    {
+        return $this->morphOne(Image::class, 'imageable');
     }
-    public function files(){
+
+    public function files(): \Illuminate\Database\Eloquent\Relations\MorphMany
+    {
         return $this->morphMany(Files::class, 'fileable');
     }
-    public function user(){
+
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
         return $this->belongsTo(User::class);
     }
-    public function universities(){
+
+    public function universities(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
         return $this->belongsToMany(university::class);
+    }
+
+    public function topics(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Topic::class);
     }
 }

@@ -20,13 +20,14 @@ class UserObserver
 //            //EmailVerification
 //            event(new Registered($user));
 //        }
-        $random = rand(0, 1000);
-        $random2 = rand(2000, 3000);
-        $user->assignRole('Student');
-        $user->Profile()->create([
-            'slug' => Str::of($user->name .'-'. $user->lastname.'-'.$random . $random2)->slug('-'),
-            'user_id' => $user->id,
-        ]);
+
+        $user->assignRole('student');
+        if (! \App::runningInConsole()) {
+            $user->Profile()->create([
+                'slug' => Str::uuid(),
+                'user_id' => $user->id,
+            ]);
+        }
     }
 
     /**

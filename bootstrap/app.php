@@ -41,11 +41,6 @@ $app->singleton(
     App\Exceptions\Handler::class
 );
 
-//$app->bind('path.public',function(){
-//    return realpath('./../public/');
-//});
-
-
 /*
 |--------------------------------------------------------------------------
 | Return The Application

@@ -11,7 +11,8 @@ use Illuminate\Support\Str;
  */
 class coursesFactory extends Factory
 {
-    protected $model=course::class;
+    protected $model = course::class;
+
     /**
      * Define the model's default state.
      *
@@ -19,11 +20,12 @@ class coursesFactory extends Factory
      */
     public function definition()
     {
-        $name=$this->faker->name();
+        $name = $this->faker->name();
+
         return [
-            'name'=>$name,
-            'slug'=>Str::slug($name),
-            'description'=>$this->faker->text(500),
+            'name' => $name,
+            'slug' => Str::slug($name),
+            'description' => $this->faker->text(500),
         ];
     }
 }

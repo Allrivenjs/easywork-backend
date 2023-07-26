@@ -4,41 +4,105 @@ namespace App\Http\Controllers\Profiles;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProfileResource;
+use App\Http\Resources\TasksResource;
 use App\Models\profile;
-use App\Models\User;
+use App\Models\task;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use JetBrains\PhpStorm\ArrayShape;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProfileController extends Controller
 {
-    public function getProfileForSlug($profile){
-        $Profile = profile::query()
-            ->where('slug', $profile)
-            ->orWhere('id',$profile)
-            ->first();
-        if (is_null($Profile)){
-            return response(['message'=>'Profile not found'])->setStatusCode(Response::HTTP_NOT_FOUND);
-        }
-
-        return response([new ProfileResource($Profile->user)])->setStatusCode(Response::HTTP_OK);
+    public function index(Request $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    {
+        return response(
+            $this->getTasks(auth()->id(), $request->input('num'))
+        );
     }
 
-    public function updateAboutProfile(Request $request){
 
+    public function getTasksByUser(Request $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    {
+        return response(
+            $this->getTasks($request->input('user_id'), $request->input('num'))
+        );
+
+    }
+
+    public function getTasks($id, $num): \Illuminate\Contracts\Pagination\Paginator
+    {
+        return
+            task::with([
+                'topics',
+                'owner',
+                'files',
+                'status_last',
+                'comments_lasted' => [
+                    'owner',
+                    'replies' => [
+                        'owner',
+                    ],
+                ],
+            ])->where('own_id', $id )
+                ->orderBy('created_at', 'desc')->simplePaginate($num ?? 5);
+    }
+
+
+    public function getProfileForSlug($profile): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    {
+        $Profile = profile::query()->with([
+            'user',
+            'topics',
+            'image',
+        ])
+            ->where('slug', $profile)
+            ->orWhere('id', $profile)
+            ->firstOrFail();
+        return response([new ProfileResource($Profile)])->setStatusCode(Response::HTTP_OK);
+    }
+
+    public function updateAboutProfile(Request $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    {
         $validate = $request->validate($this->rules());
         try {
-            auth()->user()->profile()->update($validate);
-        }catch (QueryException $e){
+            Auth()->guard('api')->user()->profile()->update($validate);
+        } catch (QueryException $e) {
             return response([$e])->setStatusCode(Response::HTTP_BAD_REQUEST);
         }
 
-        return response([])->setStatusCode(Response::HTTP_OK);
+        return response(null)->setStatusCode(Response::HTTP_OK);
     }
 
-    private function rules(){
-        return [
-            'about'=>['required','min:50','max:600','string']
-        ];
+    public function updateImageProfile(Request $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    {
+        $request->validate([
+            'image' => 'image|required',
+        ]);
+        $profile = profile::query()->findOrFail($this->authApi()->user()->profile->id);
+        $url = Storage::put('Images/profiles', $request->file('image'));
+        if ($profile->image) {
+            Storage::delete(str_replace(env('APP_URL').'/storage/', '', $profile->image->url));
+            $profile->user()->update(['profile_photo_path' => $url]);
+            $profile->image()->update([
+                'url' => $url,
+            ]);
+        } else {
+            $profile->image()->create([
+                'url' => $url,
+            ]);
+            $profile->user()->update(['profile_photo_path' => $url]);
+        }
+
+        return response(null)->setStatusCode(Response::HTTP_CREATED);
     }
+
+    #[ArrayShape(['about' => 'string[]'])]
+     private function rules(): array
+     {
+         return [
+             'about' => ['required', 'min:50', 'max:600', 'string'],
+         ];
+     }
 }

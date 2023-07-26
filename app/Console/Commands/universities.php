@@ -43,18 +43,18 @@ class universities extends Command
 
         $universities = json_decode($response);
         $no_if_universities = count($universities);
-        if (university::all()->count() <= 0){
-            for ($i =0; $i < $no_if_universities; $i++){
-                $name= preg_replace("/[\r\n|\n|\r]+/", " ", $universities[$i]->data);
+        if (university::all()->count() <= 0) {
+            for ($i = 0; $i < $no_if_universities; $i++) {
+                $name = preg_replace("/[\r\n|\n|\r]+/", ' ', $universities[$i]->data);
                 university::create([
-                    'name'=>  $name
+                    'name' => $name,
                 ]);
                 $c = $name;
                 $this->info("Creating new records: $c... $i ");
             }
-        }else{
+        } else {
             $count = university::all()->count();
-            $this->info("Records found.");
+            $this->info('Records found.');
             $this->info("Deleting $count records...");
             DB::statement('SET FOREIGN_KEY_CHECKS=0;');
             university::truncate();
@@ -62,16 +62,16 @@ class universities extends Command
         }
         if (university::all()->count() <= 0) {
             for ($i = 0; $i < $no_if_universities; $i++) {
-                $name= preg_replace("/[\r\n|\n|\r]+/", " ", $universities[$i]->data);
+                $name = preg_replace("/[\r\n|\n|\r]+/", ' ', $universities[$i]->data);
                 university::create([
-                    'name' =>  $name
+                    'name' => $name,
                 ]);
                 $c = $name;
                 $this->info("Creating new records: $c... $i ");
             }
         }
-        $this->info("All universities generated and saved successfully");
+        $this->info('All universities generated and saved successfully');
+
         return 0;
     }
-
 }

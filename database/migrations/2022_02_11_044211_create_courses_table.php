@@ -17,14 +17,15 @@ return new class extends Migration
             $table->id();
 
             $table->string('name');
-            $table->string('slug');
+            $table->string('slug')->unique();
+
             $table->longText('description');
 
             $table->unsignedBigInteger('owner');
             $table->foreign('owner')->references('id')->on('users')->onDelete('cascade');
 
-
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
